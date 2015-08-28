@@ -8,9 +8,9 @@ gem 'rails-api'
 gem 'spring', :group => :development
 
 gem 'better_errors', :group => :development
-
+gem 'binding_of_caller'
 gem 'pg'
-
+gem 'bower-rails'
 gem 'rspec-rails'
 
 # To use ActiveModel has_secure_password
