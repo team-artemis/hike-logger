@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  root 'home#index'
+
   scope '/api' do
     resources :users do
       resources :trails do 
