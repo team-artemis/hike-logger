@@ -32,17 +32,22 @@ ActiveRecord::Schema.define(version: 20150829030401) do
 
   create_table "trails", force: :cascade do |t|
     t.string   "title"
-    t.string   "length"
+    t.float    "length"
     t.string   "duration"
     t.string   "difficulty"
     t.string   "review"
     t.integer  "rating"
-    t.string   "trailhead",               array: true
-    t.string   "trailend",                array: true
+    t.boolean  "is_loop"
+    t.string   "trailhead_title"
+    t.string   "trailhead_lon"
+    t.string   "trailhead_lat"
+    t.string   "trailend_title"
+    t.string   "trailend_lon"
+    t.string   "trailend_lat"
     t.integer  "user_id"
     t.integer  "map_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "users", force: :cascade do |t|
