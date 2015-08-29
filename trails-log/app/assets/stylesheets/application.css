@@ -39,18 +39,18 @@ html {
     padding-bottom: 20%;
 }
 
-#cssmenu {
+.cssmenu {
   background: #333;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-#cssmenu li {
+.cssmenu li {
   list-style: none;
 }
 
-#cssmenu a {
+.cssmenu a {
   background: #333;
   border-bottom: 1px solid #393939;
   color: #ccc;
@@ -63,7 +63,7 @@ html {
 
 
 
-#cssmenu a:hover {
+.cssmenu a:hover {
   background: #2580a2 no-repeat;
   color: #fff;
   padding-bottom: 8px;
