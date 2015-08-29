@@ -3,8 +3,9 @@ class SessionsController < ApplicationController
   respond_to :js, :html
 
   def new
+    p 'hello'
     @user = User.new
-    respond_with new_session_path
+    render file: :new, content_type: "html"
   end
 
   def create
@@ -14,6 +15,7 @@ class SessionsController < ApplicationController
       redirect_to user_path(user)
     else
       render :new
+    end
   end
 
   def destroy
