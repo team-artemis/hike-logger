@@ -1,6 +1,11 @@
+<div class="video-wrapper">
+	<video>
+		<source src="" type="video/mp4">
+	</video>
+</div>
 
 <h1>Login</h1>
-<%= form_for :session, url: sessions_path do |f| %>
+<%= form_for :session, url: login_path do |f| %>
 	<%= f.label :email %>
 	<%= f.email_field :email, class: 'tbd' %>
 
