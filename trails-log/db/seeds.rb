@@ -26,7 +26,7 @@ User.create(
   password: "pass"
 )
 
-Trail.new(
+Trail.create(
   title: "Stinson Beach to Mt. Tamalpais",
   length: 17.3,
   is_loop: false,
@@ -43,7 +43,7 @@ Trail.new(
   user_id: 1
   )
 
-Trail.new(
+Trail.create(
   title: "Point Reyes Coast Trail to Alamere Falls",
   is_loop: true,
   length: 7.5,
