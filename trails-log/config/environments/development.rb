@@ -38,4 +38,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # DANIELA: We might need this if we deploy on heroku:
+  # config.assets.initialize_on_precompile = false
 end
