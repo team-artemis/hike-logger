@@ -1,39 +1,13 @@
-<p id="notice"><%= notice %></p>
+<div class="grid-container debug">
+      <div class="pure-u-5-24 navbar debug">
+         <li id="cssmenu"><a href='#'><span>BUTTON1</span></a></li>
+         <li id="cssmenu"><a href='#'><span>BUTTON2</span></a></li>
+         <li id="cssmenu"><a href='#'><span>BUTTON3</span></a></li>
+         <li id="cssmenu"><a href='#'><span>BUTTON4</span></a></li>
+      </div>
 
-<p>
-  <strong>Firstname:</strong>
-  <%= @user.firstname %>
-</p>
+      <div class="pure-u-19-24 debug">
+        <!-- MAP GOES HERE -->
 
-<p>
-  <strong>Lastname:</strong>
-  <%= @user.lastname %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @user.city %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @user.state %>
-</p>
-
-<p>
-  <strong>Country:</strong>
-  <%= @user.country %>
-</p>
-
-<p>
-  <strong>Password digest:</strong>
-  <%= @user.password_digest %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+      </div>
+  </div>

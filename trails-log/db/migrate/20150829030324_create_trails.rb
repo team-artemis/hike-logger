@@ -7,6 +7,10 @@ class CreateTrails < ActiveRecord::Migration
       t.string :difficulty
       t.string :review
       t.integer :rating
+      t.string  :trailhead, array: true
+      t.string  :trailend, array: true
+      t.references :user
+      t.references :map
 
       t.timestamps null: false
     end

@@ -4,6 +4,7 @@ class CreateImages < ActiveRecord::Migration
       t.string :title
       t.string :caption
       t.string :src
+      t.references :trail
 
       t.timestamps null: false
     end
