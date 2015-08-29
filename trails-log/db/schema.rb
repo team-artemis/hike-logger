@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(version: 20150829030401) do
     t.string   "difficulty"
     t.string   "review"
     t.integer  "rating"
+    t.string   "trailhead",               array: true
+    t.string   "trailend",                array: true
     t.integer  "user_id"
     t.integer  "map_id"
     t.datetime "created_at", null: false
