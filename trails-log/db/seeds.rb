@@ -13,7 +13,5 @@ taylor_swift = User.create(
 	city: "Nashville",
 	state: "TN",
 	country: "USA",
-	password_digest: "password"
-	)
-
-taylor_swift
+	password: "password"
+)

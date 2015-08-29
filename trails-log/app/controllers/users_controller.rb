@@ -31,16 +31,18 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
+    # respond_to do |format|
       if @user.save
         log_in(@user)
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
+        redirect_to @user
+        # format.html { redirect_to user_path(@user), notice: 'User was successfully created.' }
+        # format.json { render :show, status: :created, location: @user }
       else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        render :new
+        # format.html { render :new }
+        # format.json { render json: @user.errors, status: :unprocessable_entity }
       end
-    end
+    # end
   end
 
   # PATCH/PUT /users/1
@@ -69,12 +71,13 @@ class UsersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:firstname, :lastname, :city, :state, :country, :password_digest, :email)
+      params.require(:user).permit(:firstname, :lastname, :city, :state, :country, :password, :email)
+    end
+
+    def set_user
+      @user = User.find_by(id: params[:id])
     end
 end

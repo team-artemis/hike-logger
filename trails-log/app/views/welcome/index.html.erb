@@ -1,3 +1,12 @@
-<h1>You made it to the landing page!</h1>
-<a class="login" href='/sessions/new'>Login!</a>
-<div class="landing-div">Some stuff</div>
+<h1>Login</h1>
+<%= form_for :session, url: sessions_path do |f| %>
+	<%= f.label :email %>
+	<%= f.email_field :email, class: 'tbd' %>
+
+	<%= f.label :password %>
+	<%= f.password_field :password, class: 'tbd' %>
+
+	<%= f.submit "Login", class: 'tbd' %>
+<% end %>
+
+<p>New user? <%= link_to "Sign up now!", new_user_path %></p>

@@ -1,16 +1,13 @@
 class SessionsController < ApplicationController
   include SessionsHelper
-  respond_to :js, :html
 
   def new
-    p 'hello'
     @user = User.new
-    render file: :new, content_type: "html"
   end
 
   def create
     user = set_user
-    if user && user.authenticate(params[:password])
+    if user && user.authenticate(user_params[:password])
       session[:id] = user.id
       redirect_to user_path(user)
     else
@@ -25,11 +22,11 @@ class SessionsController < ApplicationController
 
   private
 
-  def set_user
-    @user = User.find(params[:id])
+  def user_params
+    params.require(:session).permit(:email, :password)
   end
 
-  def user_params
-    params.require(:user).permit(:email, :password)
+  def set_user
+    @user = User.find_by(email: user_params[:email])
   end
 end
