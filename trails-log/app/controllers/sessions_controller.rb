@@ -1,8 +1,10 @@
 class SessionsController < ApplicationController
   include SessionsHelper
+  respond_to :js, :html
 
   def new
     @user = User.new
+    respond_with new_session_path
   end
 
   def create
