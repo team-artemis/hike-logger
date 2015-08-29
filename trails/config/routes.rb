@@ -2,13 +2,15 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  scope '/api' do
-    resources :users do
-      resources :trails do 
-        resources :images 
-      end
-    end
-  end
+  get '/users', to: 'user#index'
+  
+  # scope '/api' do
+  #   resources :users do
+  #     resources :trails do 
+  #       resources :images 
+  #     end
+  #   end
+  # end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

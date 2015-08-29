@@ -1,7 +1,10 @@
-class UsersController < ActionController::API
-	 protect_from_forgery with: :null_session
+class UserController < ActionController::API
+  def index
+  	@users = User.all
+  	p "You made it!!"
+  	p "*" * 100
+  	render json: @users
+  end
 
-	 def index
-	 	"hello"
-	 end
+
 end
