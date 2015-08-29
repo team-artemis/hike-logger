@@ -10,6 +10,7 @@ class TrailsController < ApplicationController
   # GET /trails/1
   # GET /trails/1.json
   def show
+    @trail = set_trail
   end
 
   # GET /trails/new
@@ -19,6 +20,9 @@ class TrailsController < ApplicationController
 
   # GET /trails/1/edit
   def edit
+    @trail = set_trail
+    @trail.update_attributes(trail_params)
+    redirect_to user_trail_path(@trail)
   end
 
   # POST /trails
