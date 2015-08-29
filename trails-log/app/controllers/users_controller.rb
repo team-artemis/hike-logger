@@ -1,24 +1,29 @@
 class UsersController < ApplicationController
+  include SessionsHelper
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
+    render 'index'
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
+    render 'show'
   end
 
   # GET /users/new
   def new
     @user = User.new
+    render 'new'
   end
 
   # GET /users/1/edit
   def edit
+    render 'edit'
   end
 
   # POST /users
@@ -28,6 +33,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        log_in(@user)
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
