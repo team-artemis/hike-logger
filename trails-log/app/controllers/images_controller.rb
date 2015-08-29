@@ -10,6 +10,7 @@ class ImagesController < ApplicationController
   # GET /images/1
   # GET /images/1.json
   def show
+    @image = set_image
   end
 
   # GET /images/new
@@ -19,6 +20,8 @@ class ImagesController < ApplicationController
 
   # GET /images/1/edit
   def edit
+    @image = set_image
+    @image.update_attributes(image_params)
   end
 
   # POST /images
