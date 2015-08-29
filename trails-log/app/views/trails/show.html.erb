@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @trail.title %>
+</p>
+
+<p>
+  <strong>Length:</strong>
+  <%= @trail.length %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @trail.duration %>
+</p>
+
+<p>
+  <strong>Difficulty:</strong>
+  <%= @trail.difficulty %>
+</p>
+
+<p>
+  <strong>Review:</strong>
+  <%= @trail.review %>
+</p>
+
+<p>
+  <strong>Rating:</strong>
+  <%= @trail.rating %>
+</p>
+
+<%= link_to 'Edit', edit_trail_path(@trail) %> |
+<%= link_to 'Back', trails_path %>
