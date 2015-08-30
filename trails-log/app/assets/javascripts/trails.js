@@ -10,9 +10,16 @@ $(document).on("ready", function() {
 });
 
 var getTrailPoints = function(userMap) {
-    var userPath = window.location
+  var location = window.location.pathname
+  if (location.includes('trails')) {
+      userPath = location
+    }
+    else {
+      userPath = location + "/trails"
+    }
+    console.log(userPath)
   $.ajax({
-    url: userPath+'/trails',
+    url: userPath,
     dataType: 'JSON'
     })
   .done(function(response){
