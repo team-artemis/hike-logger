@@ -1,8 +1,8 @@
 <div class="pure-u-5-24 navbar debug">
 
   <li class="cssmenu"><span> <a href="#"> 
-    < Back 
-  </span></a>
+    back to menu
+  </a></span></li>
   <li class="cssmenu"><span><a href="#">
     <h2> My hikes </h2>
   </a></span></li>
@@ -10,7 +10,7 @@
 
   <li class="cssmenu"><span><a>
     <b><%= trail.title %></b> <br>
-    <%= reverse_geocode(trail.trailhead_lat, trail.trailhead_lon) %></p>
+    <%= reverse_geocode(trail.trailhead_lat, trail.trailhead_lon) %>
   </a></span></li>
   <% end %>
 </div>
