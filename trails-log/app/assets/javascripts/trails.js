@@ -44,8 +44,11 @@ $(document).on("ready", function() {
 // Show map from either /users/:id or /users/:id/trails
   var userPath = function(){
     var windowLocation = window.location.pathname
-    if (windowLocation.includes('trails')) {
-      return windowLocation + ".json"
+    if (windowLocation.includes('/new')) {
+      return windowLocation.replace('/new', '.json')
+    }
+    else if (windowLocation.includes('/trails')) {
+      return windowLocation + '.json'
     }
     else {
       return windowLocation + "/trails.json"
