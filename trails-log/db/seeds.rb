@@ -60,4 +60,21 @@ Trail.create(
   user_id: 2
   )
 
+Trail.create(
+  title: "Point Reyes Coast Trail to Alamere Falls",
+  is_loop: true,
+  length: 7.5,
+  duration: "4 hours",
+  difficulty: "Intermediate",
+  review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
+  rating: 4,
+  trailhead_title:"Florida",
+  trailhead_lon: "-81.747442",
+  trailhead_lat: "30.934242",
+  trailend_title:"Palomarin",
+  trailend_lon: "-81.582923",
+  trailend_lat: "30.927665",
+  user_id: 1
+  )
+
 
