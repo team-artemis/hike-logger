@@ -35,11 +35,11 @@ Trail.create(
   review: "It's a great time, I loved this trail. OMG! Bring a lot of water, and Karlie Kloss if you can.",
   rating: 5,
   trailhead_title:"Stinson Beach",
-  trailhead_lon: "-122.639476",
-  trailhead_lat: "37.897568",
+  trailhead_lon: -122.639476,
+  trailhead_lat: 37.897568,
   trailend_title:"Mt. Talmapais East Park",
-  trailend_lon: "-122.582923",
-  trailend_lat: "37.927665",
+  trailend_lon: -122.582923,
+  trailend_lat: 37.927665,
   user_id: 1
   )
 
@@ -52,11 +52,11 @@ Trail.create(
   review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
   rating: 4,
   trailhead_title:"Palomarin",
-  trailhead_lon: "-122.747442",
-  trailhead_lat: "37.934242",
+  trailhead_lon: -122.747442,
+  trailhead_lat: 37.934242,
   trailend_title:"Palomarin",
-  trailend_lon: "-122.582923",
-  trailend_lat: "37.927665",
+  trailend_lon: -122.582923,
+  trailend_lat: 37.927665,
   user_id: 2
   )
 
@@ -69,11 +69,11 @@ Trail.create(
   review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
   rating: 4,
   trailhead_title:"Florida",
-  trailhead_lon: "-81.747442",
-  trailhead_lat: "30.934242",
+  trailhead_lon: -81.747442,
+  trailhead_lat: 30.934242,
   trailend_title:"Palomarin",
-  trailend_lon: "-81.582923",
-  trailend_lat: "30.927665",
+  trailend_lon: -81.582923,
+  trailend_lat: 30.927665,
   user_id: 1
   )
 
