@@ -1,11 +1,11 @@
 <div class="pure-u-5-24 navbar debug">
 
-  <li class="cssmenu"><span> <a href="#"> 
+  <li class="cssmenu"><span> <a href="/users/<%= current_user.id %>"> 
     back to menu
   </a></span></li>
-  <li class="cssmenu"><span><a href="#">
+  <li class="cssmenu">
     <h2> My hikes </h2>
-  </a></span></li>
+  </li>
   <% @trails.each do |trail| %>
 
   <li class="cssmenu"><span><a>
