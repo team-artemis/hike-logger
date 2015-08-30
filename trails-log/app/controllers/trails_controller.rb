@@ -34,6 +34,11 @@ class TrailsController < ApplicationController
   # GET /trails/new
   def new
     @trail = Trail.new
+    respond_to do |format|
+      format.html { render layout: false }
+      format.json { render json: @trail }
+    end
+    p params
   end
 
   # GET /trails/1/edit

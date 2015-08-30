@@ -2,8 +2,9 @@ $(document).on("ready", function() {
   L.mapbox.accessToken = 'pk.eyJ1IjoidGlzZGVyZWsiLCJhIjoiNDQ5Y2JiODdiZDZmODM0OWI0NmRiNDI5OGQzZWE4ZWIifQ.rVJW4H9TC1cknmRYoZE78w';
 
   var userMap = L.mapbox.map('user-map', 'mapbox.run-bike-hike')
-  .addControl(L.mapbox.geocoderControl('mapbox.places'))
-  .setView([37.7833, -122.4167], 12);
+    .addControl(L.mapbox.geocoderControl('mapbox.places'))
+    .setView([37.7833, -122.4167], 12);
+
 
   // getUsersTrails() is returning the result of .featureLayer.loadURL.addTo which grabs the marker coordinates and adds to the map.
   userTrailsLayer = getUsersTrails(userMap);
@@ -14,23 +15,36 @@ $(document).on("ready", function() {
   })
 
   // This creates a featuregroup and adds it to the map
-  var featureGroup = L.featureGroup().addTo(userMap);
+  $('#log-hike').on('click', function(event) {
+    event.preventDefault();
+    $.ajax({
+      url: window.location + "/trails/new",
+      method: "GET",
+      dataType: "HTML"
+    }).done(function(response) {
+      console.log(response);
+      $('.navbar').html(response);
+    })
+    var featureGroup = L.featureGroup().addTo(userMap);
+    var drawControl = 
+      new L.Control.Draw({
+        position: 'topright',
+        edit: {
+          featureGroup: featureGroup
+        }
+      }).addTo(userMap);
+    userMap.on('draw:created', function(e) {
+      featureGroup.addLayer(e.layer);
+      var markerLat = e.layer._latlng["lat"]
+      $('#user_trails_trailhead_lat').val(markerLat)
+      var markerLng = e.layer._latlng["lng"]
+      $('#user_trails_trailhead_lon').val(markerLng)
+      console.log($('#user_trails_trailhead_lon').val())
+    });
+    
+  }) // END LOG HIKE ON CLICK
 
-  // This creates a draw controls menu with an edit option to "save" the new pin, this only makes the pin non-draggable and a able to be added to the featureGroup variable from line 17.
-  var drawControl = new L.Control.Draw({
-    edit: {
-      featureGroup: featureGroup
-    }
-  }).addTo(userMap);
-
-  // When a draw feature is created, this adds it as a layer to the featureGroup variable on line 17. It also saves to variables the lat/lon of the marker.
-  userMap.on('draw:created', function(e) {
-    featureGroup.addLayer(e.layer);
-    var markerLat = e.layer._latlng["lat"]
-    var markerLng = e.layer._latlng["lng"]
-
-  });
-});
+}); // END DOCUMENT READY
 
 // This loads from /trails.json and adds markers to the map
 // It is reaturning this as the variable featureLayer to be used later as userTrailsLayer
@@ -44,21 +58,16 @@ $(document).on("ready", function() {
 // Show map from either /users/:id or /users/:id/trails
   var userPath = function(){
     var windowLocation = window.location.pathname
-    if (windowLocation.includes('trails')) {
-      return windowLocation + ".json"
+    if (windowLocation.includes('/new')) {
+      return windowLocation.replace('/new', '.json')
+    }
+    else if (windowLocation.includes('/trails')) {
+      return windowLocation + '.json'
     }
     else {
       return windowLocation + "/trails.json"
     }
   }
-/////// drop pin pseudocode ///////
-// Place draggable pin on the map
-// User drags pin to desired trailhead
-// User clicks button to save the pin
-// Draggable marker is hidden
-// Single marker is created at the click location
-// Marker location is added to the add trail form
-// New marker/trailhead created.
 
 // OLD AJAX CALL
 //   $.ajax({
