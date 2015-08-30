@@ -13,6 +13,7 @@ class TrailsController < ApplicationController
       format.html
       format.json { render json: @geojson }
     end
+    
   end
   # Refactor to trails_helper?
   def build_geojson(trails, geojson)
