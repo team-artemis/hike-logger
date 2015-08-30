@@ -28,6 +28,7 @@ $(document).on("ready", function() {
     var featureGroup = L.featureGroup().addTo(userMap);
     var drawControl = 
       new L.Control.Draw({
+        position: 'topright',
         edit: {
           featureGroup: featureGroup
         }
