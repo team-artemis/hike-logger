@@ -5,7 +5,10 @@ class TrailsController < ApplicationController
   # GET /trails
   # GET /trails.json
   def index
-    @trails = Trail.all
+    p params
+    p "*" * 50
+    user = User.find_by(id: params[:user_id])
+    @trails = user.trails
     @geojson = Array.new
     build_geojson(@trails, @geojson)
 

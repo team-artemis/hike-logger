@@ -5,22 +5,20 @@ $(document).on("ready", function() {
   .setView([37.7833, -122.4167], 12);
   getTrailPoints(userMap);
   userMap.featureLayer.on("ready", function(e) {
-    console.log("inside featurelayer.on")
     getTrailPoints(userMap)
   })
 });
 
 var getTrailPoints = function(userMap) {
-  console.log("inside gettrailpoints");
+    var userPath = window.location
   $.ajax({
-    url: '/users/2/trails',
+    url: userPath+'/trails',
     dataType: 'JSON'
     })
   .done(function(response){
     L.geoJson(response).addTo(userMap)
     })
   .fail(function(response){
-      console.log("Failed");
       console.log(response);
     })
   };
