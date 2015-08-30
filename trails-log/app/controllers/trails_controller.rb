@@ -5,8 +5,6 @@ class TrailsController < ApplicationController
   # GET /trails
   # GET /trails.json
   def index
-    p params
-    p "*" * 50
     user = User.find_by(id: params[:user_id])
     @trails = user.trails
     @geojson = Array.new
@@ -29,6 +27,8 @@ class TrailsController < ApplicationController
   # GET /trails/1.json
   def show
     @trail = set_trail
+    # @location = reverse_geocode(@trail.trailhead_lat, @trail.trailhead_lon)
+    # p @location
   end
 
   # GET /trails/new

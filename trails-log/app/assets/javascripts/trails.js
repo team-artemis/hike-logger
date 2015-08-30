@@ -27,6 +27,7 @@ var getTrailPoints = function(userMap) {
     })
   };
 
-var trailPopUp = function(userMap) {
+// Navbar my hikes ajax
 
-}
+
+
