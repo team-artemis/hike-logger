@@ -2,8 +2,8 @@
 
   <li class="cssmenu"><span><a>Hi <%= current_user.firstname %>, we love you!</a></span></li>
   <li class="cssmenu" id="my-hikes"><a href='/users/<%= current_user.id %>/trails'><span>My Trails</span></a></li>
-  <li class="cssmenu" id="log-hike"><a href='#'><span>Log Hike</span></a></li>
-  <li class="cssmenu" id="all-hikers"><a href='#'><span>All Hikers</span></a></li>
+  <li class="cssmenu" id="log-hike"><a href='/users/<%= current_user.id %>/trails/new'><span>Log Hike</span></a></li>
+  <li class="cssmenu" id="all-hikers"><a href='/users'><span>All Hikers</span></a></li>
   <li class="cssmenu"><span><%= link_to "Logout", logout_path, method: :delete %></span></li>
 </div>
 

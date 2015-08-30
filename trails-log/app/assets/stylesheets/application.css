@@ -36,14 +36,18 @@ html {
 .navbar {
     background: #333;
     height: 100%;
-    padding-top: 20%;
+    padding-top: 10%;
     padding-bottom: 20%;
     position:absolute;
     top: 0;
     bottom: 0;
     left: 0;
+    color: #ccc;
 }
 
+.navbar form, h2 {
+    padding: 8px 12px;  
+}
 .cssmenu {
   background: #333;
   list-style: none;
@@ -53,11 +57,6 @@ html {
 
 .cssmenu li {
   list-style: none;
-}
-
-.cssmenu form {
-  color: #ccc;
-
 }
 
 .cssmenu a {
