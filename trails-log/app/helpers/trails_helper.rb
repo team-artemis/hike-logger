@@ -19,9 +19,9 @@ module TrailsHelper
          properties: {
            title: trail.title,
            review: trail.review,
-           :"marker-color" => "#00607d",
-           :"marker-symbol" => "tree",
-           :"marker-size" => "large"
+           'marker-color': '#00607d',
+           'marker-symbol': 'park',
+           'marker-size': 'large'
          }
        }    
     end
