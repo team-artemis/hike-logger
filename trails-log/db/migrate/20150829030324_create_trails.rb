@@ -9,11 +9,11 @@ class CreateTrails < ActiveRecord::Migration
       t.integer :rating
       t.boolean :is_loop
       t.string :trailhead_title
-      t.float  :trailhead_lon
-      t.float  :trailhead_lat
+      t.string  :trailhead_lon
+      t.string  :trailhead_lat
       t.string :trailend_title
-      t.float  :trailend_lon
-      t.float  :trailend_lat
+      t.string  :trailend_lon
+      t.string  :trailend_lat
       t.references :user
       t.references :map
 

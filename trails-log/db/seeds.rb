@@ -26,7 +26,7 @@ User.create(
   password: "pass"
 )
 
-Trail.new(
+Trail.create(
   title: "Stinson Beach to Mt. Tamalpais",
   length: 17.3,
   is_loop: false,
@@ -34,16 +34,16 @@ Trail.new(
   difficulty: "Difficult",
   review: "It's a great time, I loved this trail. OMG! Bring a lot of water, and Karlie Kloss if you can.",
   rating: 5,
-  trailhead_title:"Stinson Beach"
-  trailhead_lon: -122.639476,
-  trailhead_lat: 37.897568,
-  trailend_title:"Mt. Talmapais East Park"
-  trailend_lon: -122.582923 ,
-  trailend_lat: 37.927665,
-  user: 1
+  trailhead_title:"Stinson Beach",
+  trailhead_lon: "-122.639476",
+  trailhead_lat: "37.897568",
+  trailend_title:"Mt. Talmapais East Park",
+  trailend_lon: "-122.582923",
+  trailend_lat: "37.927665",
+  user_id: 1
   )
 
-Trail.new(
+Trail.create(
   title: "Point Reyes Coast Trail to Alamere Falls",
   is_loop: true,
   length: 7.5,
@@ -51,13 +51,13 @@ Trail.new(
   difficulty: "Intermediate",
   review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
   rating: 4,
-  trailhead_title:"Palomarin"
-  trailhead_lon: -122.747442,
-  trailhead_lat: 37.934242,
-  trailend_title:"Palomarin"
-  trailend_lon: -122.582923 ,
-  trailend_lat: 37.927665,
-  user: 2
+  trailhead_title:"Palomarin",
+  trailhead_lon: "-122.747442",
+  trailhead_lat: "37.934242",
+  trailend_title:"Palomarin",
+  trailend_lon: "-122.582923",
+  trailend_lat: "37.927665",
+  user_id: 2
   )
 
 
