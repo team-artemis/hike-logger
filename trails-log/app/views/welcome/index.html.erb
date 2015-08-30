@@ -2,6 +2,7 @@
 	<%= video_tag("nature.mp4", autobuffer: true, autoplay: true, loop: true, id: "bgvid") %>
 </div>
 
+<div class="login-wrapper">
 <h1>Login</h1>
 <%= form_for :session, url: login_path do |f| %>
 	<%= f.label :email %>
@@ -14,3 +15,4 @@
 <% end %>
 
 <p>New user? <%= link_to "Sign up now!", new_user_path %></p>
+</div> 
