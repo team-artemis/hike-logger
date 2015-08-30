@@ -16,9 +16,17 @@ var getTrailPoints = function(userMap) {
     dataType: 'JSON'
     })
   .done(function(response){
-    L.geoJson(response).addTo(userMap)
+    L.geoJson(response, {
+      onEachFeature: function(feature, layer) {
+        layer.bindPopup("Trail: " + feature.properties.title + " Review: " + feature.properties.review);
+    }
+    }).addTo(userMap)
     })
   .fail(function(response){
       console.log(response);
     })
   };
+
+var trailPopUp = function(userMap) {
+
+}
