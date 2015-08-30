@@ -10,8 +10,27 @@ $(document).on("ready", function() {
   userTrailsLayer = getUsersTrails(userMap);
 
   // When the layer is ready, it zooms in the map to show all markers.
-  userTrailsLayer.on("ready", function() {
+  userTrailsLayer.on("ready", function(e) {
     userMap.fitBounds(userTrailsLayer.getBounds());
+    var trailname;
+    $('.trailtitle').on('mouseenter', function(e){
+      trailname = $(this).find("b").text()
+      userTrailsLayer.eachLayer(function(marker) {
+        // if ($(this a span b))
+        if (marker.feature.properties.title === trailname){
+          marker.openPopup();
+        }
+      })
+    });
+
+    $('.trailtitle').on('mouseleave', function(e){
+      userTrailsLayer.eachLayer(function(marker) {
+        // if ($(this a span b))
+        if (marker.feature.properties.title === trailname){
+          marker.closePopup();
+        }
+      })
+    });
   })
 
   // This creates a featuregroup and adds it to the map
@@ -43,7 +62,6 @@ $(document).on("ready", function() {
     });
     
   }) // END LOG HIKE ON CLICK
-
 }); // END DOCUMENT READY
 
 // This loads from /trails.json and adds markers to the map
@@ -85,3 +103,5 @@ $(document).on("ready", function() {
 //   .fail(function(response){
 //       console.log(response);
 //     });
+
+
