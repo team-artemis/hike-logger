@@ -4,7 +4,7 @@ $(document).on("ready", function() {
   var userMap = L.mapbox.map('user-map', 'mapbox.run-bike-hike')
   .addControl(L.mapbox.geocoderControl('mapbox.places'))
   .setView([37.7833, -122.4167], 12);
-  
+
   // getUsersTrails() is returning the result of .featureLayer.loadURL.addTo which grabs the marker coordinates and adds to the map.
   userTrailsLayer = getUsersTrails(userMap);
 
@@ -12,7 +12,7 @@ $(document).on("ready", function() {
   userTrailsLayer.on("ready", function() {
     userMap.fitBounds(userTrailsLayer.getBounds());
   })
-  
+
   // This creates a featuregroup and adds it to the map
   var featureGroup = L.featureGroup().addTo(userMap);
 
@@ -28,7 +28,7 @@ $(document).on("ready", function() {
     featureGroup.addLayer(e.layer);
     var markerLat = e.layer._latlng["lat"]
     var markerLng = e.layer._latlng["lng"]
-  
+
   });
 });
 
@@ -58,7 +58,7 @@ $(document).on("ready", function() {
 // Draggable marker is hidden
 // Single marker is created at the click location
 // Marker location is added to the add trail form
-// New marker/trailhead created. 
+// New marker/trailhead created.
 
 // OLD AJAX CALL
 //   $.ajax({
