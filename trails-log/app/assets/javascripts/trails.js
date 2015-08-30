@@ -10,15 +10,31 @@ $(document).on("ready", function() {
 });
 
 var getTrailPoints = function(userMap) {
-    var userPath = window.location
+  var location = window.location.pathname
+  if (location.includes('trails')) {
+      userPath = location
+    }
+    else {
+      userPath = location + "/trails"
+    }
+    console.log(userPath)
   $.ajax({
-    url: userPath+'/trails',
+    url: userPath,
     dataType: 'JSON'
     })
   .done(function(response){
-    L.geoJson(response).addTo(userMap)
+    L.geoJson(response, {
+      onEachFeature: function(feature, layer) {
+        layer.bindPopup("Trail: " + feature.properties.title + " Review: " + feature.properties.review);
+    }
+    }).addTo(userMap)
     })
   .fail(function(response){
       console.log(response);
     })
   };
+
+// Navbar my hikes ajax
+
+
+

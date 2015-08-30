@@ -1,13 +1,13 @@
-<div class="grid-container debug">
-      <div class="pure-u-5-24 navbar debug">
-         <li class="cssmenu"><span><a>Hi <%= current_user.firstname %>, we love you!</a></span></li>
-         <li class="cssmenu"><a href='#'><span>My Hikes</span></a></li>
-         <li class="cssmenu"><a href='#'><span>Log Hike</span></a></li>
-         <li class="cssmenu"><a href='#'><span>All Hikers</span></a></li>
-         <li class="cssmenu"><span><%= link_to "Logout", logout_path, method: :delete %></span></li>
-      </div>
+<div class="pure-u-5-24 navbar debug">
 
-      <div class="pure-u-19-24 debug">
-        <div class="map" id="user-map"></div>
-      </div>
-  </div>
+  <li class="cssmenu"><span><a>Hi <%= current_user.firstname %>, we love you!</a></span></li>
+  <li class="cssmenu" id="my-hikes"><a href='/users/<%= current_user.id %>/trails'><span>My Trails</span></a></li>
+  <li class="cssmenu" id="log-hike"><a href='#'><span>Log Hike</span></a></li>
+  <li class="cssmenu" id="all-hikers"><a href='#'><span>All Hikers</span></a></li>
+  <li class="cssmenu"><span><%= link_to "Logout", logout_path, method: :delete %></span></li>
+</div>
+
+<!-- MAP -->
+<div class="pure-u-19-24 debug">
+  <div class="map" id="user-map"></div>
+</div>
