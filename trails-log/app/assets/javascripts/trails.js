@@ -79,7 +79,8 @@ $(document).on("ready", function() {
     //   $('#user_trails_trailhead_lon').val(markerLng)
     // });
 
-    var trailheadMarker = L.marker([37.7833, -122.4167], {
+    //I replaced the code above because mapbox.Draw doesn't fit our UX needs. I borrowed from the code to set the trailhead lat/lon
+    var trailheadMarker = L.marker([37.7833, -122.4167], { //This should be set dynamically based on wherever the current view is
         icon: L.mapbox.marker.icon({
           'marker-color': '#f86767'
         }),
@@ -94,9 +95,11 @@ $(document).on("ready", function() {
 
     function ondragend() {
         var m = trailheadMarker.getLatLng();
-        console.log('Latitude: ' + m.lat)
-        console.log('Longitude: ' + m.lng)
+        $('#user_trails_trailhead_lat').val(m.lat)
+        $('#user_trails_trailhead_lon').val(m.lng)
     }
+
+
   }) // END LOG HIKE ON CLICK
 
 
