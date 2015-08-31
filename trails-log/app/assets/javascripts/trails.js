@@ -98,30 +98,49 @@ $(document).on("ready", function() {
     // map.addLayer(allHikers);
   })
 
+//Add Trails with "Log Hike"
   $('#log-hike').on('click', function(event) {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
     $('.log-hike-menu').removeClass('hideMenu');
+    $('#add-trailhead-button').removeClass('hidden').addClass('add-trailhead-button');
     map.removeLayer(userTrailsLayer)
+    $('body').on("click", '#add-trailhead-button', function(e){
+      var currentLon = map.getCenter().lng//e.latlng.lng;
+      console.log(currentLon)
+      var currentLat = map.getCenter().lat//e.latlng.lat;
+      console.log(currentLat)
+      clickAddTrailheadButton(currentLat,currentLon);
+    })
 
-    var trailheadMarker = L.marker([37.7833, -122.4167], {
-      icon: L.mapbox.marker.icon({
-          'marker-color': '#f86767'
-        }),
-        draggable: true
-    }).addTo(map);
+    //Make a function to displaytrailheadMarker on button click to start trail
 
-    // every time the marker is dragged, update the coordinates container
+    var clickAddTrailheadButton = function(latitude, longitude){
+      var trailheadMarker = L.marker([latitude, longitude], {
+        icon: L.mapbox.marker.icon({
+            'marker-color': '#f86767',
+            'marker-symbol': 'park'
+          }),
+          draggable: true,
+      }).addTo(map);
     trailheadMarker.on('dragend', onDragEnd)
 
     // Set the initial marker coordinate on load.
-    onDragEnd();
-
     function onDragEnd() {
         var m = trailheadMarker.getLatLng();
         $('#user_trails_trailhead_lat').val(m.lat)
         $('#user_trails_trailhead_lon').val(m.lng)
     }
+    onDragEnd();
+
+    }
+
+// var lat = (e.latlng.lat);
+// var lng = (e.latlng.lng);
+// marker.setLatLng([lat, lng]).update();  // Updates your defined marker position
+
+
+    // every time the marker is dragged, update the coordinates container
   }) // END LOG HIKE ON CLICK
 
 //START SUBMIT NEW HIKE
@@ -141,22 +160,35 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
       // alert('request did not go through');
     });
     location.reload();
+
+    //Perhaps use setLatLng() method to set the location to the hike you just added
 })
 //END SUBMIT NEW HIKE
 
-var directions = L.mapbox.directions();
+//Directions stuff
 
+//shorthand
+var directions = L.mapbox.directions({profile: 'mapbox.walking'});
+
+//Create a new layer that displays a given set of directions on a map
 var directionsLayer = L.mapbox.directions.layer(directions)
     .addTo(map);
 
+//add the directions input control to the map object
 var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
     .addTo(map);
 
-var directionsErrorsControl = L.mapbox.directions.errorsControl('errors', directions)
-    .addTo(map);
-
+//add the routes control to the map object
 var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
     .addTo(map);
+
+//Hide all the stuff that we don't want
+$('#mapbox-directions-origin-input').hide()
+$('#mapbox-directions-destination-input').hide()
+//$('.mapbox-directions-route').hide()
+$('#routes').hide();
+$('.mapbox-form-label').hide()
+
 
 var directionsInstructionsControl = L.mapbox.directions.instructionsControl('instructions', directions)
     .addTo(map);
@@ -204,3 +236,4 @@ var directionsInstructionsControl = L.mapbox.directions.instructionsControl('ins
     map.removeLayer(allHikersLayer);
     map.removeLayer(drawControl);
   };
+

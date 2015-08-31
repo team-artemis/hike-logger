@@ -47,6 +47,17 @@ div {
   display: table;
 }
 
+.add-trailhead-button{
+  position: absolute;
+  top: 230px;
+  left: 218px;
+  z-index: 1000;
+}
+
+.hidden{
+  display: none;
+}
+
 #error_explanation {
   width: 450px;
   border: 2px solid red;
