@@ -163,7 +163,7 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
 
     //Perhaps use setLatLng() method to set the location to the hike you just added
 })
-//END SUBMIT NEW HIKE
+//END SUBMIT new HIKE
 
 //Directions stuff
 
