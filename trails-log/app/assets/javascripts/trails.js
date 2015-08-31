@@ -49,7 +49,7 @@ $(document).on("ready", function() {
     userMap.addLayer(allHikersLayer);
   })
 
-// On click of log-hike hide user's trails and show draw controls  
+// On click of log-hike hide user's trails and show draw controls
   $('#log-hike').on('click', function(event) {
     event.preventDefault();
     $.ajax({
@@ -63,23 +63,44 @@ $(document).on("ready", function() {
     userMap.removeLayer(userTrailsLayer);
     // removeAllLayers(userMap);
     var featureGroup = L.featureGroup().addTo(userMap);
-    var drawControl = 
-      new L.Control.Draw({
-        position: 'topright',
-        edit: {
-          featureGroup: featureGroup
-        }
-      }).addTo(userMap);
+    // var drawControl =
+    //   new L.Control.Draw({
+    //     position: 'topright',
+    //     edit: {
+    //       featureGroup: featureGroup
+    //     }
+    //   }).addTo(userMap);
 
-    userMap.on('draw:created', function(e) {
-      featureGroup.addLayer(e.layer);
-      var markerLat = e.layer._latlng["lat"]
-      $('#user_trails_trailhead_lat').val(markerLat)
-      var markerLng = e.layer._latlng["lng"]
-      $('#user_trails_trailhead_lon').val(markerLng)
-    });
-    
+    // userMap.on('draw:created', function(e) {
+    //   featureGroup.addLayer(e.layer);
+    //   var markerLat = e.layer._latlng["lat"]
+    //   $('#user_trails_trailhead_lat').val(markerLat)
+    //   var markerLng = e.layer._latlng["lng"]
+    //   $('#user_trails_trailhead_lon').val(markerLng)
+    // });
+
+    var trailheadMarker = L.marker([37.7833, -122.4167], {
+        icon: L.mapbox.marker.icon({
+          'marker-color': '#f86767'
+        }),
+        draggable: true
+    }).addTo(userMap);
+
+    // every time the marker is dragged, update the coordinates container
+    trailheadMarker.on('dragend', ondragend);
+
+    // Set the initial marker coordinate on load.
+    ondragend();
+
+    function ondragend() {
+        var m = trailheadMarker.getLatLng();
+        console.log('Latitude: ' + m.lat)
+        console.log('Longitude: ' + m.lng)
+    }
   }) // END LOG HIKE ON CLICK
+
+
+
 }); // END DOCUMENT READY
 
 // This loads from /trails.json and adds markers to the map
