@@ -2,6 +2,26 @@ class TrailsController < ApplicationController
   before_action :set_trail, only: [:show, :edit, :update, :destroy]
   include TrailsHelper
 
+  def all_trails
+    @trails = Trail.all 
+    @geojson = Array.new
+    build_geojson(@trails, @geojson)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @geojson }
+    end
+    p @geojson 
+    p "*" * 100
+    p @trails
+    # render 'index'
+  end
+
+  def build_geojson(trails, geojson)
+    trails.each do |trail|
+      geojson << GeojsonBuilder.build_trail_point(trail)
+    end
+  end
   # GET /trails
   # GET /trails.json
   def index
@@ -47,6 +67,11 @@ class TrailsController < ApplicationController
   # GET /trails/new
   def new
     @trail = Trail.new
+    respond_to do |format|
+      format.html { render layout: false }
+      format.json { render json: @trail }
+    end
+    p params
   end
 
   # GET /trails/1/edit
