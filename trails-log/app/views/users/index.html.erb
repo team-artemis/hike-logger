@@ -7,7 +7,7 @@
     <h2> Hikers </h2>
   </li>
   <% @users.each do |u| %>
-  <li class="cssmenu"><a>
+  <li class="cssmenu"><a href="users/<%= u.id%>/trails">
     <b><%= u.firstname %> <%= u.lastname %></b> <br>
     <%= u.city %>, <%= u.state %>
   </a></li>
