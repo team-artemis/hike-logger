@@ -128,6 +128,31 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
 //END SUBMIT NEW HIKE
 
 
+//Directions stuff
+
+//shorthand
+var directions = L.mapbox.directions({profile: 'mapbox.walking'});
+
+//Create a new layer that displays a given set of directions on a map
+var directionsLayer = L.mapbox.directions.layer(directions)
+    .addTo(map);
+
+//add the directions input control to the map object
+var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
+    .addTo(map);
+
+//add the routes control to the map object
+var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
+    .addTo(map);
+
+//Hide all the stuff that we don't want
+$('#mapbox-directions-origin-input').hide()
+$('#mapbox-directions-destination-input').hide()
+//$('.mapbox-directions-route').hide()
+$('#routes').hide();
+$('.mapbox-form-label').hide()
+
+
 
 }); // END DOCUMENT READY
 
@@ -161,3 +186,4 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
     map.removeLayer(allHikersLayer);
     map.removeLayer(drawControl);
   };
+
