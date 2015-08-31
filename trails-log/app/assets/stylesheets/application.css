@@ -33,6 +33,9 @@ html {
 }
 
 /*BEGIN of usernavbar*/
+
+.hideMenu { display: none; }
+
 .navbar {
     background: #333;
     height: 100%;
