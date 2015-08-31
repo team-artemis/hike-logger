@@ -1,34 +1,41 @@
-<p id="notice"><%= notice %></p>
+<div class="pure-u-5-24 navbar debug">
 
-<p>
-  <strong>Title:</strong>
-  <%= @trail.title %>
-</p>
+  <li class="cssmenu"><span> <a href="/users/<%= current_user.id %>"> 
+    back to menu
+  </a></span></li>
+  <li class="cssmenu">
+    <h2> <%= @trail.title %> </h2>
+  </li>
 
-<p>
-  <strong>Length:</strong>
-  <%= @trail.length %>
-</p>
+  <li class="cssmenu"><span>
+    <strong>Length:</strong>
+    <%= @trail.length %>
+    </span></li>
 
-<p>
-  <strong>Duration:</strong>
-  <%= @trail.duration %>
-</p>
+  <li class="cssmenu"><span>
+    <strong>Duration:</strong>
+    <%= @trail.duration %>
+  </span></li>
 
-<p>
-  <strong>Difficulty:</strong>
-  <%= @trail.difficulty %>
-</p>
+  <li class="cssmenu"><span>
+    <strong>Difficulty:</strong>
+    <%= @trail.difficulty %>
+  </span></li>
 
-<p>
-  <strong>Review:</strong>
-  <%= @trail.review %>
-</p>
+  <li class="cssmenu"><span>
+    <strong>Review:</strong>
+    <%= @trail.review %>
+  </span></li>
 
-<p>
-  <strong>Rating:</strong>
-  <%= @trail.rating %>
-</p>
+  <li class="cssmenu"><span>
+    <strong>Rating:</strong>
+    <%= @trail.rating %>
+  </span></li>
+  
+</div>
+  
 
-<%= link_to 'Edit', edit_trail_path(@trail) %> |
-<%= link_to 'Back', trails_path %>
+<div class="pure-u-19-24 debug">
+  <div class="map" id="user-map"></div>
+</div>
+
