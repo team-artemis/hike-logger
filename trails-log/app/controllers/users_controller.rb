@@ -16,7 +16,16 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    render 'show'
+    @trails = current_user.trails
+    @trail = Trail.new
+    @users = User.all
+    if request.xhr?
+      respond_to do |format|
+        format.html { render layout: false }
+      end
+    else
+      render 'show'
+    end
   end
 
   # GET /users/new
