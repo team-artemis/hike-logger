@@ -10,6 +10,27 @@ $(document).on("ready", function() {
   var drawLayer = L.featureGroup().addTo(map);
   var drawControl = new L.Control.Draw({edit: {featureGroup: drawLayer}})
 
+
+  // Make an AJAX call for the current_user
+  var currentUser;
+  $.ajax({
+    url: window.location.pathname,
+    method: "GET",
+    dataType: "JSON"
+  }).done(function(user){
+    currentUser = user;
+  })
+
+  var otherHikerListener = function() {
+    $(".other-hiker").on('click', function(event) {
+      event.preventDefault();
+      console.log("You clicked another hiker");
+      //If you
+    })
+  }
+  
+  otherHikerListener();
+
   userTrailsLayer.on("ready", function(e) {
     map.fitBounds(userTrailsLayer.getBounds());
     var trailPopUpOnHoverOnNavHover;

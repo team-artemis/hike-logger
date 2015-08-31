@@ -19,9 +19,11 @@ class UsersController < ApplicationController
     @trails = current_user.trails
     @trail = Trail.new
     @users = User.all
+    @user = current_user
     if request.xhr?
       respond_to do |format|
         format.html { render layout: false }
+        format.json { render json: @user }
       end
     else
       render 'show'

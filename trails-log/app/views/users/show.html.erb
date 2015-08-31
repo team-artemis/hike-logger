@@ -79,10 +79,12 @@
       <h2> Hikers </h2>
     </li>
     <% @users.each do |u| %>
-    <li class="cssmenu"><a><span>
-      <b><%= u.firstname %> <%= u.lastname %></b> <br>
-      <%= u.city %>, <%= u.state %>
-    </span></a></li>
+      <% if u.id != current_user.id %>
+        <li class="cssmenu"><a class="other-hiker" href="/users/<%= u.id %>"><span>
+          <b><%= u.firstname %> <%= u.lastname %></b> <br>
+          <%= u.city %>, <%= u.state %>
+        </span></a></li>
+      <% end %>
     <% end %>
   </div>
 </div>
