@@ -69,33 +69,42 @@ $(document).on("ready", function() {
     $('.log-hike-menu').removeClass('hideMenu');
     $('#add-trailhead-button').removeClass('hidden').addClass('add-trailhead-button');
     map.removeLayer(userTrailsLayer)
+    $('body').on("click", '#add-trailhead-button', function(e){
+      var currentLon = map.getCenter().lng//e.latlng.lng;
+      console.log(currentLon)
+      var currentLat = map.getCenter().lat//e.latlng.lat;
+      console.log(currentLat)
+      clickAddTrailheadButton(currentLat,currentLon);
+    })
 
     //Make a function to displaytrailheadMarker on button click to start trail
 
-    var clickAddTrailheadButton = function(){
-
-    }
-
-    var trailheadMarker = L.marker([37.7833, -122.4167], {
-      icon: L.mapbox.marker.icon({
-          'marker-color': '#f86767',
-          'marker-symbol': 'park'
-        }),
-        draggable: true,
-
-    }).addTo(map);
-
-    // every time the marker is dragged, update the coordinates container
+    var clickAddTrailheadButton = function(latitude, longitude){
+      var trailheadMarker = L.marker([latitude, longitude], {
+        icon: L.mapbox.marker.icon({
+            'marker-color': '#f86767',
+            'marker-symbol': 'park'
+          }),
+          draggable: true,
+      }).addTo(map);
     trailheadMarker.on('dragend', onDragEnd)
 
     // Set the initial marker coordinate on load.
-    onDragEnd();
-
     function onDragEnd() {
         var m = trailheadMarker.getLatLng();
         $('#user_trails_trailhead_lat').val(m.lat)
         $('#user_trails_trailhead_lon').val(m.lng)
     }
+    onDragEnd();
+
+    }
+
+// var lat = (e.latlng.lat);
+// var lng = (e.latlng.lng);
+// marker.setLatLng([lat, lng]).update();  // Updates your defined marker position
+
+
+    // every time the marker is dragged, update the coordinates container
   }) // END LOG HIKE ON CLICK
 
 //START SUBMIT NEW HIKE
