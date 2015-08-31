@@ -12,14 +12,14 @@ $(document).on("ready", function() {
 
 
   // Make an AJAX call for the current_user
-  var currentUser;
-  $.ajax({
-    url: window.location.pathname,
-    method: "GET",
-    dataType: "JSON"
-  }).done(function(user){
-    currentUser = user;
-  })
+  // var currentUser;
+  // $.ajax({
+  //   url: "/current_user",
+  //   method: "GET",
+  //   dataType: "JSON"
+  // }).done(function(user){
+  //   currentUser = user;
+  // })
 
   var otherHikerListener = function() {
     $(".other-hiker").on('click', function(event) {
@@ -142,8 +142,22 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
 })
 //END SUBMIT NEW HIKE
 
+var directions = L.mapbox.directions();
 
+var directionsLayer = L.mapbox.directions.layer(directions)
+    .addTo(map);
 
+var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
+    .addTo(map);
+
+var directionsErrorsControl = L.mapbox.directions.errorsControl('errors', directions)
+    .addTo(map);
+
+var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
+    .addTo(map);
+
+var directionsInstructionsControl = L.mapbox.directions.instructionsControl('instructions', directions)
+    .addTo(map);
 }); // END DOCUMENT READY
 
 
