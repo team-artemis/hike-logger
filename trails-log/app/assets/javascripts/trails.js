@@ -140,3 +140,5 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
     map.removeLayer(allHikersLayer);
     map.removeLayer(drawControl);
   };
+
+
