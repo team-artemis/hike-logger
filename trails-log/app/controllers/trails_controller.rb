@@ -36,19 +36,6 @@ class TrailsController < ApplicationController
     end
     
   end
-
-  # def global_index
-  #   @trails = Trail.all 
-  #   @geojson = Array.new
-  #   # Must be a different method, since build_geojson runs build_trail_point
-  #   build_geojson(@trails, @geojson)
-    
-  #   respond_to do |format|
-  #     format.html
-  #     format.json { render json: @geojson }
-  #   end
-  # end
-
   # Refactor to trails_helper?
   def build_geojson(trails, geojson)
     trails.each do |trail|

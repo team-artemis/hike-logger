@@ -114,3 +114,5 @@ $(document).on("ready", function() {
     map.removeLayer(allHikersLayer);
     map.removeLayer(drawControl);
   };
+
+
