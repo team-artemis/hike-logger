@@ -67,21 +67,46 @@ $(document).on("ready", function() {
     $('.log-hike-menu').removeClass('hideMenu');
     map.removeLayer(userTrailsLayer)
 
-    if ($('div.leaflet-draw').length) {
-      $('div.leaflet-draw').show();
+    var trailheadMarker = L.marker([37.7833, -122.4167], {
+      icon: L.mapbox.marker.icon({
+          'marker-color': '#f86767'
+        }),
+        draggable: true
+    }).addTo(map);
+
+    // every time the marker is dragged, update the coordinates container
+    trailheadMarker.on('dragend', ondragend)
+
+    // Set the initial marker coordinate on load.
+    ondragend();
+
+    function ondragend() {
+        var m = trailheadMarker.getLatLng();
+        $('#user_trails_trailhead_lat').val(m.lat)
+        $('#user_trails_trailhead_lon').val(m.lng)
     }
-    else {
-      drawControl.addTo(map)
-    }
-    map.on('draw:created', function(e) {
-      drawLayer.addLayer(e.layer);
-      var markerLat = e.layer._latlng["lat"]
-      $('#user_trails_trailhead_lat').val(markerLat)
-      var markerLng = e.layer._latlng["lng"]
-      $('#user_trails_trailhead_lon').val(markerLng)
-    });
-    
   }) // END LOG HIKE ON CLICK
+
+//START SUBMIT NEW HIKE
+$('.navbar').on("submit", '#new-trail-form', function(event){
+  event.preventDefault();
+  $.ajax({
+      url: window.location + '/trails',
+      method: "POST",
+      data: $('#new-trail-form').serialize()
+    }).done(function(response) {
+      // alert('Yay! request went through')
+      console.log(response)
+    }).fail(function(response){
+      console.log(response)
+      // alert('request did not go through');
+    });
+    location.reload();
+})
+//END SUBMIT NEW HIKE
+
+
+
 }); // END DOCUMENT READY
 
 

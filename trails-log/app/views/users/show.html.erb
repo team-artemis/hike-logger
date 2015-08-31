@@ -15,59 +15,60 @@
 	  </li>
 	  <% @trails.each do |trail| %>
 
-	  <li class="cssmenu trailtitle"><span><a>
+	  <li class="cssmenu trailtitle"><a href="www.google.com"><span>
 	    <b><%= trail.title %></b> <br>
 	    <%= reverse_geocode(trail.trailhead_lat, trail.trailhead_lon) %>
-	  </a></span></li>
+	  </span></a></li>
 	  <% end %>
   </div>
   <div class="log-hike-menu hideMenu">
   <li class="cssmenu back-button"><span> <a href="/users/<%= current_user.id %>">
 	    back to menu
 	  </a></span></li>
-  		<%= form_for :user_trails, html: {class: "pure-form pure-form-stacked"} do |f| %>
-  		  <% if @trail.errors.any? %>
-  		    <div id="error_explanation">
-  		      <h2><%= pluralize(@trail.errors.count, "error") %> prohibited this trail from being saved:</h2>
+  		<%= form_for :user_trails, html: {class: "pure-form pure-form-stacked", id:"new-trail-form"} do |f| %>
+        <% if @trail.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@trail.errors.count, "error") %> prohibited this trail from being saved:</h2>
 
-  		      <ul>
-  		      <% @trail.errors.full_messages.each do |message| %>
-  		        <li><%= message %></li>
-  		      <% end %>
-  		      </ul>
-  		    </div>
-  		  <% end %>
+            <ul>
+            <% @trail.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-  		  <div class="field">
-  		    <%= f.label :title %>
-  		    <%= f.text_field :title, class: "pure-input-rounded" %>
-  		  </div>
-  		  <div class="field">
-  		    <%= f.label :length %>
-  		    <%= f.text_field :length, class: "pure-input-rounded" %>
-  		  </div>
-  		  <div class="field">
-  		    <%= f.label :duration %>
-  		    <%= f.text_field :duration, class: "pure-input-rounded" %>
-  		  </div>
-  		  <div class="field">
-  		    <%= f.label :difficulty %>
-  		    <%= f.text_field :difficulty, class: "pure-input-rounded" %>
-  		  </div>
-  		  <div class="field">
-  		    <%= f.label :review %>
-  		    <%= f.text_field :review, class: "pure-input-rounded" %>
-  		  </div>
-  		  <div class="field">
-  		    <%= f.label :rating %>
-  		    <%= f.number_field :rating, class: "pure-input-rounded" %>
-  		  </div>
-  		    <%= f.hidden_field :trailhead_lat, value: @trail.trailhead_lat %> 
-  		    <%= f.hidden_field :trailhead_lon, value: @trail.trailhead_lon %> 
-  		  <div class="actions">
-  		    <%= f.submit 'Add Trail', class: "pure-button pure-button-primary" %>
-  		  </div>
-  		<% end %>
+        <div class="field">
+          <%= f.label :title %>
+          <%= f.text_field :title, class: "pure-input-rounded" %>
+        </div>
+        <div class="field">
+          <%= f.label :length %>
+          <%= f.text_field :length, class: "pure-input-rounded" %>
+        </div>
+        <div class="field">
+          <%= f.label :duration %>
+          <%= f.text_field :duration, class: "pure-input-rounded" %>
+        </div>
+        <div class="field">
+          <%= f.label :difficulty %>
+          <%= f.text_field :difficulty, class: "pure-input-rounded" %>
+        </div>
+        <div class="field">
+          <%= f.label :review %>
+          <%= f.text_field :review, class: "pure-input-rounded" %>
+        </div>
+        <div class="field">
+          <%= f.label :rating %>
+          <%= f.number_field :rating, class: "pure-input-rounded" %>
+        </div>
+          <%= f.hidden_field :trailhead_lat, value: @trail.trailhead_lat %>
+          <%= f.hidden_field :trailhead_lon, value: @trail.trailhead_lon %>
+          <%= f.hidden_field :user_id, value: current_user.id %>
+        <div class="actions">
+          <%= f.submit 'Add Trail', class: "pure-button pure-button-primary add-trail-submit" %>
+        </div>
+      <% end %>
   </div>
 
   <div class="all-hikers-menu hideMenu">
@@ -78,10 +79,10 @@
       <h2> Hikers </h2>
     </li>
     <% @users.each do |u| %>
-    <li class="cssmenu"><a>
+    <li class="cssmenu"><a><span>
       <b><%= u.firstname %> <%= u.lastname %></b> <br>
       <%= u.city %>, <%= u.state %>
-    </a></li>
+    </span></a></li>
     <% end %>
   </div>
 </div>
