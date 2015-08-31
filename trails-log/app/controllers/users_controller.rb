@@ -1,12 +1,16 @@
 class UsersController < ApplicationController
   include SessionsHelper
+  include TrailsHelper
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
-    render 'index'
+    respond_to do |format|
+      format.html { render layout: false }
+      format.json { render json: @users }
+    end
   end
 
   # GET /users/1
@@ -32,9 +36,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     # respond_to do |format|
-      if @user.save
-        log_in(@user)
-        redirect_to @user
+    if @user.save
+      log_in(@user)
+      redirect_to @user
         # format.html { redirect_to user_path(@user), notice: 'User was successfully created.' }
         # format.json { render :show, status: :created, location: @user }
       else
@@ -80,4 +84,4 @@ class UsersController < ApplicationController
     def set_user
       @user = User.find_by(id: params[:id])
     end
-end
+  end

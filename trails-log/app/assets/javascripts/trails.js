@@ -6,8 +6,8 @@ $(document).on("ready", function() {
     .setView([37.7833, -122.4167], 12);
 
 
-  // getUsersTrails() is returning the result of .featureLayer.loadURL.addTo which grabs the marker coordinates and adds to the map.
-  userTrailsLayer = getUsersTrails(userMap);
+  // getUserTrails() is returning the result of .featureLayer.loadURL.addTo which grabs the marker coordinates and adds to the map.
+  userTrailsLayer = getUserTrails(userMap);
 
   // When the layer is ready, it zooms in the map to show all markers.
   userTrailsLayer.on("ready", function(e) {
@@ -33,7 +33,23 @@ $(document).on("ready", function() {
     });
   })
 
-  // This creates a featuregroup and adds it to the map
+// On click of all-hikers, hide draw controls and show all users hikes
+  $('#all-hikers').on('click', function(event) {
+    event.preventDefault();
+    $.ajax({
+      url: "/users",
+      method: "GET",
+      dataType: "HTML"
+    }).done(function(response) {
+      $('.navbar').html(response);
+      console.log(response);
+    })
+
+    var allHikersLayer = allHikersTrails(userMap);
+    userMap.addLayer(allHikersLayer);
+  })
+
+// On click of log-hike hide user's trails and show draw controls  
   $('#log-hike').on('click', function(event) {
     event.preventDefault();
     $.ajax({
@@ -41,9 +57,11 @@ $(document).on("ready", function() {
       method: "GET",
       dataType: "HTML"
     }).done(function(response) {
-      console.log(response);
       $('.navbar').html(response);
     })
+
+    userMap.removeLayer(userTrailsLayer);
+    // removeAllLayers(userMap);
     var featureGroup = L.featureGroup().addTo(userMap);
     var drawControl = 
       new L.Control.Draw({
@@ -52,13 +70,13 @@ $(document).on("ready", function() {
           featureGroup: featureGroup
         }
       }).addTo(userMap);
+
     userMap.on('draw:created', function(e) {
       featureGroup.addLayer(e.layer);
       var markerLat = e.layer._latlng["lat"]
       $('#user_trails_trailhead_lat').val(markerLat)
       var markerLng = e.layer._latlng["lng"]
       $('#user_trails_trailhead_lon').val(markerLng)
-      console.log($('#user_trails_trailhead_lon').val())
     });
     
   }) // END LOG HIKE ON CLICK
@@ -66,12 +84,18 @@ $(document).on("ready", function() {
 
 // This loads from /trails.json and adds markers to the map
 // It is reaturning this as the variable featureLayer to be used later as userTrailsLayer
-  var getUsersTrails = function(userMap) {
+  var getUserTrails = function(userMap) {
     var featureLayer = L.mapbox.featureLayer()
     .loadURL(userPath())
     .addTo(userMap);
     return featureLayer
   };
+
+// Get all hikers geojsons
+  var allHikersTrails = function(userMap) {
+    var allHikersLayer = L.mapbox.featureLayer().loadURL("http://localhost:3000/trails.json").addTo(userMap);
+      return allHikersLayer
+  }
 
 // Show map from either /users/:id or /users/:id/trails
   var userPath = function(){
@@ -86,6 +110,14 @@ $(document).on("ready", function() {
       return windowLocation + "/trails.json"
     }
   }
+
+// Will remove all layers from map
+  // var removeAllLayers = function(userMap) {
+  //   userMap.eachLayer(function(layer) {
+  //     // if(layer._tilejson.name != "Run, Bike, and Hike");
+  //     userMap.removeLayer(layer);
+  //   })
+  // }
 
 // OLD AJAX CALL
 //   $.ajax({
