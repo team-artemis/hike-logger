@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'main/dashboard'
+
   resources :users do
     resources :trails do
       resources :images
@@ -11,7 +13,10 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
+  root 'main#landing'
+
+  get 'the_current_user' => 'main#the_current_user'
+  get 'dashboard' => 'main#dashboard'
 
   # resources :sessions, only: [:new, :create, :destroy]
   get 'login' => "sessions#new "

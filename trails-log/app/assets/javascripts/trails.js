@@ -127,9 +127,11 @@ $(document).on("ready", function() {
 //START SUBMIT NEW HIKE
 $('.navbar').on("submit", '#new-trail-form', function(event){
   event.preventDefault();
+    var urlVal = $(this).attr('action')
+    var typeVal = $(this).attr('method')
   $.ajax({
-      url: window.location + '/trails',
-      method: "POST",
+      url: urlVal,
+      type: typeVal,
       data: $('#new-trail-form').serialize()
     }).done(function(response) {
       // alert('Yay! request went through')
@@ -173,10 +175,22 @@ var directionsInstructionsControl = L.mapbox.directions.instructionsControl('ins
       return windowLocation + "/trails.json"
     }
   }
+  
+  //Make an AJAX call for the current_user
+  var currentUser;
+   $.ajax({
+     url: '/the_current_user',
+     method: "GET",
+     dataType: "JSON"
+   }).done(function(user){
+      console.log(user);
+      currentUser = user;
+   });
 
   var getUserTrails = function(map) {
+    var currentUserId = currentUser.id
     var userTrailsLayer = L.mapbox.featureLayer()
-    .loadURL(userPath())
+    .loadURL("http://localhost:3000/users/" + currentUserId + "/trails.json")
     return userTrailsLayer
   };
 

@@ -1,23 +1,31 @@
 <div class="pure-u-5-24 navbar debug">
-	<div class="main-menu">
-		  <li class="cssmenu"><span><a>Hi <%= current_user.firstname %>, we love you!</a></span></li>
-		  <li class="cssmenu" id="my-trails"><a href='/users/<%= current_user.id %>/trails'><span>My Trails</span></a></li>
-		  <li class="cssmenu" id="log-hike"><a href='/users/<%= current_user.id %>/trails/new'><span>Log Hike</span></a></li>
-		  <li class="cssmenu" id="all-hikers"><a href='/users'><span>All Hikers</span></a></li>
-		  <li class="cssmenu"><span><%= link_to "Logout", logout_path, method: :delete %></span></li>
+  <div class="main-menu">
+      <li class="cssmenu"><span><a>Hi <%= current_user.firstname %>, we love you!</a></span></li>
+      <li class="cssmenu" id="my-trails"><a href='/users/<%= current_user.id %>/trails'><span>My Trails</span></a></li>
+      <li class="cssmenu" id="log-hike"><a href='/users/<%= current_user.id %>/trails/new'><span>Log Hike</span></a></li>
+      <li class="cssmenu" id="all-hikers"><a href='/users'><span>All Hikers</span></a></li>
+      <li class="cssmenu"><span><%= link_to "Logout", logout_path, method: :delete %></span></li>
   </div>
-  <div class="my-hikes-menu <%=  %> hideMenu">
-	    <li class="cssmenu back-button"><span> <a href="/users/<%= current_user.id %>">
-	    back to menu
-	  </a></span></li>
-    <%= render 'hikes' %>
-	  <!-- Place list of hikes here depending on the user -->
+  <div class="my-hikes-menu hideMenu">
+      <li class="cssmenu back-button"><span> <a href="/users/<%= current_user.id %>">
+      back to menu
+    </a></span></li>
+    <li class="cssmenu">
+      <h2> My hikes </h2>
+    </li>
+    <% @trails.each do |trail| %>
+
+    <li class="cssmenu trailtitle"><a href="www.google.com"><span>
+      <b><%= trail.title %></b> <br>
+      <%= reverse_geocode(trail.trailhead_lat, trail.trailhead_lon) %>
+    </span></a></li>
+    <% end %>
   </div>
   <div class="log-hike-menu hideMenu">
   <li class="cssmenu back-button"><span> <a href="/users/<%= current_user.id %>">
-	    back to menu
-	  </a></span></li>
-  		<%= form_for :user_trails, html: {class: "pure-form pure-form-stacked", id:"new-trail-form"} do |f| %>
+      back to menu
+    </a></span></li>
+      <%= form_for :user_trails, html: {class: "pure-form pure-form-stacked", id:"new-trail-form"} do |f| %>
         <% if @trail.errors.any? %>
           <div id="error_explanation">
             <h2><%= pluralize(@trail.errors.count, "error") %> prohibited this trail from being saved:</h2>
@@ -71,21 +79,15 @@
       <h2> Hikers </h2>
     </li>
     <% @users.each do |u| %>
-      <% if u.id != current_user.id %>
-        <li class="cssmenu"><a class="other-hiker" href="/users/<%= u.id %>"><span>
-          <b><%= u.firstname %> <%= u.lastname %></b> <br>
-          <%= u.city %>, <%= u.state %>
-        </span></a></li>
-      <% end %>
+    <li class="cssmenu"><a><span>
+      <b><%= u.firstname %> <%= u.lastname %></b> <br>
+      <%= u.city %>, <%= u.state %>
+    </span></a></li>
     <% end %>
   </div>
 </div>
-  
+
 <!-- MAP -->
 <div class="pure-u-19-24 debug">
-
-  <div class="draw-route" id='inputs'></div>
-  <div class="draw-route" id='errors'></div>
-  <div class="map" id="user-map">
-  </div>
+  <div class="map" id="user-map"></div>
 </div>
