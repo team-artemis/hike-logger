@@ -12,11 +12,12 @@ $(document).on("ready", function() {
 
   userTrailsLayer.on("ready", function(e) {
     map.fitBounds(userTrailsLayer.getBounds());
-    var trailname;
+    var trailPopUpOnHoverOnNavHover;
     $('.trailtitle').on('mouseenter', function(e){
-      trailname = $(this).find("b").text()
+      // re-factor b tag to an ID name.
+      trailPopUpOnHoverOnNavHover = $(this).find("b").text()
       userTrailsLayer.eachLayer(function(marker) {
-        if (marker.feature.properties.title === trailname){
+        if (marker.feature.properties.title === trailPopUpOnHoverOnNavHover){
           marker.openPopup();
         }
       })
@@ -24,13 +25,13 @@ $(document).on("ready", function() {
 
     $('.trailtitle').on('mouseleave', function(e){
       userTrailsLayer.eachLayer(function(marker) {
-        if (marker.feature.properties.title === trailname){
+        if (marker.feature.properties.title === trailPopUpOnHoverOnNavHover){
           marker.closePopup();
         }
       })
     });
   })
-  
+
   // Return to main menu
   $('.back-button').on('click', function(event){
     event.preventDefault();
@@ -75,12 +76,12 @@ $(document).on("ready", function() {
     }).addTo(map);
 
     // every time the marker is dragged, update the coordinates container
-    trailheadMarker.on('dragend', ondragend)
+    trailheadMarker.on('dragend', onDragEnd)
 
     // Set the initial marker coordinate on load.
-    ondragend();
+    onDragEnd();
 
-    function ondragend() {
+    function onDragEnd() {
         var m = trailheadMarker.getLatLng();
         $('#user_trails_trailhead_lat').val(m.lat)
         $('#user_trails_trailhead_lon').val(m.lng)
