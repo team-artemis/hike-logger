@@ -189,9 +189,6 @@ $('#mapbox-directions-destination-input').hide()
 $('#routes').hide();
 $('.mapbox-form-label').hide()
 
-
-var directionsInstructionsControl = L.mapbox.directions.instructionsControl('instructions', directions)
-    .addTo(map);
 }); // END DOCUMENT READY
 
 
