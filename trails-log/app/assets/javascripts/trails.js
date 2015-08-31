@@ -62,17 +62,27 @@ $(document).on("ready", function() {
     // map.addLayer(allHikers);
   })
 
+//Add Trails with "Log Hike"
   $('#log-hike').on('click', function(event) {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
     $('.log-hike-menu').removeClass('hideMenu');
+    $('#add-trailhead-button').removeClass('hidden').addClass('add-trailhead-button');
     map.removeLayer(userTrailsLayer)
+
+    //Make a function to displaytrailheadMarker on button click to start trail
+
+    var clickAddTrailheadButton = function(){
+
+    }
 
     var trailheadMarker = L.marker([37.7833, -122.4167], {
       icon: L.mapbox.marker.icon({
-          'marker-color': '#f86767'
+          'marker-color': '#f86767',
+          'marker-symbol': 'park'
         }),
-        draggable: true
+        draggable: true,
+
     }).addTo(map);
 
     // every time the marker is dragged, update the coordinates container
@@ -103,6 +113,8 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
       // alert('request did not go through');
     });
     location.reload();
+
+    //Perhaps use setLatLng() method to set the location to the hike you just added
 })
 //END SUBMIT NEW HIKE
 
