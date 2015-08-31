@@ -95,12 +95,13 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
       method: "POST",
       data: $('#new-trail-form').serialize()
     }).done(function(response) {
-      alert('Yay! request went through')
+      // alert('Yay! request went through')
       console.log(response)
     }).fail(function(response){
       console.log(response)
-      alert('request did not go through');
+      // alert('request did not go through');
     });
+    location.reload();
 })
 //END SUBMIT NEW HIKE
 
