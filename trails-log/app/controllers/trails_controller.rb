@@ -3,7 +3,7 @@ class TrailsController < ApplicationController
   include TrailsHelper
 
   def all_trails
-    @trails = Trail.all 
+    @trails = Trail.all
     @geojson = Array.new
     build_geojson(@trails, @geojson)
 
@@ -11,7 +11,7 @@ class TrailsController < ApplicationController
       format.html
       format.json { render json: @geojson }
     end
-    p @geojson 
+    p @geojson
     p "*" * 100
     p @trails
     # render 'index'
@@ -34,7 +34,7 @@ class TrailsController < ApplicationController
       format.html
       format.json { render json: @geojson }
     end
-    
+
   end
   # Refactor to trails_helper?
   def build_geojson(trails, geojson)
@@ -71,13 +71,18 @@ class TrailsController < ApplicationController
   # POST /trails
   # POST /trails.json
   def create
+    p '*'* 100
+    p trail_params
+    p trail_params['review']
     @trail = Trail.new(trail_params)
 
     respond_to do |format|
       if @trail.save
+        p 'trail saved'
         format.html { redirect_to @trail, notice: 'Trail was successfully created.' }
         format.json { render :show, status: :created, location: @trail }
       else
+        p 'trial did not save'
         format.html { render :new }
         format.json { render json: @trail.errors, status: :unprocessable_entity }
       end
@@ -116,6 +121,6 @@ class TrailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trail_params
-      params.require(:trail).permit(:title, :length, :duration, :difficulty, :review, :rating)
+      params.require(:user_trails).permit(:title, :length, :duration, :difficulty, :review, :rating, :trailhead_lat, :trailhead_lon, :user_id)
     end
 end

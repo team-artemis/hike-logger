@@ -98,9 +98,24 @@ $(document).on("ready", function() {
         $('#user_trails_trailhead_lat').val(m.lat)
         $('#user_trails_trailhead_lon').val(m.lng)
     }
-
-
   }) // END LOG HIKE ON CLICK
+
+//START SUBMIT NEW HIKE
+$('.navbar').on("submit", '#new-trail-form', function(event){
+  event.preventDefault();
+  $.ajax({
+      url: window.location + '/trails',
+      method: "POST",
+      data: $('.pure-form').serialize()
+    }).done(function(response) {
+      alert('Yay! request went through')
+      console.log(response)
+    }).fail(function(response){
+      console.log(response)
+      alert('request did not go through');
+    });
+})
+//END SUBMIT NEW HIKE
 
 
 

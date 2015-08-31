@@ -1,4 +1,4 @@
-<%= form_for :user_trails, html: {class: "pure-form pure-form-stacked"} do |f| %>
+<%= form_for :user_trails, html: {class: "pure-form pure-form-stacked", id:"new-trail-form"} do |f| %>
   <% if @trail.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@trail.errors.count, "error") %> prohibited this trail from being saved:</h2>
@@ -35,9 +35,10 @@
     <%= f.label :rating %>
     <%= f.number_field :rating, class: "pure-input-rounded" %>
   </div>
-    <%= f.hidden_field :trailhead_lat, value: @trail.trailhead_lat %> 
-    <%= f.hidden_field :trailhead_lon, value: @trail.trailhead_lon %> 
+    <%= f.hidden_field :trailhead_lat, value: @trail.trailhead_lat %>
+    <%= f.hidden_field :trailhead_lon, value: @trail.trailhead_lon %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
   <div class="actions">
-    <%= f.submit 'Add Trail', class: "pure-button pure-button-primary" %>
+    <%= f.submit 'Add Trail', class: "pure-button pure-button-primary add-trail-submit" %>
   </div>
 <% end %>
