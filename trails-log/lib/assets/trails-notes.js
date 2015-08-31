@@ -169,3 +169,19 @@ $(document).on("ready", function() {
     //     }
     //   }).addTo(map);
 
+
+
+// Show/hide the draw controls and add stuff to the map
+    // if ($('div.leaflet-draw').length) {
+    //   $('div.leaflet-draw').show();
+    // }
+    // else {
+    //   drawControl.addTo(map)
+    // }
+    // map.on('draw:created', function(e) {
+    //   drawLayer.addLayer(e.layer);
+    //   var markerLat = e.layer._latlng["lat"]
+    //   $('#user_trails_trailhead_lat').val(markerLat)
+    //   var markerLng = e.layer._latlng["lng"]
+    //   $('#user_trails_trailhead_lon').val(markerLng)
+    // });
