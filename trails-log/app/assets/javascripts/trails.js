@@ -24,8 +24,22 @@ $(document).on("ready", function() {
   var otherHikerListener = function() {
     $(".other-hiker").on('click', function(event) {
       event.preventDefault();
-      console.log("You clicked another hiker");
-      //If you
+      var url = $(this).attr('href')
+      $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'HTML'
+      }).done(function(response){
+        console.log(response)
+        window.history.pushState(null, null, url)
+        $('.main-menu').addClass('hideMenu');
+        $('.my-hikes-menu').removeClass('hideMenu');
+      }).fail(function(response){
+        console.log("fail")
+        console.log(response)
+      })
+      // $('.main-menu').addClass('hideMenu');
+      // $('.my-hikes-menu').removeClass('hideMenu');
     })
   }
   
@@ -56,6 +70,7 @@ $(document).on("ready", function() {
   // Return to main menu
   $('.back-button').on('click', function(event){
     event.preventDefault();
+    window.location = currentUser["id"]
     $('.navbar').children().addClass('hideMenu');
     $('.main-menu').removeClass('hideMenu');
     $('.leaflet-draw').hide()

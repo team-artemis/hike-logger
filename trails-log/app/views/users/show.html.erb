@@ -6,20 +6,12 @@
 		  <li class="cssmenu" id="all-hikers"><a href='/users'><span>All Hikers</span></a></li>
 		  <li class="cssmenu"><span><%= link_to "Logout", logout_path, method: :delete %></span></li>
   </div>
-  <div class="my-hikes-menu hideMenu">
+  <div class="my-hikes-menu <%=  %> hideMenu">
 	    <li class="cssmenu back-button"><span> <a href="/users/<%= current_user.id %>">
 	    back to menu
 	  </a></span></li>
-	  <li class="cssmenu">
-	    <h2> My hikes </h2>
-	  </li>
-	  <% @trails.each do |trail| %>
-
-	  <li class="cssmenu trailtitle"><a href="www.google.com"><span>
-	    <b><%= trail.title %></b> <br>
-	    <%= reverse_geocode(trail.trailhead_lat, trail.trailhead_lon) %>
-	  </span></a></li>
-	  <% end %>
+    <%= render 'hikes' %>
+	  <!-- Place list of hikes here depending on the user -->
   </div>
   <div class="log-hike-menu hideMenu">
   <li class="cssmenu back-button"><span> <a href="/users/<%= current_user.id %>">

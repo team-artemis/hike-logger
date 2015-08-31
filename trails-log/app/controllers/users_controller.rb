@@ -3,8 +3,7 @@ class UsersController < ApplicationController
   include TrailsHelper
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  # GET /users
-  # GET /users.json
+  # GET /users /users.json
   def index
     @users = User.all
     respond_to do |format|
@@ -13,17 +12,18 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/1
-  # GET /users/1.json
+  # GET /users/1 /users/1.json
   def show
+    p params
     @trails = current_user.trails
     @trail = Trail.new
     @users = User.all
-    @user = current_user
+    @current_user = current_user
+    @user = User.find_by(id: params[:id])
     if request.xhr?
       respond_to do |format|
         format.html { render layout: false }
-        format.json { render json: @user }
+        format.json { render json: @current_user }
       end
     else
       render 'show'

@@ -8,12 +8,9 @@ class TrailsController < ApplicationController
     build_geojson(@trails, @geojson)
 
     respond_to do |format|
-      format.html
+      # format.html
       format.json { render json: @geojson }
     end
-    p @geojson
-    p "*" * 100
-    p @trails
     # render 'index'
   end
 
