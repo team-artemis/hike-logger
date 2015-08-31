@@ -36,6 +36,14 @@ $(document).on("ready", function() {
 // On click of all-hikers, hide draw controls and show all users hikes
   $('#all-hikers').on('click', function(event) {
     event.preventDefault();
+    $.ajax({
+      url: "/users",
+      method: "GET",
+      dataType: "HTML"
+    }).done(function(response) {
+      $('.navbar').html(response);
+      console.log(response);
+    })
 
     var allHikersLayer = allHikersTrails(userMap);
     userMap.addLayer(allHikersLayer);
@@ -52,7 +60,8 @@ $(document).on("ready", function() {
       $('.navbar').html(response);
     })
 
-    userMap.removeLayer(userTrailsLayer);   
+    userMap.removeLayer(userTrailsLayer);
+    // removeAllLayers(userMap);
     var featureGroup = L.featureGroup().addTo(userMap);
     var drawControl = 
       new L.Control.Draw({
@@ -101,6 +110,14 @@ $(document).on("ready", function() {
       return windowLocation + "/trails.json"
     }
   }
+
+// Will remove all layers from map
+  // var removeAllLayers = function(userMap) {
+  //   userMap.eachLayer(function(layer) {
+  //     // if(layer._tilejson.name != "Run, Bike, and Hike");
+  //     userMap.removeLayer(layer);
+  //   })
+  // }
 
 // OLD AJAX CALL
 //   $.ajax({

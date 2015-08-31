@@ -6,8 +6,11 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    p "you got here"
     @users = User.all
+    respond_to do |format|
+      format.html { render layout: false }
+      format.json { render json: @users }
+    end
   end
 
   # GET /users/1
