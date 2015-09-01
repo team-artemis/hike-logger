@@ -169,7 +169,6 @@ $(document).on("ready", function() {
       $('#user_trails_trailhead_lat').val(trailHeadLat)
       var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][0]
       $('#user_trails_trailhead_lon').val(trailHeadLon)
-      debugger
     $.ajax({
         url: urlVal,
         type: typeVal,
@@ -177,11 +176,13 @@ $(document).on("ready", function() {
       }).done(function(response) {
         console.log(response)
         console.log('Yay! request went through')
+        $('.navbar').children().hide()
+        $('.navbar').prepend(response)
       }).fail(function(response){
         console.log(response)
         console.log('request did not go through');
       });
-      // location.reload();
+      //location.reload();
   });
   //END SUBMIT NEW HIKE
 

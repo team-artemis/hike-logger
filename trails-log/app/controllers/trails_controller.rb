@@ -26,7 +26,7 @@ class TrailsController < ApplicationController
     @geojson = Array.new
     build_geojson(@trails, @geojson)
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render json: @geojson }
     end
 
@@ -62,16 +62,11 @@ class TrailsController < ApplicationController
 
   def create
     @trail = Trail.new(trail_params)
-
     respond_to do |format|
       if @trail.save
-        p 'trail saved'
-        format.html { redirect_to trails_path, notice: 'Trail was successfully created.' }
-        format.json { render :show, status: :created, location: @trail }
-      else
-        p 'trial did not save'
-        format.html { render :new }
-        format.json { render json: @trail.errors, status: :unprocessable_entity }
+        if request.xhr?
+          format.html {render 'show', layout: false}
+        end
       end
     end
 
