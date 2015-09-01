@@ -2,17 +2,56 @@
   <%= video_tag("trail.mp4", autobuffer: true, autoplay: true, loop: true, id: "bgvid") %>
 </div>
 
-<div class="login-wrapper">
-<h1>Login</h1>
-<%= form_for :session, url: login_path do |f| %>
-  <%= f.label :email %>
-  <%= f.email_field :email, class: 'tbd' %>
+<div class="landing-wrapper">
+	<div class="login-wrapper">
+		<h1>Login</h1>
+		<%= form_for :session, url: login_path do |f| %>
+		  <%= f.label :email %>
+		  <%= f.email_field :email, class: 'tbd' %>
 
-  <%= f.label :password %>
-  <%= f.password_field :password, class: 'tbd' %>
+		  <%= f.label :password %>
+		  <%= f.password_field :password, class: 'tbd' %>
 
-  <%= f.submit "Login", class: 'tbd' %>
-<% end %>
+		  <%= f.submit "Login", class: 'tbd' %>
+		<% end %>
 
-<p>New user? <%= link_to "Sign up now!", new_user_path %></p>
-</div> 
+		<p>New user? <%= link_to "Sign up now!", new_user_path, class: "sign-up" %></p>
+	</div>
+
+	<div class="signup-wrapper hideMenu">
+		<%= form_for(:user, url: users_path) do |f| %>
+		  <div class="field">
+		    <%= f.label 'First name' %><br>
+		    <%= f.text_field :firstname %>
+		  </div>
+		  <div class="field">
+		    <%= f.label 'Last name' %><br>
+		    <%= f.text_field :lastname %>
+		  </div>
+		  <div class="field">
+		    <%= f.label :city %><br>
+		    <%= f.text_field :city %>
+		  </div>
+		  <div class="field">
+		    <%= f.label :state %><br>
+		    <%= f.text_field :state %>
+		  </div>
+		  <div class="field">
+		    <%= f.label :country %><br>
+		    <%= f.text_field :country %>
+		  </div>
+		  <div class="field">
+		    <%= f.label :password %><br>
+		    <%= f.password_field :password %>
+		  </div>
+		  <div class="field">
+		    <%= f.label :email %><br>
+		    <%= f.text_field :email %>
+		  </div>
+		  <div class="actions">
+		    <%= f.submit %>
+		  </div>
+	  <% end %>
+		<p>Already a user? <%= link_to "Login!", root_path, class: "login-link" %></p>
+	</div>
+</div>

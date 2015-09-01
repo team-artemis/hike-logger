@@ -1,4 +1,18 @@
 $(document).on("ready", function() {
+// These must be the first lines in the js file
+// They toggle the login/signup forms on the landing page
+  $('.landing-wrapper').on('click', '.sign-up', function(event){
+    event.preventDefault();
+      $('.login-wrapper').addClass('hideMenu');
+      $('.signup-wrapper').removeClass('hideMenu');
+  })
+
+  $('.landing-wrapper').on('click', '.login-link', function(event){
+    event.preventDefault();
+    $('.login-wrapper').removeClass('hideMenu');
+    $('.signup-wrapper').addClass('hideMenu');
+  })
+
   L.mapbox.accessToken = 'pk.eyJ1IjoidGlzZGVyZWsiLCJhIjoiNDQ5Y2JiODdiZDZmODM0OWI0NmRiNDI5OGQzZWE4ZWIifQ.rVJW4H9TC1cknmRYoZE78w';
 
   var map = L.mapbox.map('user-map', 'mapbox.run-bike-hike')
@@ -9,7 +23,6 @@ $(document).on("ready", function() {
   var allHikersLayer = allHikersTrails(map);
   var drawLayer = L.featureGroup().addTo(map);
   var drawControl = new L.Control.Draw({edit: {featureGroup: drawLayer}})
-
 
   userTrailsLayer.on("ready", function(event) {
     map.fitBounds(userTrailsLayer.getBounds());
