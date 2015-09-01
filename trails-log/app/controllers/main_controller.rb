@@ -1,6 +1,7 @@
 class MainController < ApplicationController
   include SessionsHelper
   include TrailsHelper
+  include ApplicationHelper
 
   def dashboard
     @trails = current_user.trails

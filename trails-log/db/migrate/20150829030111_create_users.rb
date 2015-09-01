@@ -8,6 +8,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :country
       t.string :password_digest
       t.string :email
+      t.string :avatar_url
 
       t.timestamps null: false
     end
