@@ -106,6 +106,9 @@ $(document).on("ready", function() {
     $('#add-trailhead-button').addClass('hidden');
     $("#save-trailhead-button").addClass('hidden')
     $('.leaflet-draw').hide()
+    $('form span').hide();
+    $('input#mapbox-directions-origin-input').remove()
+    $('input#mapbox-directions-destination-input').remove()
     map.addLayer(userTrailsLayer)
     map.removeLayer(allHikersLayer);
   });
@@ -134,7 +137,7 @@ $(document).on("ready", function() {
     $('.log-hike-menu').removeClass('hideMenu');
     map.removeLayer(userTrailsLayer)
     var addPathCreator = function(){
-      directions = L.mapbox.directions({profile: 'mapbox.walking'});
+      var directions = L.mapbox.directions({profile: 'mapbox.walking'});
       var directionsLayer = L.mapbox.directions.layer(directions)
           .addTo(map);
       var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
