@@ -10,6 +10,41 @@ $(document).on("ready", function() {
   var drawLayer = L.featureGroup().addTo(map);
   var drawControl = new L.Control.Draw({edit: {featureGroup: drawLayer}})
 
+
+  // Make an AJAX call for the current_user
+  // var currentUser;
+  // $.ajax({
+  //   url: "/current_user",
+  //   method: "GET",
+  //   dataType: "JSON"
+  // }).done(function(user){
+  //   currentUser = user;
+  // })
+
+  var otherHikerListener = function() {
+    $(".other-hiker").on('click', function(event) {
+      event.preventDefault();
+      var url = $(this).attr('href')
+      $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'HTML'
+      }).done(function(response){
+        console.log(response)
+        window.history.pushState(null, null, url)
+        $('.main-menu').addClass('hideMenu');
+        $('.my-hikes-menu').removeClass('hideMenu');
+      }).fail(function(response){
+        console.log("fail")
+        console.log(response)
+      })
+      // $('.main-menu').addClass('hideMenu');
+      // $('.my-hikes-menu').removeClass('hideMenu');
+    })
+  }
+  
+  otherHikerListener();
+
   userTrailsLayer.on("ready", function(e) {
     map.fitBounds(userTrailsLayer.getBounds());
     var trailPopUpOnHoverOnNavHover;
@@ -35,8 +70,11 @@ $(document).on("ready", function() {
   // Return to main menu
   $('.back-button').on('click', function(event){
     event.preventDefault();
+    // window.location = currentUser["id"]
     $('.navbar').children().addClass('hideMenu');
     $('.main-menu').removeClass('hideMenu');
+    $('#add-trailhead-button').addClass('hidden');
+    $("#save-trailhead-button").addClass('hidden')
     $('.leaflet-draw').hide()
     map.addLayer(userTrailsLayer)
     map.removeLayer(allHikersLayer);
@@ -62,30 +100,51 @@ $(document).on("ready", function() {
     // map.addLayer(allHikers);
   })
 
+
   $('#log-hike').on('click', function(event) {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
     $('.log-hike-menu').removeClass('hideMenu');
     map.removeLayer(userTrailsLayer)
 
-    var trailheadMarker = L.marker([37.7833, -122.4167], {
-      icon: L.mapbox.marker.icon({
-          'marker-color': '#f86767'
-        }),
-        draggable: true
-    }).addTo(map);
 
-    // every time the marker is dragged, update the coordinates container
-    trailheadMarker.on('dragend', onDragEnd)
+    $('#add-trailhead-button').removeClass('hidden');
+    $('#add-trailhead-button').on("click", function(event) {
+      $(this).addClass('hidden');
+      $("#save-trailhead-button").removeClass('hidden')
+      addPathCreator();
 
-    // Set the initial marker coordinate on load.
-    onDragEnd();
+      $('#mapbox-directions-origin-input').hide();
+      $('#mapbox-directions-destination-input').hide();
+      //$('.mapbox-directions-route').hide()
+      $('#routes').hide();
+      $('.mapbox-form-label').hide();
+    })
 
-    function onDragEnd() {
-        var m = trailheadMarker.getLatLng();
-        $('#user_trails_trailhead_lat').val(m.lat)
-        $('#user_trails_trailhead_lon').val(m.lng)
+    var addPathCreator = function(){
+      directions = L.mapbox.directions({profile: 'mapbox.walking'});
+      var directionsLayer = L.mapbox.directions.layer(directions)
+          .addTo(map);
+      var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
+          .addTo(map);
+      var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
+          .addTo(map);
     }
+
+     $("#save-trailhead-button").on("click", function(event) {
+        event.preventDefault();
+        var fullPath = directions.query()
+        var wayPoints = fullPath["_waypoints"]
+        var trailEndLat = fullPath["destination"]["geometry"]["coordinates"][0]
+        var trailEndLon = fullPath["destination"]["geometry"]["coordinates"][1]
+        var trailHeadLat = fullPath["origin"]["geometry"]["coordinates"][0]
+        var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][1]
+        debugger
+      })
+
+    //Hide all the stuff that we don't want
+
+
   }) // END LOG HIKE ON CLICK
 
 //START SUBMIT NEW HIKE
@@ -105,10 +164,10 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
       // alert('request did not go through');
     });
     location.reload();
+
+    //Perhaps use setLatLng() method to set the location to the hike you just added
 })
-//END SUBMIT NEW HIKE
-
-
+//END SUBMIT new HIKE
 
 }); // END DOCUMENT READY
 
@@ -154,3 +213,4 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
     map.removeLayer(allHikersLayer);
     map.removeLayer(drawControl);
   };
+

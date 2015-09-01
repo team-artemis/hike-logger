@@ -37,7 +37,6 @@ Trail.create(
   trailhead_title:"Stinson Beach",
   trailhead_lon: -122.639476,
   trailhead_lat: 37.897568,
-  trailend_title:"Mt. Talmapais East Park",
   trailend_lon: -122.582923,
   trailend_lat: 37.927665,
   user_id: 1
@@ -54,14 +53,13 @@ Trail.create(
   trailhead_title:"Palomarin",
   trailhead_lon: -122.747442,
   trailhead_lat: 37.934242,
-  trailend_title:"Palomarin",
   trailend_lon: -122.582923,
   trailend_lat: 37.927665,
   user_id: 2
   )
 
 Trail.create(
-  title: "Point Reyes Coast Trail to Alamere Falls",
+  title: "Floridian Hike",
   is_loop: true,
   length: 7.5,
   duration: "4 hours",
@@ -71,7 +69,6 @@ Trail.create(
   trailhead_title:"Florida",
   trailhead_lon: -81.747442,
   trailhead_lat: 30.934242,
-  trailend_title:"Palomarin",
   trailend_lon: -81.582923,
   trailend_lat: 30.927665,
   user_id: 1
