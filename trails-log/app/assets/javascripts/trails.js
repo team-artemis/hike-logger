@@ -85,12 +85,12 @@ $(document).on("ready", function() {
     $.ajax(urlVal).done(function(hikeInfo){
       $('.navbar').children().hide()
       $('.navbar').prepend(hikeInfo)
-      // below not working yet
-      // userTrailsLayer.eachLayer(function(marker){
-      //   if (marker.feature.properties.id == clickedHikeId){
-      //      map.setView(marker.latlng, 13);
-      //   }
-      // })
+      below not working yet
+      userTrailsLayer.eachLayer(function(marker){
+        if (marker.feature.properties.id == clickedHikeId){
+           map.setView(marker._latlng, 15);
+        }
+      })
     })
   });
 
