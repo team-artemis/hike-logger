@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'main#landing'
 
+  get 'other_hiker/:id' => 'main#other_hiker'
   get 'the_current_user' => 'main#the_current_user'
   get 'dashboard' => 'main#dashboard'
 

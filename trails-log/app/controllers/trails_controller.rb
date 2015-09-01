@@ -25,9 +25,8 @@ class TrailsController < ApplicationController
     @trails = user.trails
     @geojson = Array.new
     build_geojson(@trails, @geojson)
-
     respond_to do |format|
-      format.html
+      format.html 
       format.json { render json: @geojson }
     end
 

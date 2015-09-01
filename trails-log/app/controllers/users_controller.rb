@@ -15,14 +15,14 @@ class UsersController < ApplicationController
 
   def show
     p params
-    @trails = current_user.trails
+    @trails = @user.trails
     @trail = Trail.new
     @users = User.all
     @current_user = current_user
     @user = User.find_by(id: params[:id])
     if request.xhr?
       respond_to do |format|
-        format.html { render layout: false }
+        format.html { render 'show', layout: false }
         format.json { render json: @current_user }
       end
     else

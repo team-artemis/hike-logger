@@ -13,22 +13,22 @@ $(document).on("ready", function() {
   var otherHikerListener = function() {
     $(".other-hiker").on('click', function(event) {
       event.preventDefault();
-      var url = $(this).attr('href')
+      // console.log("you got me")
+      var urlVal = $(this).attr('href')
+      console.log(urlVal)
       $.ajax({
-        url: url,
-        method: 'GET',
-        dataType: 'HTML'
+        url: urlVal,
       }).done(function(response){
         console.log(response)
-        window.history.pushState(null, null, url)
-        $('.main-menu').addClass('hideMenu');
-        $('.my-hikes-menu').removeClass('hideMenu');
+        $('.navbar').children().hide()
+        $('.navbar').prepend(response)
+
+        // $('.all-hikers-menu').addClass('hideMenu');
+        // $('.other-hiker-menu').removeClass('hideMenu');
       }).fail(function(response){
         console.log("fail")
         console.log(response)
       })
-      // $('.main-menu').addClass('hideMenu');
-      // $('.my-hikes-menu').removeClass('hideMenu');
     })
   }
   
@@ -129,13 +129,6 @@ $(document).on("ready", function() {
     $('.main-menu').addClass('hideMenu');
     $('.log-hike-menu').removeClass('hideMenu');
     map.removeLayer(userTrailsLayer)
-    addPathCreator();
-      $('#mapbox-directions-origin-input').hide();
-      $('#mapbox-directions-destination-input').hide();
-      $('#routes').hide();
-      $('.mapbox-form-label').hide();
-    })
-
     var addPathCreator = function(){
       directions = L.mapbox.directions({profile: 'mapbox.walking'});
       var directionsLayer = L.mapbox.directions.layer(directions)
@@ -145,6 +138,12 @@ $(document).on("ready", function() {
       var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
           .addTo(map);
     }
+    addPathCreator();
+      $('#mapbox-directions-origin-input').hide();
+      $('#mapbox-directions-destination-input').hide();
+      $('#routes').hide();
+      $('.mapbox-form-label').hide();
+
 
   }); // END LOG HIKE ON CLICK
 
@@ -170,7 +169,7 @@ $(document).on("ready", function() {
         console.log(response)
         console.log('request did not go through');
       });
-      location.reload();
+      // location.reload();
   });
   //END SUBMIT NEW HIKE
 
