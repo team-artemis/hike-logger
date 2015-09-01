@@ -63,7 +63,7 @@ class TrailsController < ApplicationController
     respond_to do |format|
       if @trail.save
         p 'trail saved'
-        format.html { redirect_to @trail, notice: 'Trail was successfully created.' }
+        format.html { redirect_to trails_path, notice: 'Trail was successfully created.' }
         format.json { render :show, status: :created, location: @trail }
       else
         p 'trial did not save'
@@ -71,7 +71,7 @@ class TrailsController < ApplicationController
         format.json { render json: @trail.errors, status: :unprocessable_entity }
       end
     end
-    
+
   end
 
   def update
@@ -95,12 +95,12 @@ class TrailsController < ApplicationController
   end
 
   private
-  
+
     def set_trail
       @trail = Trail.find(params[:id])
     end
 
     def trail_params
-      params.require(:user_trails).permit(:title, :length, :duration, :difficulty, :review, :rating, :trailhead_lat, :trailhead_lon, :user_id)
+      params.require(:user_trails).permit(:title, :length, :duration, :difficulty, :review, :rating, :trailhead_lat, :trailhead_lon, :trailend_lat, :trailend_lon, :waypoints, :user_id)
     end
 end

@@ -31,7 +31,7 @@ $(document).on("ready", function() {
       // $('.my-hikes-menu').removeClass('hideMenu');
     })
   }
-  
+
   otherHikerListener();
 
   userTrailsLayer.on("ready", function(event) {
@@ -129,13 +129,6 @@ $(document).on("ready", function() {
     $('.main-menu').addClass('hideMenu');
     $('.log-hike-menu').removeClass('hideMenu');
     map.removeLayer(userTrailsLayer)
-    addPathCreator();
-      $('#mapbox-directions-origin-input').hide();
-      $('#mapbox-directions-destination-input').hide();
-      $('#routes').hide();
-      $('.mapbox-form-label').hide();
-    })
-
     var addPathCreator = function(){
       directions = L.mapbox.directions({profile: 'mapbox.walking'});
       var directionsLayer = L.mapbox.directions.layer(directions)
@@ -145,20 +138,34 @@ $(document).on("ready", function() {
       var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
           .addTo(map);
     }
+    addPathCreator();
+      $('#mapbox-directions-origin-input').hide();
+      $('#mapbox-directions-destination-input').hide();
+      $('#routes').hide();
+      $('.mapbox-form-label').hide();
+
 
   }); // END LOG HIKE ON CLICK
 
   //START SUBMIT NEW HIKE
   $('.navbar').on("submit", '#new-trail-form', function(event){
     event.preventDefault();
-      var urlVal = $(this).attr('action')
+      //var urlVal = $(this).attr('action')
+      var userId = $('#user_trails_user_id').attr('value')
+      var urlVal = '/users/' + userId + '/trails'
       var typeVal = $(this).attr('method')
       var fullPath = directions.query()
       var wayPoints = fullPath["_waypoints"]
-      var trailEndLat = fullPath["destination"]["geometry"]["coordinates"][0]
-      var trailEndLon = fullPath["destination"]["geometry"]["coordinates"][1]
-      var trailHeadLat = fullPath["origin"]["geometry"]["coordinates"][0]
-      var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][1]
+      $('#user_trails_waypoints').val(wayPoints)
+      var trailEndLat = fullPath["destination"]["geometry"]["coordinates"][1]
+      $('#user_trails_trailend_lat').val(trailEndLat)
+      var trailEndLon = fullPath["destination"]["geometry"]["coordinates"][0]
+      $('#user_trails_trailend_lon').val(trailEndLon)
+      var trailHeadLat = fullPath["origin"]["geometry"]["coordinates"][1]
+      $('#user_trails_trailhead_lat').val(trailHeadLat)
+      var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][0]
+      $('#user_trails_trailhead_lon').val(trailHeadLon)
+      debugger
     $.ajax({
         url: urlVal,
         type: typeVal,
@@ -175,7 +182,7 @@ $(document).on("ready", function() {
   //END SUBMIT NEW HIKE
 
 }); // END DOCUMENT READY
-  
+
   //Make an AJAX call for the current_user
   var currentUser;
    $.ajax({
