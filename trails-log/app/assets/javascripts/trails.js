@@ -70,9 +70,11 @@ $(document).on("ready", function() {
   // Return to main menu
   $('.back-button').on('click', function(event){
     event.preventDefault();
-    window.location = currentUser["id"]
+    // window.location = currentUser["id"]
     $('.navbar').children().addClass('hideMenu');
     $('.main-menu').removeClass('hideMenu');
+    $('#add-trailhead-button').addClass('hidden');
+    $("#save-trailhead-button").addClass('hidden')
     $('.leaflet-draw').hide()
     map.addLayer(userTrailsLayer)
     map.removeLayer(allHikersLayer);
@@ -98,49 +100,51 @@ $(document).on("ready", function() {
     // map.addLayer(allHikers);
   })
 
-//Add Trails with "Log Hike"
+
   $('#log-hike').on('click', function(event) {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
     $('.log-hike-menu').removeClass('hideMenu');
-    $('#add-trailhead-button').removeClass('hidden').addClass('add-trailhead-button');
     map.removeLayer(userTrailsLayer)
-    $('body').on("click", '#add-trailhead-button', function(e){
-      var currentLon = map.getCenter().lng//e.latlng.lng;
-      console.log(currentLon)
-      var currentLat = map.getCenter().lat//e.latlng.lat;
-      console.log(currentLat)
-      clickAddTrailheadButton(currentLat,currentLon);
+
+
+    $('#add-trailhead-button').removeClass('hidden');
+    $('#add-trailhead-button').on("click", function(event) {
+      $(this).addClass('hidden');
+      $("#save-trailhead-button").removeClass('hidden')
+      addPathCreator();
+
+      $('#mapbox-directions-origin-input').hide();
+      $('#mapbox-directions-destination-input').hide();
+      //$('.mapbox-directions-route').hide()
+      $('#routes').hide();
+      $('.mapbox-form-label').hide();
     })
 
-    //Make a function to displaytrailheadMarker on button click to start trail
-
-    var clickAddTrailheadButton = function(latitude, longitude){
-      var trailheadMarker = L.marker([latitude, longitude], {
-        icon: L.mapbox.marker.icon({
-            'marker-color': '#f86767',
-            'marker-symbol': 'park'
-          }),
-          draggable: true,
-      }).addTo(map);
-    trailheadMarker.on('dragend', onDragEnd)
-
-    // Set the initial marker coordinate on load.
-    function onDragEnd() {
-        var m = trailheadMarker.getLatLng();
-        $('#user_trails_trailhead_lat').val(m.lat)
-        $('#user_trails_trailhead_lon').val(m.lng)
-    }
-    onDragEnd();
-
+    var addPathCreator = function(){
+      directions = L.mapbox.directions({profile: 'mapbox.walking'});
+      var directionsLayer = L.mapbox.directions.layer(directions)
+          .addTo(map);
+      var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
+          .addTo(map);
+      var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
+          .addTo(map);
     }
 
-// var lat = (e.latlng.lat);
-// var lng = (e.latlng.lng);
-// marker.setLatLng([lat, lng]).update();  // Updates your defined marker position
+     $("#save-trailhead-button").on("click", function(event) {
+        event.preventDefault();
+        var fullPath = directions.query()
+        var wayPoints = fullPath["_waypoints"]
+        var trailEndLat = fullPath["destination"]["geometry"]["coordinates"][0]
+        var trailEndLon = fullPath["destination"]["geometry"]["coordinates"][1]
+        var trailHeadLat = fullPath["origin"]["geometry"]["coordinates"][0]
+        var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][1]
+        debugger
+      })
+
+    //Hide all the stuff that we don't want
 
 
-    // every time the marker is dragged, update the coordinates container
   }) // END LOG HIKE ON CLICK
 
 //START SUBMIT NEW HIKE
@@ -164,30 +168,6 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
     //Perhaps use setLatLng() method to set the location to the hike you just added
 })
 //END SUBMIT new HIKE
-
-//Directions stuff
-
-//shorthand
-var directions = L.mapbox.directions({profile: 'mapbox.walking'});
-
-//Create a new layer that displays a given set of directions on a map
-var directionsLayer = L.mapbox.directions.layer(directions)
-    .addTo(map);
-
-//add the directions input control to the map object
-var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
-    .addTo(map);
-
-//add the routes control to the map object
-var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
-    .addTo(map);
-
-//Hide all the stuff that we don't want
-$('#mapbox-directions-origin-input').hide()
-$('#mapbox-directions-destination-input').hide()
-//$('.mapbox-directions-route').hide()
-$('#routes').hide();
-$('.mapbox-form-label').hide()
 
 }); // END DOCUMENT READY
 
