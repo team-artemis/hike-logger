@@ -78,20 +78,23 @@ $(document).on("ready", function() {
 
   // ajax call for hike page
   $("[id^='trail']").on('click', function(event){
-    event.preventDefault;
-    var urlVal = $(this).attr('action')
-    var typeVal = $(this).attr('method')
-    $.ajax({
-      url: urlVal,
-      type: typeVal
-    }).done(function(hikeInfo){
-      console.log(hikeInfo);
-      console.log("Yay");
-    }).fail(function(hikeInfo){
-      console.log(hikeInfo);
-      console.log("Nay");
+    event.preventDefault();
+    var clickedHikeId = $(this).attr('id').slice(-1)
+    var urlVal = $(this).attr('href')
+    console.log(clickedHikeId)
+    $.ajax(urlVal).done(function(hikeInfo){
+      $('.navbar').children().hide()
+      $('.navbar').prepend(hikeInfo)
+      // below not working yet
+      // userTrailsLayer.eachLayer(function(marker){
+      //   if (marker.feature.properties.id == clickedHikeId){
+      //      map.setView(marker.latlng, 13);
+      //   }
+      // })
     })
   });
+
+
 
   // Return to main menu
   $('.back-button').on('click', function(event){

@@ -1,45 +1,34 @@
-<div class="pure-u-5-24 navbar debug">
+<li class="cssmenu"><span> <a href="/users/<%= current_user.id %>"> 
+  back to menu
+</a></span></li>
+<li class="cssmenu">
+  <h2> <%= @trail.title %> </h2>
+</li>
 
-  <li class="cssmenu"><span> <a href="/users/<%= current_user.id %>"> 
-    back to menu
-  </a></span></li>
+<div id="nav-content">
+
   <li class="cssmenu">
-    <h2> <%= @trail.title %> </h2>
+    <strong>Length:</strong>
+    <%= @trail.length %>
   </li>
 
-  <div id="nav-content">
+  <li class="cssmenu">
+    <strong>Duration:</strong>
+    <%= @trail.duration %>
+  </li>
 
-    <li class="cssmenu">
-      <strong>Length:</strong>
-      <%= @trail.length %>
-    </li>
+  <li class="cssmenu">
+    <strong>Difficulty:</strong>
+    <%= @trail.difficulty %>
+  </li>
 
-    <li class="cssmenu">
-      <strong>Duration:</strong>
-      <%= @trail.duration %>
-    </li>
+  <li class="cssmenu">
+    <strong>Review:</strong>
+    <%= @trail.review %>
+  </li>
 
-    <li class="cssmenu">
-      <strong>Difficulty:</strong>
-      <%= @trail.difficulty %>
-    </li>
-
-    <li class="cssmenu">
-      <strong>Review:</strong>
-      <%= @trail.review %>
-    </li>
-
-    <li class="cssmenu">
-      <strong>Rating:</strong>
-      <%= @trail.rating %>
-    </li>
-
-  </div>
+  <li class="cssmenu">
+    <strong>Rating:</strong>
+    <%= @trail.rating %>
+  </li>
   
-</div>
-  
-
-<div class="pure-u-19-24 debug">
-  <div class="map" id="user-map"></div>
-</div>
-
