@@ -9,7 +9,7 @@ $(document).on("ready", function() {
   var allHikersLayer = allHikersTrails(map);
   var drawLayer = L.featureGroup().addTo(map);
   var drawControl = new L.Control.Draw({edit: {featureGroup: drawLayer}})
-  
+
 
   userTrailsLayer.on("ready", function(event) {
     map.fitBounds(userTrailsLayer.getBounds());
@@ -49,8 +49,8 @@ $(document).on("ready", function() {
           }
         })
       })
-    });  
-  
+    });
+
   // Return to main menu
   $('.back-button').on('click', function(event){
     event.preventDefault();
@@ -58,8 +58,7 @@ $(document).on("ready", function() {
     // window.location = currentUser["id"]
     $('.navbar').children().addClass('hideMenu');
     $('.main-menu').removeClass('hideMenu');
-    $('#add-trailhead-button').addClass('hidden');
-    $("#save-trailhead-button").addClass('hidden')
+    //REFACTORED ALERT: Andrew removed add and save trailhead buttons here
     $('.leaflet-draw').hide()
     map.addLayer(userTrailsLayer)
     map.removeLayer(allHikersLayer);
@@ -68,9 +67,24 @@ $(document).on("ready", function() {
   // Show the my trails menu
   $('#my-trails').on('click', function(event){
     event.preventDefault();
-    $('.main-menu').addClass('hideMenu');
-    $('.my-hikes-menu').removeClass('hideMenu');
-    map.addlayer(userTrailsLayer);
+    var urlVal = $('#my-trails a').attr('href')
+    var typeVal = 'GET'
+    $.ajax({
+      url: urlVal,
+      type: typeVal,
+      dataType: 'json'
+    }).done(function(response) {
+      console.log(response)
+      console.log('Yay! request went through')
+      $('.main-menu').addClass('hideMenu');
+      $('.my-hikes-menu').removeClass('hideMenu');
+      //$('.navbar').children().hide()
+      $('.navbar').prepend(response)
+    }).fail(function(response){
+      console.log(response)
+      console.log('request did not go through');
+    })
+    map.addLayer(userTrailsLayer);
   });
 
   // ALL HIKERS
@@ -164,7 +178,7 @@ $(document).on("ready", function() {
       $('#user_trails_trailhead_lat').val(trailHeadLat)
       var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][0]
       $('#user_trails_trailhead_lon').val(trailHeadLon)
-      
+
     $.ajax({
         url: urlVal,
         type: typeVal,
@@ -172,16 +186,18 @@ $(document).on("ready", function() {
       }).done(function(response) {
         console.log(response)
         console.log('Yay! request went through')
+        $('.navbar').children().hide()
+        $('.navbar').prepend(response)
       }).fail(function(response){
         console.log(response)
         console.log('request did not go through');
       });
-      // location.reload();
+      //location.reload();
   });
   //END SUBMIT NEW HIKE
 
 }); // END DOCUMENT READY
-  
+
 
   //Make an AJAX call for the current_user
   var currentUser;
