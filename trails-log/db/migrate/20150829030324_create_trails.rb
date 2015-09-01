@@ -11,9 +11,9 @@ class CreateTrails < ActiveRecord::Migration
       t.string :trailhead_title
       t.decimal  :trailhead_lon
       t.decimal  :trailhead_lat
-      t.string :trailend_title
       t.decimal  :trailend_lon
       t.decimal  :trailend_lat
+      t.string  :waypoints
       t.references :user
       t.references :map
 
