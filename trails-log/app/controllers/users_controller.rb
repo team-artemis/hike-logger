@@ -33,7 +33,11 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    render 'new'
+    if request.xhr?
+      respond_to do |format|
+        format.html { render 'new', layout: false }
+      end
+    end
   end
 
 
