@@ -20,7 +20,9 @@
     <li class="cssmenu">
       <h2> My hikes </h2>
     </li>
+    <div id="hike-list">
     <%= render 'trails/index' %>
+    </div>
   </div>
 
   <!-- LOG HIKE  -->
@@ -58,6 +60,17 @@
     <%= render 'users/index' %>
 
   </div>
+  
+  <div class="other-hiker-menu hideMenu">
+    <li class="cssmenu back-button">
+      <span>
+        <a href="/users/<%= current_user.id %>">
+          back to menu
+        </a>
+      </span>
+    </li>
+    <%= render 'main/other_hiker' %>
+  </div>
 
 </div>
 
@@ -65,13 +78,8 @@
 <div class="pure-u-19-24 debug">
   <div class="map" id="user-map"></div>
 </div>
-
+<!-- DRAW PATH -->
   <div id='inputs'></div>
   <div id='directions'>
     <div id='routes'></div>
   </div>
-
-
-<!-- Button to add trail -->
-<button id='add-trailhead-button' class='hidden'>Add Trailhead</button>
-<button id='save-trailhead-button' class='hidden'>Save Trailhead</button>

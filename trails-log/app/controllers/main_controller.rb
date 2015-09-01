@@ -27,6 +27,22 @@ class MainController < ApplicationController
     end
   end
 
+  def other_hiker
+    p "*" * 50
+    user = User.find_by(id: params[:id])
+    @trails = user.trails
+    if request.xhr?
+      render "trails/index", layout: false
+      # respond_to do |format|
+      #   format.html { render layout: false }
+      #   # format.json { render json: @user }
+      # end
+    end
+    p @trails
+    p user
+    p "&" * 50
+  end
+
   private
 
   def reverse_geocode(trailhead_lat, trailhead_lon)

@@ -1,0 +1,19 @@
+<li class="cssmenu">
+<% if @user %>
+		<h2> <%= @user.firstname %>'s hikes </h2>
+	</li>
+
+	<% @user.trails.each do |trail| %>
+	<li class="cssmenu trailtitle">
+		<a href="">
+			<span>
+				<b>
+					<%= trail.title %>
+				</b>
+				<br>
+				<%= reverse_geocode(trail.trailhead_lat, trail.trailhead_lon) %>
+			</span>
+		</a>
+	</li>
+	<% end %>
+<% end %>
