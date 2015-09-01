@@ -13,12 +13,12 @@ $(document).on("ready", function() {
 
   userTrailsLayer.on("ready", function(e) {
     map.fitBounds(userTrailsLayer.getBounds());
-    var trailname;
+    var hoveredTrail;
     $('.trailtitle').on('mouseenter', function(e){
-      trailname = $(this).find("b").text()
+      hoveredTrail = $(this).find("b").text()
       userTrailsLayer.eachLayer(function(marker) {
         // if ($(this a span b))
-        if (marker.feature.properties.title === trailname){
+        if (marker.feature.properties.title === hoveredTrail){
           marker.openPopup();
         }
       })
@@ -27,12 +27,32 @@ $(document).on("ready", function() {
     $('.trailtitle').on('mouseleave', function(e){
       userTrailsLayer.eachLayer(function(marker) {
         // if ($(this a span b))
-        if (marker.feature.properties.title === trailname){
+        if (marker.feature.properties.title === hoveredTrail){
           marker.closePopup();
         }
       });
     });
   });
+
+  var allHikersLayerBehavior = function() {
+    map.fitBounds(allHikersLayer.getBounds());
+    $("[id^='hiker']").on('mouseenter', function(e){
+      var hoveredUserId = $(this).attr('id').slice(-1)
+      allHikersLayer.eachLayer(function(marker) {
+        if (marker.feature.properties.user == hoveredUserId){
+          marker.openPopup();
+        }
+      })
+    });
+
+    $("[id^='hiker']").on('mouseleave', function(e){
+      userTrailsLayer.eachLayer(function(marker) {
+        if (marker.feature.properties.title === hoveredUser){
+          marker.closePopup();
+        }
+      })
+    });
+  };
 
   // Return to main menu
   $('.back-button').on('click', function(event){
@@ -57,11 +77,8 @@ $(document).on("ready", function() {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
     $('.all-hikers-menu').removeClass('hideMenu');
-
-    // removeAllLayers(map);
-    // map.removeLayer(userTrailsLayer);
     allHikersLayer.addTo(map)
-    // map.addLayer(allHikers);
+    allHikersLayerBehavior();
   })
 
   $('#log-hike').on('click', function(event) {
@@ -134,18 +151,18 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
 }); // END DOCUMENT READY
 
 
-  var userPath = function(){
-    var windowLocation = window.location.pathname
-    if (windowLocation.includes('/new')) {
-      return windowLocation.replace('/new', '.json')
-    }
-    else if (windowLocation.includes('/trails')) {
-      return windowLocation + '.json'
-    }
-    else {
-      return windowLocation + "/trails.json"
-    }
-  }
+  // var userPath = function(){
+  //   var windowLocation = window.location.pathname
+  //   if (windowLocation.includes('/new')) {
+  //     return windowLocation.replace('/new', '.json')
+  //   }
+  //   else if (windowLocation.includes('/trails')) {
+  //     return windowLocation + '.json'
+  //   }
+  //   else {
+  //     return windowLocation + "/trails.json"
+  //   }
+  // }
   
   //Make an AJAX call for the current_user
   var currentUser;

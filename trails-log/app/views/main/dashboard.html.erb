@@ -77,20 +77,23 @@
       <% end %>
   </div>
 
+  <!-- ALL HIKERS -->
+
   <div class="all-hikers-menu hideMenu">
-    <li class="cssmenu back-button"><span> <a href="/users/<%= current_user.id %>"> 
+    <li class="cssmenu back-button"><span> <a href="/users/<%= current_user.id %>">
       back to menu
     </a></span></li>
     <li class="cssmenu">
       <h2> Hikers </h2>
     </li>
     <% @users.each do |u| %>
-    <li class="cssmenu"><a><span>
+    <li class="cssmenu" id="hiker<%= u.id %>"><a><span>
       <b><%= u.firstname %> <%= u.lastname %></b> <br>
       <%= u.city %>, <%= u.state %>
     </span></a></li>
     <% end %>
   </div>
+  
 </div>
 
 <!-- MAP -->

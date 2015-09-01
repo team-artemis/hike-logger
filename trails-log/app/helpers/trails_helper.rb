@@ -1,5 +1,16 @@
 module TrailsHelper
-  
+
+  def reverse_geocode(trailhead_lat, trailhead_lon)
+    location = Geokit::LatLng.new(trailhead_lat, trailhead_lon)
+    city = location.reverse_geocode.city
+    state = location.reverse_geocode.state
+    return [city, state].join(', ')
+  end
+
+  def get_trail_owner(trail_object)
+    User.find_by(trail_object.user_id)
+  end
+
   class GeojsonBuilder
 
     def self.build_trail_point(trail)
@@ -12,6 +23,7 @@ module TrailsHelper
          properties: {
            title: trail.title,
            review: trail.review,
+           user: trail.user_id,
            :'marker-color' => '#00607d',
            :'marker-symbol' => 'park',
            :'marker-size' => 'large'
