@@ -106,9 +106,7 @@ $(document).on("ready", function() {
     $('#add-trailhead-button').addClass('hidden');
     $("#save-trailhead-button").addClass('hidden')
     $('.leaflet-draw').hide()
-    $('form span').hide();
-    $('input#mapbox-directions-origin-input').remove()
-    $('input#mapbox-directions-destination-input').remove()
+    $('#inputs').empty();
     map.addLayer(userTrailsLayer)
     map.removeLayer(allHikersLayer);
   });
