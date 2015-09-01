@@ -16,6 +16,14 @@ class MainController < ApplicationController
   end
 
   def landing
+    if current_user
+      @trails = current_user.trails
+      @trail = Trail.new
+      @users = User.all
+      render 'dashboard'
+    else
+      render 'landing'
+    end
   end
 
   def the_current_user

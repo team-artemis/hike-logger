@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'main/dashboard'
 
   resources :users do
     resources :trails do
