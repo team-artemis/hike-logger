@@ -1,7 +1,7 @@
 <% @trails.each do |trail| %>
 
-<li id="trail<%= trail.id %>" class="cssmenu trailtitle"><a href="/users/<%= current_user.id %>/trails/<%= trail.id %>"><span>
+<li class="cssmenu"><a id="trail<%= trail.id %>" href="/users/<%= current_user.id %>/trails/<%= trail.id %>">
   <b><%= trail.title %></b> <br>
   <%= reverse_geocode(trail.trailhead_lat, trail.trailhead_lon) %>
-</span></a></li>
+</a></li>
 <% end %>
