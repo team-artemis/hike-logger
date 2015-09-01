@@ -129,17 +129,9 @@ $(document).on("ready", function() {
     $('.main-menu').addClass('hideMenu');
     $('.log-hike-menu').removeClass('hideMenu');
     map.removeLayer(userTrailsLayer)
-
-
-    $('#add-trailhead-button').removeClass('hidden');
-    $('#add-trailhead-button').on("click", function(event) {
-      $(this).addClass('hidden');
-      $("#save-trailhead-button").removeClass('hidden')
-      addPathCreator();
-
+    addPathCreator();
       $('#mapbox-directions-origin-input').hide();
       $('#mapbox-directions-destination-input').hide();
-      //$('.mapbox-directions-route').hide()
       $('#routes').hide();
       $('.mapbox-form-label').hide();
     })
@@ -154,22 +146,6 @@ $(document).on("ready", function() {
           .addTo(map);
     }
 
-     $("#save-trailhead-button").on("click", function(event) {
-        event.preventDefault();
-        var fullPath = directions.query()
-        var wayPoints = fullPath["_waypoints"]
-        var trailEndLat = fullPath["destination"]["geometry"]["coordinates"][0]
-        var trailEndLon = fullPath["destination"]["geometry"]["coordinates"][1]
-        var trailHeadLat = fullPath["origin"]["geometry"]["coordinates"][0]
-        var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][1]
-      })
-
-    //Hide all the stuff that we don't want
-    function onDragEnd() {
-        var m = trailheadMarker.getLatLng();
-        $('#user_trails_trailhead_lat').val(m.lat)
-        $('#user_trails_trailhead_lon').val(m.lng)
-    }
   }); // END LOG HIKE ON CLICK
 
   //START SUBMIT NEW HIKE
@@ -177,6 +153,12 @@ $(document).on("ready", function() {
     event.preventDefault();
       var urlVal = $(this).attr('action')
       var typeVal = $(this).attr('method')
+      var fullPath = directions.query()
+      var wayPoints = fullPath["_waypoints"]
+      var trailEndLat = fullPath["destination"]["geometry"]["coordinates"][0]
+      var trailEndLon = fullPath["destination"]["geometry"]["coordinates"][1]
+      var trailHeadLat = fullPath["origin"]["geometry"]["coordinates"][0]
+      var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][1]
     $.ajax({
         url: urlVal,
         type: typeVal,
