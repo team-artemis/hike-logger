@@ -18,7 +18,9 @@ class MainController < ApplicationController
 
   def landing
     if logged_in?
-      @trails = current_user.trails
+      if current_user.trails
+        @trails = current_user.trails
+      end
       @trail = Trail.new
       @users = User.all
       render 'dashboard'

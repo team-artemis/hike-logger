@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   include SessionsHelper
   include TrailsHelper
   include MainHelper
+  include ApplicationHelper
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
@@ -14,7 +15,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    p params
     @trails = @user.trails
     @trail = Trail.new
     @users = User.all
@@ -33,11 +33,6 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    if request.xhr?
-      respond_to do |format|
-        format.html { render 'new', layout: false }
-      end
-    end
   end
 
 
@@ -47,19 +42,13 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
-    # respond_to do |format|
     if @user.save
+      @user.trails << Trail.create(title: "San Francisco", review: "Your first trailhead!", trailhead_lat: 37.7833, trailhead_lon: -122.4167)
       log_in(@user)
-      redirect_to @user
-        # format.html { redirect_to user_path(@user), notice: 'User was successfully created.' }
-        # format.json { render :show, status: :created, location: @user }
-      else
-        render :new
-        # format.html { render :new }
-        # format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    # end
+      redirect_to dashboard_path
+    else
+      render :new
+    end
   end
 
   # PATCH/PUT /users/1
