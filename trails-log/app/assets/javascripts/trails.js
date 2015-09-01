@@ -99,6 +99,7 @@ $(document).on("ready", function() {
   // Return to main menu
   $('.back-button').on('click', function(event){
     event.preventDefault();
+    console.log("back button working")
     // window.location = currentUser["id"]
     $('.navbar').children().addClass('hideMenu');
     $('.main-menu').removeClass('hideMenu');
