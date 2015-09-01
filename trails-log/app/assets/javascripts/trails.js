@@ -13,21 +13,19 @@ $(document).on("ready", function() {
 
   userTrailsLayer.on("ready", function(e) {
     map.fitBounds(userTrailsLayer.getBounds());
-    var hoveredTrail;
-    $('.trailtitle').on('mouseenter', function(e){
-      hoveredTrail = $(this).find("b").text()
+    var hoveredTrailId;
+    $("[id^='trail']").on('mouseenter', function(e){
+      hoveredTrailId = $(this).attr('id').slice(-1)
       userTrailsLayer.eachLayer(function(marker) {
-        // if ($(this a span b))
-        if (marker.feature.properties.title === hoveredTrail){
+        if (marker.feature.properties.id == hoveredTrailId){
           marker.openPopup();
         }
       })
     });
 
-    $('.trailtitle').on('mouseleave', function(e){
+    $("[id^='trail']").on('mouseleave', function(e){
       userTrailsLayer.eachLayer(function(marker) {
-        // if ($(this a span b))
-        if (marker.feature.properties.title === hoveredTrail){
+        if (marker.feature.properties.id == hoveredTrailId){
           marker.closePopup();
         }
       });
@@ -36,6 +34,7 @@ $(document).on("ready", function() {
 
   var allHikersLayerBehavior = function() {
     map.fitBounds(allHikersLayer.getBounds());
+    var hoveredUserId;
     $("[id^='hiker']").on('mouseenter', function(e){
       var hoveredUserId = $(this).attr('id').slice(-1)
       allHikersLayer.eachLayer(function(marker) {
@@ -47,7 +46,7 @@ $(document).on("ready", function() {
 
     $("[id^='hiker']").on('mouseleave', function(e){
       userTrailsLayer.eachLayer(function(marker) {
-        if (marker.feature.properties.title === hoveredUser){
+        if (marker.feature.properties.user === hoveredUserId){
           marker.closePopup();
         }
       })
@@ -136,11 +135,11 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
       type: typeVal,
       data: $('#new-trail-form').serialize()
     }).done(function(response) {
-      // alert('Yay! request went through')
       console.log(response)
+      console.log('Yay! request went through')
     }).fail(function(response){
       console.log(response)
-      // alert('request did not go through');
+      console.log('request did not go through');
     });
     location.reload();
 })
@@ -171,7 +170,6 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
      method: "GET",
      dataType: "JSON"
    }).done(function(user){
-      console.log(user);
       currentUser = user;
    });
 

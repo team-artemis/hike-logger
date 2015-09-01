@@ -11,9 +11,6 @@ class TrailsController < ApplicationController
       format.html
       format.json { render json: @geojson }
     end
-    p @geojson
-    p "*" * 100
-    p @trails
     # render 'index'
   end
 
@@ -22,8 +19,7 @@ class TrailsController < ApplicationController
       geojson << GeojsonBuilder.build_trail_point(trail)
     end
   end
-  # GET /trails
-  # GET /trails.json
+
   def index
     user = User.find_by(id: params[:user_id])
     @trails = user.trails
@@ -37,52 +33,30 @@ class TrailsController < ApplicationController
 
   end
 
-  # def global_index
-  #   @trails = Trail.all 
-  #   @geojson = Array.new
-  #   # Must be a different method, since build_geojson runs build_trail_point
-  #   build_geojson(@trails, @geojson)
-    
-  #   respond_to do |format|
-  #     format.html
-  #     format.json { render json: @geojson }
-  #   end
-  # end
-
-  # Refactor to trails_helper?
   def build_geojson(trails, geojson)
     trails.each do |trail|
       geojson << GeojsonBuilder.build_trail_point(trail)
     end
   end
 
-  # GET /trails/1
-  # GET /trails/1.json
   def show
     @trail = set_trail
-    # @location = reverse_geocode(@trail.trailhead_lat, @trail.trailhead_lon)
-    # p @location
   end
 
-  # GET /trails/new
   def new
     @trail = Trail.new
     respond_to do |format|
       format.html { render layout: false }
       format.json { render json: @trail }
     end
-    p params
   end
 
-  # GET /trails/1/edit
   def edit
     @trail = set_trail
     @trail.update_attributes(trail_params)
     redirect_to user_trail_path(@trail)
   end
 
-  # POST /trails
-  # POST /trails.json
   def create
     @trail = Trail.new(trail_params)
 
@@ -100,8 +74,6 @@ class TrailsController < ApplicationController
     
   end
 
-  # PATCH/PUT /trails/1
-  # PATCH/PUT /trails/1.json
   def update
     respond_to do |format|
       if @trail.update(trail_params)
@@ -114,8 +86,6 @@ class TrailsController < ApplicationController
     end
   end
 
-  # DELETE /trails/1
-  # DELETE /trails/1.json
   def destroy
     @trail.destroy
     respond_to do |format|
@@ -125,12 +95,11 @@ class TrailsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+  
     def set_trail
       @trail = Trail.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def trail_params
       params.require(:user_trails).permit(:title, :length, :duration, :difficulty, :review, :rating, :trailhead_lat, :trailhead_lon, :user_id)
     end
