@@ -10,14 +10,15 @@ $(document).on("ready", function() {
   var drawLayer = L.featureGroup().addTo(map);
   var drawControl = new L.Control.Draw({edit: {featureGroup: drawLayer}})
 
+
   userTrailsLayer.on("ready", function(e) {
     map.fitBounds(userTrailsLayer.getBounds());
-    var trailPopUpOnHoverOnNavHover;
+    var trailname;
     $('.trailtitle').on('mouseenter', function(e){
-      // re-factor b tag to an ID name.
-      trailPopUpOnHoverOnNavHover = $(this).find("b").text()
+      trailname = $(this).find("b").text()
       userTrailsLayer.eachLayer(function(marker) {
-        if (marker.feature.properties.title === trailPopUpOnHoverOnNavHover){
+        // if ($(this a span b))
+        if (marker.feature.properties.title === trailname){
           marker.openPopup();
         }
       })
@@ -25,12 +26,13 @@ $(document).on("ready", function() {
 
     $('.trailtitle').on('mouseleave', function(e){
       userTrailsLayer.eachLayer(function(marker) {
-        if (marker.feature.properties.title === trailPopUpOnHoverOnNavHover){
+        // if ($(this a span b))
+        if (marker.feature.properties.title === trailname){
           marker.closePopup();
         }
-      })
+      });
     });
-  })
+  });
 
   // Return to main menu
   $('.back-button').on('click', function(event){
@@ -67,6 +69,25 @@ $(document).on("ready", function() {
     $('.main-menu').addClass('hideMenu');
     $('.log-hike-menu').removeClass('hideMenu');
     map.removeLayer(userTrailsLayer)
+
+    var showAllTrails = function() {
+      map.fitBounds(allHikersLayer.getBounds());
+      $("[id^='hiker']").on('mouseenter', function(e){
+        var hoveredUserId = $(this).attr('id').slice(-1)
+        allHikersLayer.eachLayer(function(marker) {
+          if (marker.feature.properties.user == hoveredUserId){
+            marker.openPopup();
+          }
+        })
+      });
+      $("[id^='hiker']").on('mouseleave', function(e){
+        userTrailsLayer.eachLayer(function(marker) {
+          if (marker.feature.properties.title === hoveredUser){
+            marker.closePopup();
+          }
+        })
+      });
+    };
 
     var trailheadMarker = L.marker([37.7833, -122.4167], {
       icon: L.mapbox.marker.icon({
