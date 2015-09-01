@@ -5,11 +5,6 @@ class UsersController < ApplicationController
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-<<<<<<< HEAD
- 
-=======
-  # GET /users /users.json
->>>>>>> cb37b69a7d17d0dddef8782144d63d6a3578a9ee
   def index
     @users = User.all
     respond_to do |format|
@@ -18,10 +13,6 @@ class UsersController < ApplicationController
     end
   end
 
-<<<<<<< HEAD
-=======
-  # GET /users/1 /users/1.json
->>>>>>> cb37b69a7d17d0dddef8782144d63d6a3578a9ee
   def show
     p params
     @trails = current_user.trails

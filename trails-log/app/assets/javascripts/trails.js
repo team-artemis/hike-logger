@@ -78,7 +78,7 @@ $(document).on("ready", function() {
 
   // ajax call for hike page
   $("[id^='trail']").on('click', function(event){
-    e.preventDefault;
+    event.preventDefault;
     var urlVal = $(this).attr('action')
     var typeVal = $(this).attr('method')
     $.ajax({
