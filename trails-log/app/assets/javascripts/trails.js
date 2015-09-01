@@ -53,6 +53,23 @@ $(document).on("ready", function() {
     });
   };
 
+  // ajax call for hike page
+  $("[id^='trail']").on('click', function(event){
+    e.preventDefault;
+    var urlVal = $(this).attr('action')
+    var typeVal = $(this).attr('method')
+    $.ajax({
+      url: urlVal,
+      type: typeVal
+    }).done(function(hikeInfo){
+      console.log(hikeInfo);
+      console.log("Yay");
+    }).fail(function(hikeInfo){
+      console.log(hikeInfo);
+      console.log("Nay");
+    })
+  });
+
   // Return to main menu
   $('.back-button').on('click', function(event){
     event.preventDefault();
@@ -61,7 +78,7 @@ $(document).on("ready", function() {
     $('.leaflet-draw').hide()
     map.addLayer(userTrailsLayer)
     map.removeLayer(allHikersLayer);
-  })
+  });
 
   // Show the my trails menu
   $('#my-trails').on('click', function(event){
@@ -69,7 +86,7 @@ $(document).on("ready", function() {
     $('.main-menu').addClass('hideMenu');
     $('.my-hikes-menu').removeClass('hideMenu');
     map.addlayer(userTrailsLayer);
-  })
+  });
 
   // Show all-hikers menu
   $('#all-hikers').on('click', function(event) {
@@ -78,32 +95,14 @@ $(document).on("ready", function() {
     $('.all-hikers-menu').removeClass('hideMenu');
     allHikersLayer.addTo(map)
     allHikersLayerBehavior();
-  })
+  });
 
+  //START LOG HIKE ON CLICK
   $('#log-hike').on('click', function(event) {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
     $('.log-hike-menu').removeClass('hideMenu');
     map.removeLayer(userTrailsLayer)
-
-    var showAllTrails = function() {
-      map.fitBounds(allHikersLayer.getBounds());
-      $("[id^='hiker']").on('mouseenter', function(e){
-        var hoveredUserId = $(this).attr('id').slice(-1)
-        allHikersLayer.eachLayer(function(marker) {
-          if (marker.feature.properties.user == hoveredUserId){
-            marker.openPopup();
-          }
-        })
-      });
-      $("[id^='hiker']").on('mouseleave', function(e){
-        userTrailsLayer.eachLayer(function(marker) {
-          if (marker.feature.properties.title === hoveredUser){
-            marker.closePopup();
-          }
-        })
-      });
-    };
 
     var trailheadMarker = L.marker([37.7833, -122.4167], {
       icon: L.mapbox.marker.icon({
@@ -123,45 +122,29 @@ $(document).on("ready", function() {
         $('#user_trails_trailhead_lat').val(m.lat)
         $('#user_trails_trailhead_lon').val(m.lng)
     }
-  }) // END LOG HIKE ON CLICK
+  }); // END LOG HIKE ON CLICK
 
-//START SUBMIT NEW HIKE
-$('.navbar').on("submit", '#new-trail-form', function(event){
-  event.preventDefault();
-    var urlVal = $(this).attr('action')
-    var typeVal = $(this).attr('method')
-  $.ajax({
-      url: urlVal,
-      type: typeVal,
-      data: $('#new-trail-form').serialize()
-    }).done(function(response) {
-      console.log(response)
-      console.log('Yay! request went through')
-    }).fail(function(response){
-      console.log(response)
-      console.log('request did not go through');
-    });
-    location.reload();
-})
-//END SUBMIT NEW HIKE
-
-
+  //START SUBMIT NEW HIKE
+  $('.navbar').on("submit", '#new-trail-form', function(event){
+    event.preventDefault();
+      var urlVal = $(this).attr('action')
+      var typeVal = $(this).attr('method')
+    $.ajax({
+        url: urlVal,
+        type: typeVal,
+        data: $('#new-trail-form').serialize()
+      }).done(function(response) {
+        console.log(response)
+        console.log('Yay! request went through')
+      }).fail(function(response){
+        console.log(response)
+        console.log('request did not go through');
+      });
+      location.reload();
+  });
+  //END SUBMIT NEW HIKE
 
 }); // END DOCUMENT READY
-
-
-  // var userPath = function(){
-  //   var windowLocation = window.location.pathname
-  //   if (windowLocation.includes('/new')) {
-  //     return windowLocation.replace('/new', '.json')
-  //   }
-  //   else if (windowLocation.includes('/trails')) {
-  //     return windowLocation + '.json'
-  //   }
-  //   else {
-  //     return windowLocation + "/trails.json"
-  //   }
-  // }
   
   //Make an AJAX call for the current_user
   var currentUser;
