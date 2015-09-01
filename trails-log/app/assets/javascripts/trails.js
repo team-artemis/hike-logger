@@ -9,33 +9,12 @@ $(document).on("ready", function() {
   var allHikersLayer = allHikersTrails(map);
   var drawLayer = L.featureGroup().addTo(map);
   var drawControl = new L.Control.Draw({edit: {featureGroup: drawLayer}})
-
-  var otherHikerListener = function() {
-    $(".other-hiker").on('click', function(event) {
-      event.preventDefault();
-      // console.log("you got me")
-      var urlVal = $(this).attr('href')
-      console.log(urlVal)
-      $.ajax({
-        url: urlVal,
-      }).done(function(response){
-        console.log(response)
-        $('.navbar').children().hide()
-        $('.navbar').prepend(response)
-
-        // $('.all-hikers-menu').addClass('hideMenu');
-        // $('.other-hiker-menu').removeClass('hideMenu');
-      }).fail(function(response){
-        console.log("fail")
-        console.log(response)
-      })
-    })
-  }
-
-  otherHikerListener();
+  
 
   userTrailsLayer.on("ready", function(event) {
     map.fitBounds(userTrailsLayer.getBounds());
+
+    // Hovering on the trail in the navbar opens pop up
     var hoveredTrailId;
     $("[id^='trail']").on('mouseenter', function(event){
       hoveredTrailId = $(this).attr('id').slice(-1)
@@ -52,50 +31,29 @@ $(document).on("ready", function() {
           marker.closePopup();
         }
       });
+
     });
   });
 
-  var allHikersLayerBehavior = function() {
-    map.fitBounds(allHikersLayer.getBounds());
-    var hoveredUserId;
-    $("[id^='hiker']").on('mouseenter', function(e){
-      var hoveredUserId = $(this).attr('id').slice(-1)
-      allHikersLayer.eachLayer(function(marker) {
-        if (marker.feature.properties.user == hoveredUserId){
-          marker.openPopup();
-        }
+// $("[id^='trail']").on('click', function(event){
+ $('a#trail1').on('click', function(event){
+      event.preventDefault();
+      debugger
+      var clickedHikeId = $(this).attr('id').slice(-1)
+      var urlVal = $(this).attr('href')
+      $.ajax(urlVal).done(function(hikeInfo){
+        $('.navbar').children().hide()
+        $('.navbar').prepend(hikeInfo)
+        userTrailsLayer.eachLayer(function(marker){
+          if (marker.feature.properties.id == clickedHikeId){
+             map.setView(marker._latlng, 15);
+          }
+        })
       })
     });
-
-    $("[id^='hiker']").on('mouseleave', function(e){
-      userTrailsLayer.eachLayer(function(marker) {
-        if (marker.feature.properties.user === hoveredUserId){
-          marker.closePopup();
-        }
-      })
-    });
-  };
-
-  // ajax call for hike page
-  $("[id^='trail']").on('click', function(event){
-    event.preventDefault();
-    var clickedHikeId = $(this).attr('id').slice(-1)
-    var urlVal = $(this).attr('href')
-    console.log(clickedHikeId)
-    $.ajax(urlVal).done(function(hikeInfo){
-      $('.navbar').children().hide()
-      $('.navbar').prepend(hikeInfo)
-      below not working yet
-      userTrailsLayer.eachLayer(function(marker){
-        if (marker.feature.properties.id == clickedHikeId){
-           map.setView(marker._latlng, 15);
-        }
-      })
-    })
-  });
-
-
-
+    // showHikePageBehavior();
+  
+  
   // Return to main menu
   $('.back-button').on('click', function(event){
     event.preventDefault();
@@ -118,6 +76,8 @@ $(document).on("ready", function() {
     map.addlayer(userTrailsLayer);
   });
 
+  // ALL HIKERS
+
   // Show all-hikers menu
   $('#all-hikers').on('click', function(event) {
     event.preventDefault();
@@ -125,8 +85,47 @@ $(document).on("ready", function() {
     $('.all-hikers-menu').removeClass('hideMenu');
     allHikersLayer.addTo(map)
     allHikersLayerBehavior();
+    // showHikePageBehavior();
   });
 
+  var allHikersLayerBehavior = function() {
+    map.fitBounds(allHikersLayer.getBounds());
+    // Hover user's nav item to highlight their markers
+    var hoveredUserId;
+    $("[id^='hiker']").on('mouseenter', function(e){
+      var hoveredUserId = $(this).attr('id').slice(-1)
+      allHikersLayer.eachLayer(function(marker) {
+        if (marker.feature.properties.user == hoveredUserId){
+          marker.openPopup();
+        }
+      })
+    });
+
+    $("[id^='hiker']").on('mouseleave', function(e){
+      userTrailsLayer.eachLayer(function(marker) {
+        if (marker.feature.properties.user === hoveredUserId){
+          marker.closePopup();
+        }
+      })
+    });
+  };
+
+  var otherHikerListener = (function() {
+    $(".other-hiker").on('click', function(event) {
+      event.preventDefault();
+      var urlVal = $(this).attr('href')
+      $.ajax(urlVal)
+      .done(function(response){
+        $('.navbar').children().hide()
+        $('.navbar').prepend(response)
+      })
+      .fail(function(response){
+        console.log("The request failed.")
+      })
+    })
+  })()
+
+// LOG HIKE
   //START LOG HIKE ON CLICK
   $('#log-hike').on('click', function(event) {
     event.preventDefault();
@@ -186,6 +185,26 @@ $(document).on("ready", function() {
   //END SUBMIT NEW HIKE
 
 }); // END DOCUMENT READY
+  
+  // ajax call for hike page
+  // var showHikePageBehavior = function() {
+    
+    // $("[id^='trail']").on('click', function(event){
+    //   event.preventDefault();
+    //   debugger
+    //   var clickedHikeId = $(this).attr('id').slice(-1)
+    //   var urlVal = $(this).attr('href')
+    //   $.ajax(urlVal).done(function(hikeInfo){
+    //     $('.navbar').children().hide()
+    //     $('.navbar').prepend(hikeInfo)
+    //     userTrailsLayer.eachLayer(function(marker){
+    //       if (marker.feature.properties.id == clickedHikeId){
+    //          map.setView(marker._latlng, 15);
+    //       }
+    //     })
+    //   })
+    // });
+  // }
 
   //Make an AJAX call for the current_user
   var currentUser;
