@@ -143,13 +143,13 @@ $(document).on("ready", function() {
       var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
           .addTo(map);
     }
-    addPathCreator();
-      $('#mapbox-directions-origin-input').hide();
-      $('#mapbox-directions-destination-input').hide();
-      $('#routes').hide();
-      $('.mapbox-form-label').hide();
-
-
+    if($('.log-hike-menu').hasClass('hideMenu')) {
+      addPathCreator();
+        $('#mapbox-directions-origin-input').hide();
+        $('#mapbox-directions-destination-input').hide();
+        $('#routes').hide();
+        $('.mapbox-form-label').hide();
+      }
   }); // END LOG HIKE ON CLICK
 
   //START SUBMIT NEW HIKE
