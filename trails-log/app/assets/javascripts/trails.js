@@ -35,10 +35,9 @@ $(document).on("ready", function() {
     });
   });
 
-// $("[id^='trail']").on('click', function(event){
- $('a#trail1').on('click', function(event){
+  // Show hike page from both my trails list and hikers' trails list
+ $('.navbar').on('click', "[id^='trail']", function(event){
       event.preventDefault();
-      debugger
       var clickedHikeId = $(this).attr('id').slice(-1)
       var urlVal = $(this).attr('href')
       $.ajax(urlVal).done(function(hikeInfo){
@@ -50,9 +49,7 @@ $(document).on("ready", function() {
           }
         })
       })
-    });
-    // showHikePageBehavior();
-  
+    });  
   
   // Return to main menu
   $('.back-button').on('click', function(event){
@@ -85,7 +82,6 @@ $(document).on("ready", function() {
     $('.all-hikers-menu').removeClass('hideMenu');
     allHikersLayer.addTo(map)
     allHikersLayerBehavior();
-    // showHikePageBehavior();
   });
 
   var allHikersLayerBehavior = function() {
@@ -168,7 +164,7 @@ $(document).on("ready", function() {
       $('#user_trails_trailhead_lat').val(trailHeadLat)
       var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][0]
       $('#user_trails_trailhead_lon').val(trailHeadLon)
-      debugger
+      
     $.ajax({
         url: urlVal,
         type: typeVal,
@@ -186,25 +182,6 @@ $(document).on("ready", function() {
 
 }); // END DOCUMENT READY
   
-  // ajax call for hike page
-  // var showHikePageBehavior = function() {
-    
-    // $("[id^='trail']").on('click', function(event){
-    //   event.preventDefault();
-    //   debugger
-    //   var clickedHikeId = $(this).attr('id').slice(-1)
-    //   var urlVal = $(this).attr('href')
-    //   $.ajax(urlVal).done(function(hikeInfo){
-    //     $('.navbar').children().hide()
-    //     $('.navbar').prepend(hikeInfo)
-    //     userTrailsLayer.eachLayer(function(marker){
-    //       if (marker.feature.properties.id == clickedHikeId){
-    //          map.setView(marker._latlng, 15);
-    //       }
-    //     })
-    //   })
-    // });
-  // }
 
   //Make an AJAX call for the current_user
   var currentUser;
