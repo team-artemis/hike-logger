@@ -10,7 +10,7 @@ module SessionsHelper
   end
 
   def logged_in?
-    !(params[:session] == nil)
+    session[:id] != nil
   end
 
   def current_user

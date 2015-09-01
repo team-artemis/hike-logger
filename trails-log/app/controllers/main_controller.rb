@@ -16,7 +16,7 @@ class MainController < ApplicationController
   end
 
   def landing
-    if current_user
+    if logged_in?
       @trails = current_user.trails
       @trail = Trail.new
       @users = User.all
