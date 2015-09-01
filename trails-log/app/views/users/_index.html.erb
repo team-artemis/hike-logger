@@ -1,0 +1,11 @@
+<% @users.each do |user| %>
+<li class="cssmenu" id="hiker<%= user.id %>">
+  <a>
+    <span>
+      <b> <%= user.firstname %> <%= user.lastname %> </b>
+      <br>
+      <%= user.city %>, <%= user.state %>
+    </span>
+  </a>
+</li>
+<% end %>

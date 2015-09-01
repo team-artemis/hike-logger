@@ -1,5 +1,7 @@
 class MainController < ApplicationController
   include SessionsHelper
+  include TrailsHelper
+
   def dashboard
     @trails = current_user.trails
     @trail = Trail.new
@@ -23,5 +25,14 @@ class MainController < ApplicationController
         format.json { render json: @current_user}
       end
     end
+  end
+
+  private
+
+  def reverse_geocode(trailhead_lat, trailhead_lon)
+    location = Geokit::LatLng.new(trailhead_lat, trailhead_lon)
+    city = location.reverse_geocode.city
+    state = location.reverse_geocode.state
+    return [city, state].join(', ')
   end
 end

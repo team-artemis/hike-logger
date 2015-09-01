@@ -3,23 +3,12 @@ $(document).on("ready", function() {
 
   var map = L.mapbox.map('user-map', 'mapbox.run-bike-hike')
     .addControl(L.mapbox.geocoderControl('mapbox.places'))
-    .setView([37.7833, -122.4167], 12);
+    .setView([37.7833, -122.4167]);
 
   var userTrailsLayer = getUserTrails(map).addTo(map);
   var allHikersLayer = allHikersTrails(map);
   var drawLayer = L.featureGroup().addTo(map);
   var drawControl = new L.Control.Draw({edit: {featureGroup: drawLayer}})
-
-
-  // Make an AJAX call for the current_user
-  // var currentUser;
-  // $.ajax({
-  //   url: "/current_user",
-  //   method: "GET",
-  //   dataType: "JSON"
-  // }).done(function(user){
-  //   currentUser = user;
-  // })
 
   var otherHikerListener = function() {
     $(".other-hiker").on('click', function(event) {
@@ -45,27 +34,64 @@ $(document).on("ready", function() {
   
   otherHikerListener();
 
-  userTrailsLayer.on("ready", function(e) {
+  userTrailsLayer.on("ready", function(event) {
     map.fitBounds(userTrailsLayer.getBounds());
-    var trailPopUpOnHoverOnNavHover;
-    $('.trailtitle').on('mouseenter', function(e){
-      // re-factor b tag to an ID name.
-      trailPopUpOnHoverOnNavHover = $(this).find("b").text()
+    var hoveredTrailId;
+    $("[id^='trail']").on('mouseenter', function(event){
+      hoveredTrailId = $(this).attr('id').slice(-1)
       userTrailsLayer.eachLayer(function(marker) {
-        if (marker.feature.properties.title === trailPopUpOnHoverOnNavHover){
+        if (marker.feature.properties.id == hoveredTrailId){
           marker.openPopup();
         }
       })
     });
 
-    $('.trailtitle').on('mouseleave', function(e){
+    $("[id^='trail']").on('mouseleave', function(event){
       userTrailsLayer.eachLayer(function(marker) {
-        if (marker.feature.properties.title === trailPopUpOnHoverOnNavHover){
+        if (marker.feature.properties.id == hoveredTrailId){
+          marker.closePopup();
+        }
+      });
+    });
+  });
+
+  var allHikersLayerBehavior = function() {
+    map.fitBounds(allHikersLayer.getBounds());
+    var hoveredUserId;
+    $("[id^='hiker']").on('mouseenter', function(e){
+      var hoveredUserId = $(this).attr('id').slice(-1)
+      allHikersLayer.eachLayer(function(marker) {
+        if (marker.feature.properties.user == hoveredUserId){
+          marker.openPopup();
+        }
+      })
+    });
+
+    $("[id^='hiker']").on('mouseleave', function(e){
+      userTrailsLayer.eachLayer(function(marker) {
+        if (marker.feature.properties.user === hoveredUserId){
           marker.closePopup();
         }
       })
     });
-  })
+  };
+
+  // ajax call for hike page
+  $("[id^='trail']").on('click', function(event){
+    event.preventDefault;
+    var urlVal = $(this).attr('action')
+    var typeVal = $(this).attr('method')
+    $.ajax({
+      url: urlVal,
+      type: typeVal
+    }).done(function(hikeInfo){
+      console.log(hikeInfo);
+      console.log("Yay");
+    }).fail(function(hikeInfo){
+      console.log(hikeInfo);
+      console.log("Nay");
+    })
+  });
 
   // Return to main menu
   $('.back-button').on('click', function(event){
@@ -78,7 +104,7 @@ $(document).on("ready", function() {
     $('.leaflet-draw').hide()
     map.addLayer(userTrailsLayer)
     map.removeLayer(allHikersLayer);
-  })
+  });
 
   // Show the my trails menu
   $('#my-trails').on('click', function(event){
@@ -86,21 +112,18 @@ $(document).on("ready", function() {
     $('.main-menu').addClass('hideMenu');
     $('.my-hikes-menu').removeClass('hideMenu');
     map.addlayer(userTrailsLayer);
-  })
+  });
 
   // Show all-hikers menu
   $('#all-hikers').on('click', function(event) {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
     $('.all-hikers-menu').removeClass('hideMenu');
-
-    // removeAllLayers(map);
-    // map.removeLayer(userTrailsLayer);
     allHikersLayer.addTo(map)
-    // map.addLayer(allHikers);
-  })
+    allHikersLayerBehavior();
+  });
 
-
+  //START LOG HIKE ON CLICK
   $('#log-hike').on('click', function(event) {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
@@ -139,51 +162,37 @@ $(document).on("ready", function() {
         var trailEndLon = fullPath["destination"]["geometry"]["coordinates"][1]
         var trailHeadLat = fullPath["origin"]["geometry"]["coordinates"][0]
         var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][1]
-        debugger
       })
 
     //Hide all the stuff that we don't want
+    function onDragEnd() {
+        var m = trailheadMarker.getLatLng();
+        $('#user_trails_trailhead_lat').val(m.lat)
+        $('#user_trails_trailhead_lon').val(m.lng)
+    }
+  }); // END LOG HIKE ON CLICK
 
-
-  }) // END LOG HIKE ON CLICK
-
-//START SUBMIT NEW HIKE
-$('.navbar').on("submit", '#new-trail-form', function(event){
-  event.preventDefault();
-    var urlVal = $(this).attr('action')
-    var typeVal = $(this).attr('method')
-  $.ajax({
-      url: urlVal,
-      type: typeVal,
-      data: $('#new-trail-form').serialize()
-    }).done(function(response) {
-      // alert('Yay! request went through')
-      console.log(response)
-    }).fail(function(response){
-      console.log(response)
-      // alert('request did not go through');
-    });
-    location.reload();
-
-    //Perhaps use setLatLng() method to set the location to the hike you just added
-})
-//END SUBMIT new HIKE
+  //START SUBMIT NEW HIKE
+  $('.navbar').on("submit", '#new-trail-form', function(event){
+    event.preventDefault();
+      var urlVal = $(this).attr('action')
+      var typeVal = $(this).attr('method')
+    $.ajax({
+        url: urlVal,
+        type: typeVal,
+        data: $('#new-trail-form').serialize()
+      }).done(function(response) {
+        console.log(response)
+        console.log('Yay! request went through')
+      }).fail(function(response){
+        console.log(response)
+        console.log('request did not go through');
+      });
+      location.reload();
+  });
+  //END SUBMIT NEW HIKE
 
 }); // END DOCUMENT READY
-
-
-  var userPath = function(){
-    var windowLocation = window.location.pathname
-    if (windowLocation.includes('/new')) {
-      return windowLocation.replace('/new', '.json')
-    }
-    else if (windowLocation.includes('/trails')) {
-      return windowLocation + '.json'
-    }
-    else {
-      return windowLocation + "/trails.json"
-    }
-  }
   
   //Make an AJAX call for the current_user
   var currentUser;
@@ -192,7 +201,6 @@ $('.navbar').on("submit", '#new-trail-form', function(event){
      method: "GET",
      dataType: "JSON"
    }).done(function(user){
-      console.log(user);
       currentUser = user;
    });
 

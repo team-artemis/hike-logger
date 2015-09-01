@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
   include SessionsHelper
   include TrailsHelper
+  include MainHelper
+
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  # GET /users /users.json
   def index
     @users = User.all
     respond_to do |format|
@@ -12,7 +13,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/1 /users/1.json
   def show
     p params
     @trails = current_user.trails
@@ -30,19 +30,17 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/new
+
   def new
     @user = User.new
     render 'new'
   end
 
-  # GET /users/1/edit
+
   def edit
     render 'edit'
   end
 
-  # POST /users
-  # POST /users.json
   def create
     @user = User.new(user_params)
 
