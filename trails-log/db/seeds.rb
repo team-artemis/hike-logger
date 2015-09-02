@@ -80,3 +80,45 @@ Trail.create(
         ['http://3.bp.blogspot.com/-zAm7BN6kPl4/T0x5xDp0rWI/AAAAAAAABFY/K0Ti2ONJw_Y/s1600/IMG_6393.JPG','I love plant.']
         ]
   )
+
+Trail.create(
+  title: "Honolulu",
+  is_loop: true,
+  length: 7.5,
+  duration: "4 hours",
+  difficulty: "Intermediate",
+  review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
+  rating: 4,
+  trailhead_title:"Florida",
+  trailhead_lon: 21.304770,
+  trailhead_lat: -157.857614,
+  trailend_lon: -81.582923,
+  trailend_lat: 30.927665,
+  user_id: 1,
+  images: [
+        ['http://2.bp.blogspot.com/-kw9YgQnbELY/Um6dt-GgdXI/AAAAAAAAB0o/VCErLESCKGE/s1600/mt-tamalpais-matt-davis-trail-staircase-big.jpg','A really big staircase on the Matt Davis Trail!'],
+        ['http://www.boopidy.com/aj/lj/1-27-2006/trail__large_.jpg','How creepy! Am I in a horror movie starring Jonathon Taylor Thomas? I sure hope so.'],
+        ['http://3.bp.blogspot.com/-zAm7BN6kPl4/T0x5xDp0rWI/AAAAAAAABFY/K0Ti2ONJw_Y/s1600/IMG_6393.JPG','I love plant.']
+        ]
+  )
+
+Trail.create(
+  title: "Nashville",
+  is_loop: true,
+  length: 7.5,
+  duration: "4 hours",
+  difficulty: "Intermediate",
+  review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
+  rating: 4,
+  trailhead_title:"Florida",
+  trailhead_lon: 36.167783,
+  trailhead_lat: -86.778365,
+  trailend_lon: -81.582923,
+  trailend_lat: 30.927665,
+  user_id: 2,
+  images: [
+        ['http://2.bp.blogspot.com/-kw9YgQnbELY/Um6dt-GgdXI/AAAAAAAAB0o/VCErLESCKGE/s1600/mt-tamalpais-matt-davis-trail-staircase-big.jpg','A really big staircase on the Matt Davis Trail!'],
+        ['http://www.boopidy.com/aj/lj/1-27-2006/trail__large_.jpg','How creepy! Am I in a horror movie starring Jonathon Taylor Thomas? I sure hope so.'],
+        ['http://3.bp.blogspot.com/-zAm7BN6kPl4/T0x5xDp0rWI/AAAAAAAABFY/K0Ti2ONJw_Y/s1600/IMG_6393.JPG','I love plant.']
+        ]
+  )
