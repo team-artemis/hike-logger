@@ -10,6 +10,26 @@ $(document).on("ready", function() {
   var drawLayer = L.featureGroup().addTo(map);
   var drawControl = new L.Control.Draw({edit: {featureGroup: drawLayer}})
 
+  var addHikeButton =  L.Control.extend({options: {position: 'topleft'},
+    onAdd: function(map){
+      var addHike = L.DomUtil.create('div', 'addHikeButton leaflet-bar leaflet-control leaflet-control-custom');
+
+      addHike.style.backgroundColor = 'white';
+      addHike.style.backgroundImage = "url(http://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)";
+      addHike.style.backgroundSize = "30px 30px";
+      addHike.style.width = '30px';
+      addHike.style.height = '30px';
+
+      addHike.onclick = function(){
+        console.log('buttonClicked');
+      }
+
+      return addHike;
+    }
+  });
+
+  var button = new addHikeButton
+
   var otherHikerListener = function() {
     $(".other-hiker").on('click', function(event) {
       event.preventDefault();
@@ -108,7 +128,7 @@ $(document).on("ready", function() {
     $('.leaflet-draw').hide()
     $('#inputs').empty();
     map.addLayer(userTrailsLayer)
-    map.removeLayer(allHikersLayer);
+    map.removeControl(button)
   });
 
   // Show the my trails menu
@@ -134,6 +154,8 @@ $(document).on("ready", function() {
     $('.main-menu').addClass('hideMenu');
     $('.log-hike-menu').removeClass('hideMenu');
     map.removeLayer(userTrailsLayer)
+    map.addControl(button);
+
     var addPathCreator = function(){
       var directions = L.mapbox.directions({profile: 'mapbox.walking'});
       var directionsLayer = L.mapbox.directions.layer(directions)
@@ -143,14 +165,15 @@ $(document).on("ready", function() {
       var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
           .addTo(map);
     }
-    if($('.log-hike-menu').hasClass('hideMenu')) {
+
       addPathCreator();
-        $('#mapbox-directions-origin-input').hide();
-        $('#mapbox-directions-destination-input').hide();
-        $('#routes').hide();
-        $('.mapbox-form-label').hide();
-      }
+      $('#mapbox-directions-origin-input').hide();
+      $('#mapbox-directions-destination-input').hide();
+      $('#routes').hide();
+      $('.mapbox-form-label').hide();
   }); // END LOG HIKE ON CLICK
+
+
 
   //START SUBMIT NEW HIKE
   $('.navbar').on("submit", '#new-trail-form', function(event){
@@ -170,7 +193,6 @@ $(document).on("ready", function() {
       $('#user_trails_trailhead_lat').val(trailHeadLat)
       var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][0]
       $('#user_trails_trailhead_lon').val(trailHeadLon)
-      debugger
     $.ajax({
         url: urlVal,
         type: typeVal,
@@ -214,5 +236,6 @@ $(document).on("ready", function() {
     map.removeLayer(userTrailsLayer);
     map.removeLayer(allHikersLayer);
     map.removeLayer(drawControl);
+    map.removeControl(addHikeButton)
   };
 
