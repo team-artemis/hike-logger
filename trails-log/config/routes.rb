@@ -17,12 +17,13 @@ Rails.application.routes.draw do
   get 'other_hiker/:id' => 'main#other_hiker'
   get 'the_current_user' => 'main#the_current_user'
   get 'dashboard' => 'main#dashboard'
+  get 'the_current_trail_path/:id' => 'main#the_current_trail_path'
 
   # resources :sessions, only: [:new, :create, :destroy]
   get 'login' => "sessions#new "
   post 'login' => "sessions#create"
   delete 'logout' => "sessions#destroy"
-  
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
