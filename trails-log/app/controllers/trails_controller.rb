@@ -40,7 +40,6 @@ class TrailsController < ApplicationController
 
   def show
     @trail = set_trail
-
     if request.xhr?
       render 'show', layout: false
     end

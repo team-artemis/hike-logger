@@ -1,4 +1,4 @@
-<li class="cssmenu back-button"><span> <a href="/users/<%= current_user.id %>"> 
+<li class="cssmenu back-button"><span> <a href="/users/<%= current_user.id %>">
   back to menu
 </a></span></li>
 <li class="cssmenu">
@@ -31,4 +31,8 @@
     <strong>Rating:</strong>
     <%= @trail.rating %>
   </li>
-  
+
+  <li class="trail-id hidden">
+    <%= @trail.id %>
+  </li>
+
