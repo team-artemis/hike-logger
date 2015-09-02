@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20150829030401) do
     t.decimal  "trailend_lon"
     t.decimal  "trailend_lat"
     t.string   "waypoints"
+    t.string   "images",                       array: true
     t.integer  "user_id"
     t.integer  "map_id"
     t.datetime "created_at",      null: false

@@ -39,7 +39,12 @@ Trail.create(
   trailhead_lat: 37.897568,
   trailend_lon: -122.582923,
   trailend_lat: 37.927665,
-  user_id: 1
+  user_id: 1,
+  images: [
+          ['http://2.bp.blogspot.com/-kw9YgQnbELY/Um6dt-GgdXI/AAAAAAAAB0o/VCErLESCKGE/s1600/mt-tamalpais-matt-davis-trail-staircase-big.jpg','A really big staircase on the Matt Davis Trail!'],
+          ['http://www.boopidy.com/aj/lj/1-27-2006/trail__large_.jpg','How creepy! Am I in a horror movie starring Jonathon Taylor Thomas? I sure hope so.'],
+          ['http://3.bp.blogspot.com/-zAm7BN6kPl4/T0x5xDp0rWI/AAAAAAAABFY/K0Ti2ONJw_Y/s1600/IMG_6393.JPG','I love plant.']
+          ]
   )
 
 Trail.create(
@@ -55,7 +60,12 @@ Trail.create(
   trailhead_lat: 37.934242,
   trailend_lon: -122.582923,
   trailend_lat: 37.927665,
-  user_id: 2
+  user_id: 2,
+  images: [
+        ['http://2.bp.blogspot.com/-kw9YgQnbELY/Um6dt-GgdXI/AAAAAAAAB0o/VCErLESCKGE/s1600/mt-tamalpais-matt-davis-trail-staircase-big.jpg','A really big staircase on the Matt Davis Trail!'],
+        ['http://www.boopidy.com/aj/lj/1-27-2006/trail__large_.jpg','How creepy! Am I in a horror movie starring Jonathon Taylor Thomas? I sure hope so.'],
+        ['http://3.bp.blogspot.com/-zAm7BN6kPl4/T0x5xDp0rWI/AAAAAAAABFY/K0Ti2ONJw_Y/s1600/IMG_6393.JPG','I love plant.']
+        ]
   )
 
 Trail.create(
@@ -71,7 +81,12 @@ Trail.create(
   trailhead_lat: 30.934242,
   trailend_lon: -81.582923,
   trailend_lat: 30.927665,
-  user_id: 1
+  user_id: 1,
+  images: [
+        ['http://2.bp.blogspot.com/-kw9YgQnbELY/Um6dt-GgdXI/AAAAAAAAB0o/VCErLESCKGE/s1600/mt-tamalpais-matt-davis-trail-staircase-big.jpg','A really big staircase on the Matt Davis Trail!'],
+        ['http://www.boopidy.com/aj/lj/1-27-2006/trail__large_.jpg','How creepy! Am I in a horror movie starring Jonathon Taylor Thomas? I sure hope so.'],
+        ['http://3.bp.blogspot.com/-zAm7BN6kPl4/T0x5xDp0rWI/AAAAAAAABFY/K0Ti2ONJw_Y/s1600/IMG_6393.JPG','I love plant.']
+        ]
   )
 
 Trail.create(

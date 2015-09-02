@@ -204,7 +204,7 @@ $(document).on("ready", function() {
         $('#user_trails_trailhead_lon').val(m.lng)
     }
     onDragEnd();
-/Add Trails with "Log Hike"
+//Add Trails with "Log Hike"
   $('#log-hike').on('click', function(event) {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
