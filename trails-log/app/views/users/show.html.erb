@@ -1,14 +1,16 @@
-<li class="cssmenu back-button">
-  <span>
-    <a href="/users/<%= current_user.id %>">
-      back to menu
-    </a>
-  </span>
-</li>
+<div class="show-other-user-menu">
+	<li id="show-user-back" class="cssmenu back-button">
+	  <span>
+	    <a href="/users/<%= current_user.id %>">
+	      back to menu
+	    </a>
+	  </span>
+	</li>
 
-<li class="cssmenu">
-  <h2> <%= @user.firstname %>'s hikes </h2>
-</li>
+	<li class="cssmenu">
+	  <h2> <%= @user.firstname %>'s hikes </h2>
+	</li>
 
-<%= render 'trails/index' %>
+	<%= render 'trails/index' %>
 
+</div>

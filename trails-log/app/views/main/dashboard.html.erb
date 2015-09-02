@@ -5,7 +5,7 @@
     </div>
     <br>
     <li class="cssmenu"><span><a>Hi <%= current_user.firstname %>, we love you!</a></span></li>
-    <li class="cssmenu" id="my-trails"><a href='/users/<%= current_user.id %>/trails'><span>My Trails</span></a></li>
+    <li class="cssmenu"><a id="my-trails" href='/users/<%= current_user.id %>/trails'><span>My Trails</span></a></li>
     <li class="cssmenu" id="log-hike"><a href='/users/<%= current_user.id %>/trails/new'><span>Log Hike</span></a></li>
     <li class="cssmenu" id="all-hikers"><a href='/users'><span>All Hikers</span></a></li>
     <li class="cssmenu"><span><%= link_to "Logout", logout_path, method: :delete %></span></li>
@@ -14,7 +14,7 @@
   <!-- MY HIKES  -->
 
   <div class="my-hikes-menu hideMenu">
-    <li class="cssmenu back-button">
+    <li id= "my-hikes-back" class="cssmenu back-button">
       <span>
         <a href="/users/<%= current_user.id %>">
           back to menu
@@ -32,7 +32,7 @@
   <!-- LOG HIKE  -->
 
   <div class="log-hike-menu hideMenu" id="log-hike">
-    <li class="cssmenu back-button">
+    <li id= "log-hike-back" class="cssmenu back-button">
       <span>
         <a href="/users/<%= current_user.id %>">
           back to menu
@@ -50,7 +50,7 @@
   <!-- ALL HIKERS -->
 
   <div class="all-hikers-menu hideMenu">
-    <li class="cssmenu back-button">
+    <li id= "all-hikers-back" class="cssmenu back-button">
       <span>
         <a href="/users/<%= current_user.id %>">
           back to menu
@@ -63,17 +63,6 @@
 
     <%= render 'users/index' %>
 
-  </div>
-
-  <div class="other-hiker-menu hideMenu">
-    <li class="cssmenu back-button">
-      <span>
-        <a href="/users/<%= current_user.id %>">
-          back to menu
-        </a>
-      </span>
-    </li>
-    <%= render 'users/index' %>
   </div>
 
 </div>

@@ -66,18 +66,14 @@ $(document).on("ready", function() {
 
   var logHikeButton = new addHikeButton
 
-  var otherHikerListener = function() {
     $(".other-hiker").on('click', function(event) {
       event.preventDefault();
-      // console.log("you got me")
       var urlVal = $(this).attr('href')
-      console.log(urlVal)
       $.ajax({
         url: urlVal,
       }).done(function(response){
-        console.log(response)
         $('.navbar').children().hide()
-        $('.navbar').prepend(response)
+        // $('.navbar').prepend(response)
 
         // $('.all-hikers-menu').addClass('hideMenu');
         // $('.other-hiker-menu').removeClass('hideMenu');
@@ -86,9 +82,8 @@ $(document).on("ready", function() {
         console.log(response)
       })
     })
-  }
+  
 
-  otherHikerListener();
 
   userTrailsLayer.on("ready", function(event) {
     map.fitBounds(userTrailsLayer.getBounds());
@@ -213,25 +208,73 @@ $(document).on("ready", function() {
       })
     });
 
-  // Return to main menu
-  $('.back-button').on('click', function(event){
+  // Return to main menu from trail-page
+  $('.navbar').on('click', '#show-page-back', function(event){
     event.preventDefault();
-    console.log("back button working")
-    // window.location = currentUser["id"]
     $('.navbar').children().addClass('hideMenu');
     $('.main-menu').removeClass('hideMenu');
-    //REFACTORED ALERT: Andrew removed add and save trailhead buttons here
-    $('.leaflet-draw').hide()
-    $('#inputs').empty();
+    $('.main-menu').show();
+    $('#nav-content').hide();
+    $('.my-hikes-menu').hide();
     map.addLayer(userTrailsLayer);
-    map.removeControl(logHikeButton);
-    map.removeLayer(directionsLayer);
+    map.fitBounds(userTrailsLayer.getBounds());
+  })
+
+  // Return to main menu from my-trails page
+  $('#my-hikes-back').on('click', function(event){
+    event.preventDefault(); 
+    $('.navbar').children().addClass('hideMenu');
+    $('.main-menu').removeClass('hideMenu');
+    $('.my-hikes-menu').hide();
   });
+
+  // Return to main menu from the log hike page
+  $('.navbar').on('click', '#log-hike-back', function(event){
+    // debugger
+    event.preventDefault();
+    $('.navbar').children().addClass('hideMenu');
+    $('.main-menu').removeClass('hideMenu');
+    $('.main-menu').show();
+    map.removeControl(logHikeButton);
+    if(directionsLayer){map.removeLayer(directionsLayer)} 
+  })
+
+  // Return to main menu from all hikers page
+  $('#all-hikers-back').on('click', function(event){
+    event.preventDefault();
+    $('.navbar').children().addClass('hideMenu');
+    $('.main-menu').removeClass('hideMenu');
+    $('.main-menu').show();
+    $('.all-hikers-menu').hide();
+    map.removeLayer(allHikersLayer);
+  })
+
+  $('.navbar').on('click', '#show-user-back', function(event){
+    event.preventDefault();
+    console.log("you got meeee");
+    $('.show-other-user-menu').hide();
+    $('.main-menu').removeClass('hideMenu');
+    $('.main-menu').show();
+  })
+
+  // $('.back-button').on('click', function(event){
+  //   event.preventDefault();
+  //   console.log("back button working")
+  //   // window.location = currentUser["id"]
+  //   $('.navbar').children().addClass('hideMenu');
+  //   $('.main-menu').removeClass('hideMenu');
+  //   //REFACTORED ALERT: Andrew removed add and save trailhead buttons here
+  //   $('.leaflet-draw').hide()
+  //   $('#inputs').empty();
+  //   map.addLayer(userTrailsLayer);
+  //   map.removeControl(logHikeButton);
+  //   map.removeLayer(directionsLayer);
+  // });
 
   // Show the my trails menu
   $('#my-trails').on('click', function(event){
     event.preventDefault();
-    var urlVal = $('#my-trails a').attr('href')
+    var urlVal = $('#my-trails').attr('href')
     var typeVal = 'GET'
     $.ajax({
       url: urlVal,
@@ -242,6 +285,7 @@ $(document).on("ready", function() {
       console.log('Yay! request went through')
       $('.main-menu').addClass('hideMenu');
       $('.my-hikes-menu').removeClass('hideMenu');
+      $('.my-hikes-menu').show();
       //$('.navbar').children().hide()
       $('.navbar').prepend(response)
     }).fail(function(response){
@@ -258,6 +302,8 @@ $(document).on("ready", function() {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
     $('.all-hikers-menu').removeClass('hideMenu');
+    $('.all-hikers-menu').show();
+
     allHikersLayer.addTo(map)
     allHikersLayerBehavior();
   });
@@ -303,22 +349,16 @@ $(document).on("ready", function() {
 
 
 // LOG HIKE
-  //START LOG HIKE ON CLICK
   $('#log-hike').on('click', function(event) {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
+    $('.main-menu').hide();
     $('.log-hike-menu').removeClass('hideMenu');
-    map.removeLayer(userTrailsLayer)
+    $('.log-hike-menu').show();
+
+    map.removeLayer(userTrailsLayer);
     map.addControl(logHikeButton);
-
-      // $('#mapbox-directions-origin-input').hide();
-      // $('#mapbox-directions-destination-input').hide();
-      // $('#routes').hide();
-      // $('.mapbox-form-label').hide();
   });
-  // END LOG HIKE ON CLICK
-
-
 
   //START SUBMIT NEW HIKE
   $('.navbar').on("submit", '#new-trail-form', function(event){
@@ -366,6 +406,7 @@ $(document).on("ready", function() {
         $('.navbar').prepend(response)
         //remove the draw layer
         map.removeLayer(directionsLayer);
+        map.removeControl(logHikeButton);
         //place the new Trail layer
         var trailId = $('.trail-id').text()
         var currentTrail;
