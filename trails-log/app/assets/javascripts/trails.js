@@ -66,18 +66,14 @@ $(document).on("ready", function() {
 
   var logHikeButton = new addHikeButton
 
-  var otherHikerListener = function() {
     $(".other-hiker").on('click', function(event) {
       event.preventDefault();
-      // console.log("you got me")
       var urlVal = $(this).attr('href')
-      console.log(urlVal)
       $.ajax({
         url: urlVal,
       }).done(function(response){
-        console.log(response)
         $('.navbar').children().hide()
-        $('.navbar').prepend(response)
+        // $('.navbar').prepend(response)
 
         // $('.all-hikers-menu').addClass('hideMenu');
         // $('.other-hiker-menu').removeClass('hideMenu');
@@ -86,9 +82,8 @@ $(document).on("ready", function() {
         console.log(response)
       })
     })
-  }
+  
 
-  otherHikerListener();
 
   userTrailsLayer.on("ready", function(event) {
     map.fitBounds(userTrailsLayer.getBounds());
@@ -240,6 +235,13 @@ $(document).on("ready", function() {
     map.removeLayer(allHikersLayer);
   })
 
+  $('.navbar').on('click', '#show-user-back', function(event){
+    event.preventDefault();
+    console.log("you got meeee");
+    $('.show-other-user-menu').hide();
+    $('.main-menu').removeClass('hideMenu');
+    $('.main-menu').show();
+  })
 
   // $('.back-button').on('click', function(event){
   //   event.preventDefault();
@@ -286,6 +288,8 @@ $(document).on("ready", function() {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
     $('.all-hikers-menu').removeClass('hideMenu');
+    $('.all-hikers-menu').show();
+
     allHikersLayer.addTo(map)
     allHikersLayerBehavior();
   });
