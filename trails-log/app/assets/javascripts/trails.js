@@ -316,7 +316,7 @@ $(document).on("ready", function() {
       var typeVal = $(this).attr('method')
       var fullPath = directions.query()
       var waypointString = "";
-      debugger
+      
       for (var i = 0;i < fullPath["_waypoints"].length;i++){
         if (fullPath["_waypoints"].length !== 0){
           var wayPoint = fullPath["_waypoints"][i]["geometry"]["coordinates"]
