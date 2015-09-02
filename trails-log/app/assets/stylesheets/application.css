@@ -34,6 +34,8 @@ html {
 
 /*BEGIN of usernavbar*/
 
+.hikeButton:hover { cursor: pointer;}
+
 .hideMenu { display: none; }
 
 .navbar {
@@ -156,5 +158,3 @@ video#bgvid {
   }
 .popup .cycle a.prev { float:left; }
 .popup .cycle a.next { float:right; }
-
-

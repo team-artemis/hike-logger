@@ -41,12 +41,12 @@ $(document).on("ready", function() {
       addHike.onclick = function(){
         console.log('before')
         var addPathCreator = function(){
-          var directions = L.mapbox.directions({profile: 'mapbox.walking'});
-          var directionsLayer = L.mapbox.directions.layer(directions)
+          directions = L.mapbox.directions({profile: 'mapbox.walking'});
+          directionsLayer = L.mapbox.directions.layer(directions)
               .addTo(map);
-          var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
+          directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
               .addTo(map);
-          var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
+          directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
               .addTo(map);
         }
         addPathCreator();
@@ -64,7 +64,7 @@ $(document).on("ready", function() {
   });
 
 
-  var button = new addHikeButton
+  var logHikeButton = new addHikeButton
 
   var otherHikerListener = function() {
     $(".other-hiker").on('click', function(event) {
@@ -104,7 +104,7 @@ $(document).on("ready", function() {
       })
     });
 
-    
+
 
 
     $("[id^='trail']").on('mouseleave', function(event){
@@ -120,7 +120,7 @@ $(document).on("ready", function() {
 //*~**~**~**~**~**~**~**~**~**~**~**~**~*
   var myLayer = L.mapbox.featureLayer().addTo(map);
   // Set the geojson data
-  var geoJson = myLayer.loadURL("http://localhost:3000/users/1/trails.json") 
+  var geoJson = myLayer.loadURL("http://localhost:3000/users/1/trails.json")
 
     //On add of the layer
     myLayer.on('layeradd', function(e) {
@@ -210,8 +210,9 @@ $(document).on("ready", function() {
     //REFACTORED ALERT: Andrew removed add and save trailhead buttons here
     $('.leaflet-draw').hide()
     $('#inputs').empty();
-    map.addLayer(userTrailsLayer)
-    map.removeControl(button)
+    map.addLayer(userTrailsLayer);
+    map.removeControl(logHikeButton);
+    map.removeLayer(directionsLayer);
   });
 
   // Show the my trails menu
@@ -286,6 +287,8 @@ $(document).on("ready", function() {
   })()
 
     var directionsLayer;
+
+
 // LOG HIKE
   //START LOG HIKE ON CLICK
   $('#log-hike').on('click', function(event) {
@@ -293,13 +296,16 @@ $(document).on("ready", function() {
     $('.main-menu').addClass('hideMenu');
     $('.log-hike-menu').removeClass('hideMenu');
     map.removeLayer(userTrailsLayer)
-    map.addControl(button);
+    map.addControl(logHikeButton);
 
-      $('#mapbox-directions-origin-input').hide();
-      $('#mapbox-directions-destination-input').hide();
-      $('#routes').hide();
-      $('.mapbox-form-label').hide();
-  }); // END LOG HIKE ON CLICK
+      // $('#mapbox-directions-origin-input').hide();
+      // $('#mapbox-directions-destination-input').hide();
+      // $('#routes').hide();
+      // $('.mapbox-form-label').hide();
+  });
+  // END LOG HIKE ON CLICK
+
+
 
   //START SUBMIT NEW HIKE
   $('.navbar').on("submit", '#new-trail-form', function(event){
@@ -310,13 +316,19 @@ $(document).on("ready", function() {
       var typeVal = $(this).attr('method')
       var fullPath = directions.query()
       var waypointString = "";
+      
       for (var i = 0;i < fullPath["_waypoints"].length;i++){
-        var wayPoint = fullPath["_waypoints"][i]["geometry"]["coordinates"]
-        var waypointLons = wayPoint[0]
-        var waypointLats = wayPoint[1]
-        waypointString += waypointLons+","+waypointLats+";"
+        if (fullPath["_waypoints"].length !== 0){
+          var wayPoint = fullPath["_waypoints"][i]["geometry"]["coordinates"]
+          var waypointLons = wayPoint[0]
+          var waypointLats = wayPoint[1]
+          waypointString += waypointLons+","+waypointLats+";"
+        }
+        else {
+          waypointString = ""
+        }
       }
-      waypointString = waypointString.substring(0, waypointString.length - 1);
+      //waypointString = waypointString.substring(0, waypointString.length - 1);
       var trailEndLat = fullPath["destination"]["geometry"]["coordinates"][1]
       $('#user_trails_trailend_lat').val(trailEndLat)
       var trailEndLon = fullPath["destination"]["geometry"]["coordinates"][0]
@@ -325,7 +337,7 @@ $(document).on("ready", function() {
       $('#user_trails_trailhead_lat').val(trailHeadLat)
       var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][0]
       $('#user_trails_trailhead_lon').val(trailHeadLon)
-      var waypointPlusLonLat = trailHeadLon+","+trailHeadLat +";" + waypointString +  ";"+trailEndLon+","+trailEndLat
+      var waypointPlusLonLat = trailHeadLon+","+trailHeadLat +";" + waypointString +trailEndLon+","+trailEndLat
       $('#user_trails_waypoints').val(waypointPlusLonLat)
       console.log(waypointPlusLonLat)
 
@@ -405,6 +417,7 @@ $(document).on("ready", function() {
     }
     console.log(pathCoordinates)
     var polyline = L.polyline(pathCoordinates).addTo(map)
+    $('path').attr('style', 'stroke:#3D0D3E !important')
     map.fitBounds(polyline.getBounds());
   }
 
