@@ -209,7 +209,7 @@ $(document).on("ready", function() {
             dataType: "JSON"
         }).done(function(serverResponse){
           currentTrail = serverResponse;
-          renderTrail(currentTrail);
+          renderTrail(currentTrail, map);
           }).fail(function(){
             console.log('fail')
           })
@@ -257,8 +257,15 @@ $(document).on("ready", function() {
         })
   }
 
-  var renderTrail = function(trail) {
-    var polyline = L.polyline([[37.78,-122.42],[37.7,-122.0], [37.6,-122.0]], {color: 'red'}).addTo(map)
+  var renderTrail = function(trail, map) {
+    var pathCoordinates = trail["routes"][0]["geometry"]["coordinates"]
+    console.log(pathCoordinates)
+    for (var i = 0; i < pathCoordinates.length; i++){
+      pathCoordinates[i] = pathCoordinates[i].reverse()
+    }
+    console.log(pathCoordinates)
+    var polyline = L.polyline(pathCoordinates).addTo(map)
+    map.fitBounds(polyline.getBounds());
   }
 
   var allHikersTrails = function(map) {
