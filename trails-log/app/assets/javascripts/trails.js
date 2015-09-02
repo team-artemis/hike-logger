@@ -51,17 +51,37 @@ $(document).on("ready", function() {
 
 //*~**~**~**~**~**~**~**~**~**~**~**~**~*
   var myLayer = L.mapbox.featureLayer().addTo(map);
-
   // Set the geojson data
   var geoJson = myLayer.loadURL("http://localhost:3000/users/1/trails.json") 
 
     //On add of the layer
     myLayer.on('layeradd', function(e) {
-    var marker = e.layer,
-    feature = marker.feature;
+    var marker = e.layer;
+    var slideshowContent = '';
+    var feature = marker.feature;
+    var images = feature.properties.images;
+
+    // craft the slideshow content
+    for(var i = 0; i < images.length; i++) {
+        var img = images[i];
+
+        slideshowContent += '<div class="image' + (i === 0 ? ' active' : '') + '">' +
+                              '<img src="' + img[0] + '" />' +
+                              '<div class="caption">' + img[1] + '</div>' +
+                            '</div>';
+    }
+
     //Craft the popup content
-      var popupContent =  
-      '<a target="_blank" class="popup" href="' + feature.properties.title + '">' + '<img src="' + feature.properties.images[1] + '" />' + feature.properties.review +'</a>';
+      var popupContent =  '<div id="' + feature.properties.id + '" class="popup">' +
+                            '<h2>' + feature.properties.title + '</h2>' +
+                            '<div class="slideshow">' +
+                                slideshowContent +
+                            '</div>' +
+                            '<div class="cycle">' +
+                                '<a href="#" class="prev">&laquo; Previous</a>' +
+                                '<a href="#" class="next">Next &raquo;</a>' +
+                            '</div>'
+                        '</div>';
 
       //bindpopup of the popupcontent
       marker.bindPopup(popupContent,{
@@ -70,8 +90,29 @@ $(document).on("ready", function() {
       });
     });
     //Add layer w/geojson data (currently in global)
-    myLayer.setGeoJSON(geoJson);
+    myLayer.getGeoJSON(geoJson);
 
+    $('.map').on('click', '.popup .cycle a', function() {
+      console.log("yes")
+        var $slideshow = $('.slideshow'),
+            $newSlide;
+
+        if ($(this).hasClass('prev')) {
+            $newSlide = $slideshow.find('.active').prev();
+            if ($newSlide.index() < 0) {
+                $newSlide = $('.image').last();
+            }
+        } else {
+            $newSlide = $slideshow.find('.active').next();
+            if ($newSlide.index() < 0) {
+                $newSlide = $('.image').first();
+            }
+        }
+
+        $slideshow.find('.active').removeClass('active').hide();
+        $newSlide.addClass('active').show();
+        return false;
+    });
 //*~**~**~**~**~**~**~**~**~**~**~**~**~*
 
 
