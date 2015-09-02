@@ -36,7 +36,7 @@ $(document).on("ready", function() {
       })
     });
 
-    
+
 
 
     $("[id^='trail']").on('mouseleave', function(event){
@@ -52,7 +52,7 @@ $(document).on("ready", function() {
 //*~**~**~**~**~**~**~**~**~**~**~**~**~*
   var myLayer = L.mapbox.featureLayer().addTo(map);
   // Set the geojson data
-  var geoJson = myLayer.loadURL("http://localhost:3000/users/1/trails.json") 
+  var geoJson = myLayer.loadURL("http://localhost:3000/users/1/trails.json")
 
     //On add of the layer
     myLayer.on('layeradd', function(e) {
@@ -346,6 +346,7 @@ $(document).on("ready", function() {
     }
     console.log(pathCoordinates)
     var polyline = L.polyline(pathCoordinates).addTo(map)
+    $('path').attr('style', 'stroke:#3D0D3E !important')
     map.fitBounds(polyline.getBounds());
   }
 
