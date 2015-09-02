@@ -232,6 +232,7 @@ $(document).on("ready", function() {
     $('.navbar').children().addClass('hideMenu');
     $('.main-menu').removeClass('hideMenu');
     $('.main-menu').show();
+    $('.all-hikers-menu').hide();
     map.removeLayer(allHikersLayer);
   })
 
