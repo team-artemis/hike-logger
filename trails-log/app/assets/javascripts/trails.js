@@ -135,6 +135,7 @@ $(document).on("ready", function() {
     })
   })()
 
+    var directionsLayer;
 // LOG HIKE
   //START LOG HIKE ON CLICK
   $('#log-hike').on('click', function(event) {
@@ -144,7 +145,7 @@ $(document).on("ready", function() {
     map.removeLayer(userTrailsLayer)
     var addPathCreator = function(){
       directions = L.mapbox.directions({profile: 'mapbox.walking'});
-      var directionsLayer = L.mapbox.directions.layer(directions)
+      directionsLayer = L.mapbox.directions.layer(directions)
           .addTo(map);
       var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
           .addTo(map);
@@ -168,8 +169,14 @@ $(document).on("ready", function() {
       var urlVal = '/users/' + userId + '/trails'
       var typeVal = $(this).attr('method')
       var fullPath = directions.query()
-      var wayPoints = fullPath["_waypoints"]
-      $('#user_trails_waypoints').val(wayPoints)
+      var waypointString = "";
+      for (var i = 0;i < fullPath["_waypoints"].length;i++){
+        var wayPoint = fullPath["_waypoints"][i]["geometry"]["coordinates"]
+        var waypointLons = wayPoint[0]
+        var waypointLats = wayPoint[1]
+        waypointString += waypointLons+","+waypointLats+";"
+      }
+      waypointString = waypointString.substring(0, waypointString.length - 1);
       var trailEndLat = fullPath["destination"]["geometry"]["coordinates"][1]
       $('#user_trails_trailend_lat').val(trailEndLat)
       var trailEndLon = fullPath["destination"]["geometry"]["coordinates"][0]
@@ -178,6 +185,9 @@ $(document).on("ready", function() {
       $('#user_trails_trailhead_lat').val(trailHeadLat)
       var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][0]
       $('#user_trails_trailhead_lon').val(trailHeadLon)
+      var waypointPlusLonLat = trailHeadLon+","+trailHeadLat +";" + waypointString +  ";"+trailEndLon+","+trailEndLat
+      $('#user_trails_waypoints').val(waypointPlusLonLat)
+      console.log(waypointPlusLonLat)
 
     $.ajax({
         url: urlVal,
@@ -188,14 +198,27 @@ $(document).on("ready", function() {
         console.log('Yay! request went through')
         $('.navbar').children().hide()
         $('.navbar').prepend(response)
-      }).fail(function(response){
-        console.log(response)
-        console.log('request did not go through');
-      });
-      //location.reload();
+        //remove the draw layer
+        map.removeLayer(directionsLayer);
+        //place the new Trail layer
+        var trailId = $('.trail-id').text()
+        var currentTrail;
+        $.ajax({
+            url: '/the_current_trail_path/' + trailId,
+            method: "GET",
+            dataType: "JSON"
+        }).done(function(serverResponse){
+          currentTrail = serverResponse;
+          renderTrail(currentTrail);
+          }).fail(function(){
+            console.log('fail')
+          })
+        }).fail(function(response){
+          console.log(response)
+          console.log('request did not go through');
+        });
   });
   //END SUBMIT NEW HIKE
-
 }); // END DOCUMENT READY
 
 
@@ -209,12 +232,34 @@ $(document).on("ready", function() {
       currentUser = user;
    });
 
+
   var getUserTrails = function(map) {
     var currentUserId = currentUser.id
     var userTrailsLayer = L.mapbox.featureLayer()
     .loadURL("http://localhost:3000/users/" + currentUserId + "/trails.json")
     return userTrailsLayer
   };
+
+//Not currently in use
+  var getLastTrail = function(currentTrailId) {
+    //var currentUserId = currentUser.id
+    var currentTrail;
+      $.ajax({
+        url: '/the_current_trail_path/' + currentTrailId,
+        method: "GET",
+        dataType: "JSON"
+      }).done(function(serverResponse){
+        console.log(serverResponse)
+        currentTrail = serverResponse;
+        return currentTrail
+        }).fail(function(){
+          console.log('fail')
+        })
+  }
+
+  var renderTrail = function(trail) {
+    var polyline = L.polyline([[37.78,-122.42],[37.7,-122.0], [37.6,-122.0]], {color: 'red'}).addTo(map)
+  }
 
   var allHikersTrails = function(map) {
     var allHikersLayer = L.mapbox.featureLayer().loadURL("http://localhost:3000/trails.json")
