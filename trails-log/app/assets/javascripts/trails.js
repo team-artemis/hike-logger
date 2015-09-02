@@ -22,6 +22,74 @@ $(document).on("ready", function() {
   var userTrailsLayer = getUserTrails(map).addTo(map);
   var allHikersLayer = allHikersTrails(map);
 
+
+  var addHikeButton =  L.Control.extend({options: {position: 'topleft'},
+    onAdd: function(map){
+      var addHike = L.DomUtil.create('div', 'hikeButton leaflet-bar leaflet-control leaflet-control-button');
+      L.DomEvent
+      .addListener(addHike, 'click', L.DomEvent.stopPropagation)
+      .addListener(addHike, 'click', L.DomEvent.preventDefault)
+
+      addHike.style.backgroundColor = 'white';
+      addHike.style.backgroundImage = "url(http://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)";
+      addHike.style.backgroundSize = "30px 30px";
+      addHike.style.width = '30px';
+      addHike.style.height = '30px';
+
+
+
+      addHike.onclick = function(){
+        console.log('before')
+        var addPathCreator = function(){
+          var directions = L.mapbox.directions({profile: 'mapbox.walking'});
+          var directionsLayer = L.mapbox.directions.layer(directions)
+              .addTo(map);
+          var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
+              .addTo(map);
+          var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
+              .addTo(map);
+        }
+        addPathCreator();
+
+        $('#mapbox-directions-origin-input').hide();
+        $('#mapbox-directions-destination-input').hide();
+        $('#routes').hide();
+        $('.mapbox-form-label').hide();
+        }
+
+        return addHike;
+      }
+
+  //   }
+  });
+
+
+  var button = new addHikeButton
+
+  var otherHikerListener = function() {
+    $(".other-hiker").on('click', function(event) {
+      event.preventDefault();
+      // console.log("you got me")
+      var urlVal = $(this).attr('href')
+      console.log(urlVal)
+      $.ajax({
+        url: urlVal,
+      }).done(function(response){
+        console.log(response)
+        $('.navbar').children().hide()
+        $('.navbar').prepend(response)
+
+        // $('.all-hikers-menu').addClass('hideMenu');
+        // $('.other-hiker-menu').removeClass('hideMenu');
+      }).fail(function(response){
+        console.log("fail")
+        console.log(response)
+      })
+    })
+  }
+
+  otherHikerListener();
+
   userTrailsLayer.on("ready", function(event) {
     map.fitBounds(userTrailsLayer.getBounds());
 
@@ -141,8 +209,9 @@ $(document).on("ready", function() {
     $('.main-menu').removeClass('hideMenu');
     //REFACTORED ALERT: Andrew removed add and save trailhead buttons here
     $('.leaflet-draw').hide()
+    $('#inputs').empty();
     map.addLayer(userTrailsLayer)
-    map.removeLayer(allHikersLayer);
+    map.removeControl(button)
   });
 
   // Show the my trails menu
@@ -224,22 +293,12 @@ $(document).on("ready", function() {
     $('.main-menu').addClass('hideMenu');
     $('.log-hike-menu').removeClass('hideMenu');
     map.removeLayer(userTrailsLayer)
-    var addPathCreator = function(){
-      directions = L.mapbox.directions({profile: 'mapbox.walking'});
-      directionsLayer = L.mapbox.directions.layer(directions)
-          .addTo(map);
-      var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
-          .addTo(map);
-      var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
-          .addTo(map);
-    }
-    addPathCreator();
+    map.addControl(button);
+
       $('#mapbox-directions-origin-input').hide();
       $('#mapbox-directions-destination-input').hide();
       $('#routes').hide();
       $('.mapbox-form-label').hide();
-
-
   }); // END LOG HIKE ON CLICK
 
   //START SUBMIT NEW HIKE
@@ -358,5 +417,6 @@ $(document).on("ready", function() {
     map.removeLayer(userTrailsLayer);
     map.removeLayer(allHikersLayer);
     map.removeLayer(drawControl);
+    map.removeControl(addHikeButton)
   };
 
