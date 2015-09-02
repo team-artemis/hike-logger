@@ -204,8 +204,10 @@ $(document).on("ready", function() {
   $('.navbar').on('click', '#show-page-back', function(event){
     event.preventDefault();
     $('.navbar').children().addClass('hideMenu');
-    $('#nav-content').hide();
+    $('.main-menu').removeClass('hideMenu');
     $('.main-menu').show();
+    $('#nav-content').hide();
+    $('.my-hikes-menu').hide();
     map.addLayer(userTrailsLayer);
     map.fitBounds(userTrailsLayer.getBounds());
   })
@@ -215,7 +217,7 @@ $(document).on("ready", function() {
     event.preventDefault(); 
     $('.navbar').children().addClass('hideMenu');
     $('.main-menu').removeClass('hideMenu');
-
+    $('.my-hikes-menu').hide();
   });
 
   // Return to main menu from the log hike page
@@ -267,6 +269,7 @@ $(document).on("ready", function() {
       console.log('Yay! request went through')
       $('.main-menu').addClass('hideMenu');
       $('.my-hikes-menu').removeClass('hideMenu');
+      $('.my-hikes-menu').show();
       //$('.navbar').children().hide()
       $('.navbar').prepend(response)
     }).fail(function(response){
