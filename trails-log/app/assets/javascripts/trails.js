@@ -221,14 +221,14 @@ $(document).on("ready", function() {
   });
 
   // Return to main menu from the log hike page
-  $('#log-hike-back').on('click', function(event){
+  $('.navbar').on('click', '#log-hike-back', function(event){
+    // debugger
     event.preventDefault();
     $('.navbar').children().addClass('hideMenu');
     $('.main-menu').removeClass('hideMenu');
     $('.main-menu').show();
-    map.removeLayer(directionsLayer);
     map.removeControl(logHikeButton);
-    // map.removeControl(addHikeButton);
+    if(directionsLayer){map.removeLayer(directionsLayer)} 
   })
 
   // Return to main menu from all hikers page
@@ -336,7 +336,9 @@ $(document).on("ready", function() {
     $('.main-menu').addClass('hideMenu');
     $('.main-menu').hide();
     $('.log-hike-menu').removeClass('hideMenu');
-    map.removeLayer(userTrailsLayer)
+    $('.log-hike-menu').show();
+
+    map.removeLayer(userTrailsLayer);
     map.addControl(logHikeButton);
   });
 
