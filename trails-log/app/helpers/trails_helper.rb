@@ -28,7 +28,8 @@ module TrailsHelper
         user: trail.user_id,
         :'marker-color' => '#00607d',
         :'marker-symbol' => 'park',
-        :'marker-size' => 'large'
+        :'marker-size' => 'large',
+        :'images' => trail.images
         }
       }
     end

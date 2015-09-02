@@ -14,6 +14,7 @@ class CreateTrails < ActiveRecord::Migration
       t.decimal  :trailend_lon
       t.decimal  :trailend_lat
       t.string  :waypoints
+      t.string  :images, array: true
       t.references :user
       t.references :map
 

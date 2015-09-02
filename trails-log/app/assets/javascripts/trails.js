@@ -21,8 +21,6 @@ $(document).on("ready", function() {
 
   var userTrailsLayer = getUserTrails(map).addTo(map);
   var allHikersLayer = allHikersTrails(map);
-  var drawLayer = L.featureGroup().addTo(map);
-  var drawControl = new L.Control.Draw({edit: {featureGroup: drawLayer}})
 
   userTrailsLayer.on("ready", function(event) {
     map.fitBounds(userTrailsLayer.getBounds());
@@ -38,6 +36,9 @@ $(document).on("ready", function() {
       })
     });
 
+    
+
+
     $("[id^='trail']").on('mouseleave', function(event){
       userTrailsLayer.eachLayer(function(marker) {
         if (marker.feature.properties.id == hoveredTrailId){
@@ -47,6 +48,32 @@ $(document).on("ready", function() {
 
     });
   });
+
+//*~**~**~**~**~**~**~**~**~**~**~**~**~*
+  var myLayer = L.mapbox.featureLayer().addTo(map);
+
+  // Set the geojson data
+  var geoJson = myLayer.loadURL("http://localhost:3000/users/1/trails.json") 
+
+    //On add of the layer
+    myLayer.on('layeradd', function(e) {
+    var marker = e.layer,
+    feature = marker.feature;
+    //Craft the popup content
+      var popupContent =  
+      '<a target="_blank" class="popup" href="' + feature.properties.title + '">' + '<img src="' + feature.properties.images[1] + '" />' + feature.properties.review +'</a>';
+
+      //bindpopup of the popupcontent
+      marker.bindPopup(popupContent,{
+        closeButton: false,
+        minWidth: 320,
+      });
+    });
+    //Add layer w/geojson data (currently in global)
+    myLayer.setGeoJSON(geoJson);
+
+//*~**~**~**~**~**~**~**~**~**~**~**~**~*
+
 
   // Show hike page from both my trails list and hikers' trails list
  $('.navbar').on('click', "[id^='trail']", function(event){

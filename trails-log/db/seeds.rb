@@ -39,7 +39,12 @@ Trail.create(
   trailhead_lat: 37.897568,
   trailend_lon: -122.582923,
   trailend_lat: 37.927665,
-  user_id: 1
+  user_id: 1,
+  images: [
+          ['https://i.imgur.com/O6QEpBs.jpg','The U.S. Capitol after the burning of Washington during the War of 1812'],
+          ['https://i.imgur.com/xND1MND.jpg','Ford\'s Theatre in the 19th century, site of the 1865 assassination of President Lincoln'],
+          ['https://i.imgur.com/EKJmqui.jpg','The National Cherry Blossom Festival is celebrated around the city each spring.']
+          ]
   )
 
 Trail.create(
