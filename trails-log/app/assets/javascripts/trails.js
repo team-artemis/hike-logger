@@ -316,7 +316,7 @@ $(document).on("ready", function() {
       var typeVal = $(this).attr('method')
       var fullPath = directions.query()
       var waypointString = "";
-      
+
       for (var i = 0;i < fullPath["_waypoints"].length;i++){
         if (fullPath["_waypoints"].length !== 0){
           var wayPoint = fullPath["_waypoints"][i]["geometry"]["coordinates"]
@@ -410,6 +410,8 @@ $(document).on("ready", function() {
   }
 
   var renderTrail = function(trail, map) {
+    var startCoordinates = trail["origin"]["geometry"]["coordinates"].reverse();
+    var endCoordinates = trail["destination"]["geometry"]["coordinates"].reverse();
     var pathCoordinates = trail["routes"][0]["geometry"]["coordinates"]
     console.log(pathCoordinates)
     for (var i = 0; i < pathCoordinates.length; i++){
@@ -418,6 +420,8 @@ $(document).on("ready", function() {
     console.log(pathCoordinates)
     var polyline = L.polyline(pathCoordinates).addTo(map)
     $('path').attr('style', 'stroke:#3D0D3E !important')
+    var startMarker = L.marker(startCoordinates).addTo(map);
+    var endMarker = L.marker(endCoordinates).addTo(map);
     map.fitBounds(polyline.getBounds());
   }
 
