@@ -2,7 +2,7 @@
   <div class="main-menu">
     <div class="avatar-frame">
       <%= image_tag avatar_url(current_user)  %>
-    </div> 
+    </div>
     <br>
     <li class="cssmenu"><span><a>Hi <%= current_user.firstname %>, we love you!</a></span></li>
     <li class="cssmenu" id="my-trails"><a href='/users/<%= current_user.id %>/trails'><span>My Trails</span></a></li>
@@ -12,7 +12,7 @@
   </div>
 
   <!-- MY HIKES  -->
-  
+
   <div class="my-hikes-menu hideMenu">
     <li class="cssmenu back-button">
       <span>
@@ -31,11 +31,11 @@
 
   <!-- LOG HIKE  -->
 
-  <div class="log-hike-menu hideMenu">
+  <div class="log-hike-menu hideMenu" id="log-hike">
     <li class="cssmenu back-button">
       <span>
         <a href="/users/<%= current_user.id %>">
-          back to menu 
+          back to menu
         </a>
       </span>
     </li>
@@ -63,6 +63,17 @@
 
     <%= render 'users/index' %>
 
+  </div>
+
+  <div class="other-hiker-menu hideMenu">
+    <li class="cssmenu back-button">
+      <span>
+        <a href="/users/<%= current_user.id %>">
+          back to menu
+        </a>
+      </span>
+    </li>
+    <%= render 'users/index' %>
   </div>
 
 </div>
