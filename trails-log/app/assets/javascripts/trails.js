@@ -188,6 +188,19 @@ $(document).on("ready", function() {
  $('.navbar').on('click', "[id^='trail']", function(event){
       event.preventDefault();
       var clickedHikeId = $(this).attr('id').slice(-1)
+      //var currentTrailBody = getLastTrail(clickedHikeId)
+      var currentTrail;
+      $.ajax({
+        url: '/the_current_trail_path/' + clickedHikeId,
+        method: "GET",
+        dataType: "JSON"
+      }).done(function(serverResponse){
+        console.log(serverResponse)
+        currentTrail = serverResponse;
+        renderTrail(currentTrail, map);
+        }).fail(function(){
+          console.log('fail')
+        });
       var urlVal = $(this).attr('href')
       $.ajax(urlVal).done(function(hikeInfo){
         $('.navbar').children().hide()
@@ -315,6 +328,7 @@ $(document).on("ready", function() {
       var urlVal = '/users/' + userId + '/trails'
       var typeVal = $(this).attr('method')
       var fullPath = directions.query()
+      debugger
       var waypointString = "";
 
       for (var i = 0;i < fullPath["_waypoints"].length;i++){
@@ -396,17 +410,17 @@ $(document).on("ready", function() {
   var getLastTrail = function(currentTrailId) {
     //var currentUserId = currentUser.id
     var currentTrail;
-      $.ajax({
-        url: '/the_current_trail_path/' + currentTrailId,
-        method: "GET",
-        dataType: "JSON"
-      }).done(function(serverResponse){
-        console.log(serverResponse)
-        currentTrail = serverResponse;
-        return currentTrail
-        }).fail(function(){
-          console.log('fail')
-        })
+    $.ajax({
+      url: '/the_current_trail_path/' + currentTrailId,
+      method: "GET",
+      dataType: "JSON"
+    }).done(function(serverResponse){
+      console.log(serverResponse)
+      currentTrail = serverResponse;
+      return currentTrail
+      }).fail(function(){
+        console.log('fail')
+      })
   }
 
   var renderTrail = function(trail, map) {
@@ -420,8 +434,8 @@ $(document).on("ready", function() {
     console.log(pathCoordinates)
     var polyline = L.polyline(pathCoordinates).addTo(map)
     $('path').attr('style', 'stroke:#3D0D3E !important')
-    var startMarker = L.marker(startCoordinates).addTo(map);
-    var endMarker = L.marker(endCoordinates).addTo(map);
+    var startMarker = L.marker(startCoordinates).addTo(map); //style with 'S'
+    var endMarker = L.marker(endCoordinates).addTo(map); //style with 'End' or something
     map.fitBounds(polyline.getBounds());
   }
 
