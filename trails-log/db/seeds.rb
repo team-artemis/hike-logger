@@ -73,6 +73,96 @@ Trail.create(
   trailend_lat: 30.927665,
   user_id: 1
   )
+Trail.create(
+  title: "Floridian Hike",
+  is_loop: true,
+  length: 7.5,
+  duration: "4 hours",
+  difficulty: "Intermediate",
+  review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
+  rating: 4,
+  trailhead_title:"Florida",
+  trailhead_lon: -81.747442,
+  trailhead_lat: 30.934242,
+  trailend_lon: -81.582923,
+  trailend_lat: 30.927665,
+  user_id: 1
+  )
+  Trail.create(
+  title: "Floridian Hike",
+  is_loop: true,
+  length: 7.5,
+  duration: "4 hours",
+  difficulty: "Intermediate",
+  review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
+  rating: 4,
+  trailhead_title:"Florida",
+  trailhead_lon: -81.747442,
+  trailhead_lat: 30.934242,
+  trailend_lon: -81.582923,
+  trailend_lat: 30.927665,
+  user_id: 1
+  )
+  Trail.create(
+  title: "Floridian Hike",
+  is_loop: true,
+  length: 7.5,
+  duration: "4 hours",
+  difficulty: "Intermediate",
+  review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
+  rating: 4,
+  trailhead_title:"Florida",
+  trailhead_lon: -81.747442,
+  trailhead_lat: 30.934242,
+  trailend_lon: -81.582923,
+  trailend_lat: 30.927665,
+  user_id: 1
+  )
+  Trail.create(
+  title: "Floridian Hike",
+  is_loop: true,
+  length: 7.5,
+  duration: "4 hours",
+  difficulty: "Intermediate",
+  review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
+  rating: 4,
+  trailhead_title:"Florida",
+  trailhead_lon: -81.747442,
+  trailhead_lat: 30.934242,
+  trailend_lon: -81.582923,
+  trailend_lat: 30.927665,
+  user_id: 1
+  )
+  Trail.create(
+  title: "Floridian Hike",
+  is_loop: true,
+  length: 7.5,
+  duration: "4 hours",
+  difficulty: "Intermediate",
+  review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
+  rating: 4,
+  trailhead_title:"Florida",
+  trailhead_lon: -81.747442,
+  trailhead_lat: 30.934242,
+  trailend_lon: -81.582923,
+  trailend_lat: 30.927665,
+  user_id: 1
+  )
+  Trail.create(
+  title: "Floridian Hike",
+  is_loop: true,
+  length: 7.5,
+  duration: "4 hours",
+  difficulty: "Intermediate",
+  review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
+  rating: 4,
+  trailhead_title:"Florida",
+  trailhead_lon: -81.747442,
+  trailhead_lat: 30.934242,
+  trailend_lon: -81.582923,
+  trailend_lat: 30.927665,
+  user_id: 1
+  )
 
 Trail.create(
   title: "White House Hike",
