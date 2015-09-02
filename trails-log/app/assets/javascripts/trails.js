@@ -12,7 +12,7 @@ $(document).on("ready", function() {
 
   var addHikeButton =  L.Control.extend({options: {position: 'topleft'},
     onAdd: function(map){
-      var addHike = L.DomUtil.create('div', 'addHikeButton leaflet-bar leaflet-control leaflet-control-custom');
+      var addHike = L.DomUtil.create('div', 'hikeButton active leaflet-bar leaflet-control leaflet-control-custom');
 
       addHike.style.backgroundColor = 'white';
       addHike.style.backgroundImage = "url(http://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)";
@@ -21,7 +21,30 @@ $(document).on("ready", function() {
       addHike.style.height = '30px';
 
       addHike.onclick = function(){
-        console.log('buttonClicked');
+        console.log('before')
+        var addPathCreator = function(){
+          var directions = L.mapbox.directions({profile: 'mapbox.walking'});
+          var directionsLayer = L.mapbox.directions.layer(directions)
+              .addTo(map);
+          var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
+              .addTo(map);
+          var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
+              .addTo(map);
+        }
+          if($(this).hasClass("active")){
+            console.log('had')
+            $(this).removeClass("active");
+          } else {
+            console.log('has')
+            $(this).className = "active"
+          }
+
+        }
+
+          $('#mapbox-directions-origin-input').hide();
+          $('#mapbox-directions-destination-input').hide();
+          $('#routes').hide();
+          $('.mapbox-form-label').hide();
       }
 
       return addHike;
@@ -156,6 +179,14 @@ $(document).on("ready", function() {
     map.removeLayer(userTrailsLayer)
     map.addControl(button);
 
+      $('#mapbox-directions-origin-input').hide();
+      $('#mapbox-directions-destination-input').hide();
+      $('#routes').hide();
+      $('.mapbox-form-label').hide();
+  }); // END LOG HIKE ON CLICK
+
+  $('.hikeButton').on('click', function(){
+    console.log('baba canoosh')
     var addPathCreator = function(){
       var directions = L.mapbox.directions({profile: 'mapbox.walking'});
       var directionsLayer = L.mapbox.directions.layer(directions)
@@ -165,13 +196,8 @@ $(document).on("ready", function() {
       var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
           .addTo(map);
     }
-
-      addPathCreator();
-      $('#mapbox-directions-origin-input').hide();
-      $('#mapbox-directions-destination-input').hide();
-      $('#routes').hide();
-      $('.mapbox-form-label').hide();
-  }); // END LOG HIKE ON CLICK
+    addPathCreator();
+  })
 
 
 
