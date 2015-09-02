@@ -387,6 +387,7 @@ $(document).on("ready", function() {
         $('.navbar').prepend(response)
         //remove the draw layer
         map.removeLayer(directionsLayer);
+        map.removeControl(logHikeButton);
         //place the new Trail layer
         var trailId = $('.trail-id').text()
         var currentTrail;
