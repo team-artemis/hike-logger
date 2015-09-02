@@ -251,13 +251,19 @@ $(document).on("ready", function() {
       var typeVal = $(this).attr('method')
       var fullPath = directions.query()
       var waypointString = "";
+      debugger
       for (var i = 0;i < fullPath["_waypoints"].length;i++){
-        var wayPoint = fullPath["_waypoints"][i]["geometry"]["coordinates"]
-        var waypointLons = wayPoint[0]
-        var waypointLats = wayPoint[1]
-        waypointString += waypointLons+","+waypointLats+";"
+        if (fullPath["_waypoints"].length !== 0){
+          var wayPoint = fullPath["_waypoints"][i]["geometry"]["coordinates"]
+          var waypointLons = wayPoint[0]
+          var waypointLats = wayPoint[1]
+          waypointString += waypointLons+","+waypointLats+";"
+        }
+        else {
+          waypointString = ""
+        }
       }
-      waypointString = waypointString.substring(0, waypointString.length - 1);
+      //waypointString = waypointString.substring(0, waypointString.length - 1);
       var trailEndLat = fullPath["destination"]["geometry"]["coordinates"][1]
       $('#user_trails_trailend_lat').val(trailEndLat)
       var trailEndLon = fullPath["destination"]["geometry"]["coordinates"][0]
@@ -266,7 +272,7 @@ $(document).on("ready", function() {
       $('#user_trails_trailhead_lat').val(trailHeadLat)
       var trailHeadLon = fullPath["origin"]["geometry"]["coordinates"][0]
       $('#user_trails_trailhead_lon').val(trailHeadLon)
-      var waypointPlusLonLat = trailHeadLon+","+trailHeadLat +";" + waypointString +  ";"+trailEndLon+","+trailEndLat
+      var waypointPlusLonLat = trailHeadLon+","+trailHeadLat +";" + waypointString +trailEndLon+","+trailEndLat
       $('#user_trails_waypoints').val(waypointPlusLonLat)
       console.log(waypointPlusLonLat)
 
