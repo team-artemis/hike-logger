@@ -2,10 +2,13 @@
 <html>
 <head>
   <title>TrailsLog</title>
-  <%= stylesheet_link_tag    "http://yui.yahooapis.com/pure/0.6.0/pure-min.css" %>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
+
+    <!-- responsiveness -->
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+  
   <link rel='stylesheet' href='https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.css'/>
   <script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
   <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
@@ -13,11 +16,7 @@
   <link rel='stylesheet' href='https://api.mapbox.com/mapbox.js/plugins/mapbox-directions.js/v0.3.0/mapbox.directions.css' type='text/css' /> 
 </head>
 <body>
-<div class="grid-container debug">
   <%= yield %>
-</div>
-
-
 	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
 </body>
 </html>
