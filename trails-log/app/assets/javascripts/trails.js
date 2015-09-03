@@ -195,15 +195,18 @@ $(document).on("ready", function() {
         }).fail(function(){
           console.log('fail')
         });
+
       var urlVal = $(this).attr('href')
       $.ajax(urlVal).done(function(hikeInfo){
         $('.navbar').children().hide()
         $('.navbar').prepend(hikeInfo)
-        userTrailsLayer.eachLayer(function(marker){
-          if (marker.feature.properties.id == clickedHikeId){
-             map.setView(marker._latlng, 15);
-          }
-        })
+        zoomInHike(userTrailsLayer, clickedHikeId);
+        zoomInHike(hikerTrailsLayer, clickedHikeId);
+        // userTrailsLayer.eachLayer(function(marker){
+        //   if (marker.feature.properties.id == clickedHikeId){
+        //      map.setView(marker._latlng, 15);
+        //   }
+        // })
       })
     });
 
@@ -307,7 +310,7 @@ $(document).on("ready", function() {
     });
 
     $("[id^='hiker']").on('mouseleave', function(e){
-      userTrailsLayer.eachLayer(function(marker) {
+      allHikersLayer.eachLayer(function(marker) {
         if (marker.feature.properties.user === hoveredUserId){
           marker.closePopup();
         }
@@ -315,6 +318,13 @@ $(document).on("ready", function() {
     });
   };
 
+var zoomInHike = function(layer, clickedHikeId){
+  layer.eachLayer(function(marker){
+    if (marker.feature.properties.id == clickedHikeId){
+     map.setView(marker._latlng, 15);
+    }
+  })
+};
 
   var otherHikerListener = (function() {
     $(".other-hiker").on('click', function(event) {
@@ -328,7 +338,7 @@ $(document).on("ready", function() {
         map.removeLayer(photoLayer);
         $('.navbar').children().hide();
         $('.navbar').prepend(response);
-        var hikerTrailsLayer = hikerTrails(hikerId).addTo(map)
+        hikerTrailsLayer = hikerTrails(hikerId).addTo(map)
         hoverNavToPopUp(hikerTrailsLayer);
       })
       .fail(function(response){
