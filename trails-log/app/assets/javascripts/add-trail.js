@@ -3,5 +3,6 @@ var hideExtraPathControls = function(){
 	$('#mapbox-directions-destination-input').hide();
 	$('#routes').hide();
 	$('.mapbox-form-label').hide();
+	$('.mapbox-reverse-icon').hide();
 }
 
