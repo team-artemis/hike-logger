@@ -203,7 +203,7 @@ $(document).on("ready", function() {
   $('#my-hikes-back').on('click', function(event){
     event.preventDefault();
     // $('.navbar').children().addClass('hideMenu');
-    $('#my-hikes-back').addClass('hideMenu');
+    $('#my-hikes-menu').addClass('hideMenu');
     $('.main-menu').addClass('animated bounceInLeft').one(animationEnd, function(){
       $('.main-menu').removeClass('hideMenu')
       $(this).removeAttr('style');
@@ -231,7 +231,7 @@ $(document).on("ready", function() {
   // Return to main menu from all hikers page
   $('#all-hikers-back').on('click', function(event){
     event.preventDefault();
-    $('#all-hikers-back').addClass('hideMenu');
+    $('#all-hikers-menu').addClass('hideMenu');
     $('.main-menu').addClass('animated bounceInLeft').one(animationEnd, function(){
         $('.main-menu').removeClass('hideMenu')
         $(this).removeAttr('style');
