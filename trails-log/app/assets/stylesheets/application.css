@@ -23,13 +23,13 @@
 #header {
   font-size: 4em;
   -webkit-text-stroke: 1px black;
-   color: white;
-   text-shadow:
-       1px 1px 0 #000,
-     -1px -1px 0 #000,  
-      1px -1px 0 #000,
-      -1px 1px 0 #000,
-       1px 1px 0 #000;
+  color: white;
+  text-shadow:
+  1px 1px 0 #000,
+  -1px -1px 0 #000,  
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
   margin-top:2em;
   margin-bottom: 1em
 }
@@ -40,7 +40,7 @@
 
 
 
- /***** POST SEMANTIC END *****/
+/***** POST SEMANTIC END *****/
 
 html, body {
   height: 100%;
@@ -48,15 +48,15 @@ html, body {
 }
 /* box-sizing fix */
 html {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 *, *:before, *:after {
-    -webkit-box-sizing: inherit;
-    -moz-box-sizing: inherit;
-    box-sizing: inherit;
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 /*BEGIN of usernavbar*/
@@ -66,17 +66,17 @@ html {
 .hideMenu { display: none; }
 
 .navbar {
-    background: #333;
-    height: 100%;
-    padding-top: 10%;
-    padding-bottom: 20%;
-    position:absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    color: #ccc;
-    width:20%;
-    overflow-y: scroll;
+  background: #333;
+  height: 100%;
+  padding-top: 10%;
+  padding-bottom: 20%;
+  position:absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  color: #ccc;
+  width:20%;
+  overflow-y: scroll;
 }
 
 .navbar form, #nav-content, h2 {
@@ -110,15 +110,30 @@ html {
   padding: 8px 12px;
   text-decoration: none;
   font-weight: normal;
+
+  /*THIS WILL APPLY ON HOVER FADE IN EFFECT*/
+  -moz-transition: all .5s ease-in;
+  -o-transition: all .5s ease-in;
+  -webkit-transition: all .5s ease-in;
+  transition: all .5s ease-in;
 }
 
+/*NEED TO TARGET ID's OF LINKS*/
+.my-trails a:hover {background: #85CA4D;}
+.log-hike a:hover {background: #E47225;}
+.all-hikers a:hover {background: #0b91d8;}
+.logout a:hover {background: #EC407A;}
+
+.my-hikes-menu h2 {background: #85CA4D;}
+.log-hike-menu h2 {background: #E47225;}
+.all-hikers-menu h2 {background: #0b91d8;}
 
 
-.cssmenu a:hover {
+/*.cssmenu a:hover {
   background: #2580a2 no-repeat;
   color: #fff;
   padding-bottom: 8px;
-}
+}*/
 
 /*CLEARFIX*/
 .group:after {
@@ -141,18 +156,18 @@ html {
 
 /*VIDEO*/
 video#bgvid {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -100;
-    -webkit-transform: translateX(-50%) translateY(-50%);
-    transform: translateX(-50%) translateY(-50%);
-    background: url(polina.jpg) no-repeat;
-    background-size: cover;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  background: url(polina.jpg) no-repeat;
+  background-size: cover;
 }
 
 /*MAP*/
@@ -170,18 +185,18 @@ video#bgvid {
 
 .popup {
   text-align:center;
-  }
+}
 .popup .slideshow .image        { display:none; }
 .popup .slideshow .image.active { display:block; }
 .popup .slideshow img {
   width:100%;
-  }
+}
 .popup .slideshow .caption {
   background:#eee;
   padding:10px;
-  }
+}
 .popup .cycle {
   padding:10px 0 20px;
-  }
+}
 .popup .cycle a.prev { float:left; }
 .popup .cycle a.next { float:right; }
