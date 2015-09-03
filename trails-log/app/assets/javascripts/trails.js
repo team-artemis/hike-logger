@@ -206,7 +206,7 @@ $('.map').on('click', '.popup .cycle a', function() {
   })
 
   // Show the my trails menu
-  $('#my-trails').on('click', function(event){
+  $('.main-menu').on('click', '#my-trails', function(event){
     event.preventDefault();
     var urlVal = $('#my-trails').attr('href')
     var typeVal = 'GET'
