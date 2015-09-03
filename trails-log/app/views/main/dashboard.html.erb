@@ -1,77 +1,98 @@
 <div class="pure-u-5-24 navbar debug">
-  <div class="main-menu">
-    <div class="avatar-frame">
-      <%= image_tag avatar_url(current_user)  %>
+  <div class="avatar-frame">
+    <%= image_tag avatar_url(current_user)  %>
+  </div>
+  <div class="ui medium centered inverted header">
+    Hi <%= current_user.firstname %>, we love you!
+  </div>
+  <br>
+  <div class="menu">
+      <div class="ui middle aligned animated relaxed massive list">
+        <div class="item">
+          <%= image_tag( "canoe.png", width:'50', height:'50', class: "ui image") %>
+          <div class="middle aligned content">
+            <a class="medium inverted header">Your Hikes</a>
+          </div>
+        </div>
+
+        <div class="item">
+          <%= image_tag( "main_log_hike.png", width:'50', height:'50', class: "ui image") %>
+          <div class="middle aligned content">
+            <a class="medium inverted header">Log New Hike</a>
+          </div>
+        </div>
+
+        <div class="item">
+          <%= image_tag( "main_all_hikers.png", width:'50', height:'50', class: "ui image") %>
+          <div class="middle aligned content">
+            <a class="medium inverted header">All Hikers</a>
+          </div>
+        </div>
+
+
+      </div>
+  </div>
+    <!-- MY HIKES  -->
+
+    <div class="my-hikes-menu hideMenu">
+      <li id= "my-hikes-back" class="cssmenu back-button">
+        <span>
+          <a href="/users/<%= current_user.id %>">
+            back to menu
+          </a>
+        </span>
+      </li>
+      <li class="cssmenu">
+        <h2> My hikes </h2>
+      </li>
+      <div id="hike-list">
+        <%= render 'trails/index' %>
+      </div>
     </div>
-    <br>
-    <li class="cssmenu"><span><a>Hi <%= current_user.firstname %>, we love you!</a></span></li>
-    <li class="cssmenu"><a id="my-trails" href='/users/<%= current_user.id %>/trails'><span>My Trails</span></a></li>
-    <li class="cssmenu" id="log-hike"><a href='/users/<%= current_user.id %>/trails/new'><span>Log Hike</span></a></li>
-    <li class="cssmenu" id="all-hikers"><a href='/users'><span>All Hikers</span></a></li>
-    <li class="cssmenu"><span><%= link_to "Logout", logout_path, method: :delete %></span></li>
-  </div>
 
-  <!-- MY HIKES  -->
+    <!-- LOG HIKE  -->
 
-  <div class="my-hikes-menu hideMenu">
-    <li id= "my-hikes-back" class="cssmenu back-button">
-      <span>
-        <a href="/users/<%= current_user.id %>">
-          back to menu
-        </a>
-      </span>
-    </li>
-    <li class="cssmenu">
-      <h2> My hikes </h2>
-    </li>
-    <div id="hike-list">
-    <%= render 'trails/index' %>
+    <div class="log-hike-menu hideMenu" id="log-hike">
+      <li id= "log-hike-back" class="cssmenu back-button">
+        <span>
+          <a href="/users/<%= current_user.id %>">
+            back to menu
+          </a>
+        </span>
+      </li>
+      <li class="cssmenu">
+        <h2> Log Hike </h2>
+      </li>
+
+      <%= render 'trails/form' %>
+
     </div>
-  </div>
 
-  <!-- LOG HIKE  -->
+    <!-- ALL HIKERS -->
 
-  <div class="log-hike-menu hideMenu" id="log-hike">
-    <li id= "log-hike-back" class="cssmenu back-button">
-      <span>
-        <a href="/users/<%= current_user.id %>">
-          back to menu
-        </a>
-      </span>
-    </li>
-    <li class="cssmenu">
-      <h2> Log Hike </h2>
-    </li>
+    <div class="all-hikers-menu hideMenu">
+      <li id= "all-hikers-back" class="cssmenu back-button">
+        <span>
+          <a href="/users/<%= current_user.id %>">
+            back to menu
+          </a>
+        </span>
+      </li>
+      <li class="cssmenu">
+        <h2> Hikers </h2>
+      </li>
 
-    <%= render 'trails/form' %>
+      <%= render 'users/index' %>
 
-  </div>
-
-  <!-- ALL HIKERS -->
-
-  <div class="all-hikers-menu hideMenu">
-    <li id= "all-hikers-back" class="cssmenu back-button">
-      <span>
-        <a href="/users/<%= current_user.id %>">
-          back to menu
-        </a>
-      </span>
-    </li>
-    <li class="cssmenu">
-      <h2> Hikers </h2>
-    </li>
-
-    <%= render 'users/index' %>
+    </div>
 
   </div>
 
-</div>
-
-<!-- MAP -->
-<div class="pure-u-19-24 debug">
-  <div class="map" id="user-map"></div>
-</div>
-<!-- DRAW PATH -->
+  <!-- MAP -->
+  <div class="pure-u-19-24 debug">
+    <div class="map" id="user-map"></div>
+  </div>
+  <!-- DRAW PATH -->
   <div id='inputs'></div>
   <div id='directions'>
     <div id='routes'></div>

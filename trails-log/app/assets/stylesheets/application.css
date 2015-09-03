@@ -37,8 +37,12 @@
   font-size: .5em;
 
 }
-
-
+.menu {
+  padding-left:1em;
+}
+.menu a:link {
+  font-color:w #FFF;
+}
 
  /***** POST SEMANTIC END *****/
 
