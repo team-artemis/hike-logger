@@ -32,7 +32,9 @@ gem 'binding_of_caller'
 gem 'geokit'
 # Use Unicorn as the app server
 # gem 'unicorn'
-
+gem 'less-rails-semantic_ui'
+gem 'autoprefixer-rails'
+gem 'therubyracer'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

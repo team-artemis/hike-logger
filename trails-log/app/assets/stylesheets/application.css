@@ -11,9 +11,32 @@
  * file per style scope.
  *
  *= require_tree .
+ *= require semantic_ui/semantic_ui
  *= require_self
  */
 
+ /***** POST SEMANTIC START *****/
+ #splash-col{
+  max-width: 400px;
+}
+#header {
+  font-size: 4em;
+  -webkit-text-stroke: 1px black;
+   color: white;
+   text-shadow:
+       1px 1px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+}
+#header div {
+  font-size: .5em;
+}
+
+
+
+ /***** POST SEMANTIC END *****/
 
 html, body {
   height: 100%;
