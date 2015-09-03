@@ -156,10 +156,11 @@ $('.map').on('click', '.popup .cycle a', function() {
     $('.main-menu').show();
     $('#nav-content').hide();
     $('.my-hikes-menu').hide();
-    map.addLayer(userTrailsLayer);
+    userTrailsLayer = getUserTrails(map)
     removePolylineTrail(map);
     map.addLayer(photoLayer);
-    map.fitBounds(userTrailsLayer.getBounds());
+    map.addLayer(userTrailsLayer);
+    map.fitBounds(photoLayer.getBounds());
   })
 
   // Return to main menu from my-trails page
