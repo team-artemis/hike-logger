@@ -161,12 +161,12 @@ $('.map').on('click', '.popup .cycle a', function() {
     $('.main-menu').show();
     $('#nav-content').hide();
     $('.my-hikes-menu').hide();
-    map.addLayer(userTrailsLayer);
     map.addLayer(photoLayer);
     removePolylineTrail(map);
     map.fitBounds(userTrailsLayer.getBounds());
-    // userTrailsLayer = getUserTrails(map)
-    // map.fitBounds(photoLayer.getBounds());
+    userTrailsLayer = getUserTrails(map)
+    map.addLayer(userTrailsLayer);
+    map.fitBounds(photoLayer.getBounds());
   })
 
   // Return to main menu from my-trails page
@@ -206,7 +206,7 @@ $('.map').on('click', '.popup .cycle a', function() {
   })
 
   // Show the my trails menu
-  $('#my-trails').on('click', function(event){
+  $('.main-menu').on('click', '#my-trails', function(event){
     event.preventDefault();
     var urlVal = $('#my-trails').attr('href')
     var typeVal = 'GET'
@@ -485,4 +485,4 @@ var getLastTrail = function(currentTrailId) {
       photoLayer = L.mapbox.featureLayer()
       .loadURL("http://localhost:3000/users/1/trails.json")
       return photoLayer
-  } 
+  }
