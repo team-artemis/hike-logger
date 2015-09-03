@@ -65,6 +65,7 @@ $(document).on("ready", function() {
 
 
   var logHikeButton = new addHikeButton
+  var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
   userTrailsLayer.on("ready", function(event) {
     map.fitBounds(userTrailsLayer.getBounds());
@@ -210,9 +211,21 @@ $(document).on("ready", function() {
   $('.navbar').on('click', '#log-hike-back', function(event){
     // debugger
     event.preventDefault();
-    $('.navbar').children().addClass('hideMenu');
-    $('.main-menu').removeClass('hideMenu');
-    $('.main-menu').show();
+    $('.log-hike-menu').addClass('animated bounceOutRight').one(animationEnd, function(){
+      $('.navbar').children().addClass('hideMenu');
+      $(this).removeClass('animated bounceOutRight')
+      setTimeout(testing, -500)
+    })
+
+    var testing = function() {
+      $('.main-menu').addClass('animated bounceInLeft').one(animationEnd, function(){
+        $('.main-menu').removeClass('hideMenu')
+        $(this).removeAttr('style');
+        $(this).removeClass('animated bounceInLeft')
+      });
+      $('.main-menu').show();
+    }
+
     map.removeControl(logHikeButton);
     if(directionsLayer){map.removeLayer(directionsLayer)}
   })
@@ -245,15 +258,15 @@ $(document).on("ready", function() {
       type: typeVal,
       dataType: 'json'
     }).done(function(response) {
-      console.log(response)
-      console.log('Yay! request went through')
       $('.main-menu').addClass('hideMenu');
       $('.my-hikes-menu').removeClass('hideMenu');
+      $('.my-hikes-menu').addClass('animated bounceInRight').one(animationEnd, function(){
+        $(this).removeClass('hideMenu');
+        $(this).removeAttr('style');
+      })
       $('.my-hikes-menu').show();
       $('.navbar').prepend(response)
     }).fail(function(response){
-      console.log(response)
-      console.log('request did not go through');
     })
     map.addLayer(userTrailsLayer);
   });
@@ -329,7 +342,10 @@ var zoomInHike = function(layer, clickedHikeId){
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
     $('.main-menu').hide();
-    $('.log-hike-menu').removeClass('hideMenu');
+    $('.log-hike-menu').addClass('animated bounceInRight').one(animationEnd, function(){
+      $(this).removeClass('hideMenu animated bounceInRight')
+      $(this).removeAttr('style');
+    })
     $('.log-hike-menu').show();
 
     map.removeLayer(userTrailsLayer);
