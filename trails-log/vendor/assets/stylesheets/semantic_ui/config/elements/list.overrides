@@ -8,3 +8,11 @@
   color: #FFFFFF !important;
 }
 
+
+.ui.list .list > .item a:hover.header,
+.ui.list > .item a:hover.header {
+  cursor: pointer;
+  color: #FFFFFF !important;
+}
+
+
