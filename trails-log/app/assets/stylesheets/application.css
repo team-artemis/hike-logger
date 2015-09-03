@@ -26,7 +26,7 @@
   color: white;
   text-shadow:
   1px 1px 0 #000,
-  -1px -1px 0 #000,  
+  -1px -1px 0 #000,
   1px -1px 0 #000,
   -1px 1px 0 #000,
   1px 1px 0 #000;
@@ -200,3 +200,7 @@ video#bgvid {
 }
 .popup .cycle a.prev { float:left; }
 .popup .cycle a.next { float:right; }
+
+.noshow {
+  display: none;
+}
