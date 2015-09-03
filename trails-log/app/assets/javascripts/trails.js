@@ -195,6 +195,7 @@ $(document).on("ready", function() {
     $('#nav-content').hide();
     $('.my-hikes-menu').hide();
     map.addLayer(userTrailsLayer);
+    removePolylineTrail(map);
     map.fitBounds(userTrailsLayer.getBounds());
   })
 
@@ -440,16 +441,16 @@ var zoomInHike = function(layer, clickedHikeId){
       })
   }
 
+  var polyline;
+  var trailPointsLayer;
   var renderTrail = function(trail, map) {
     var startCoordinates = trail["origin"]["geometry"]["coordinates"].reverse();
     var endCoordinates = trail["destination"]["geometry"]["coordinates"].reverse();
     var pathCoordinates = trail["routes"][0]["geometry"]["coordinates"]
-    console.log(pathCoordinates)
     for (var i = 0; i < pathCoordinates.length; i++){
       pathCoordinates[i] = pathCoordinates[i].reverse()
     }
-    console.log(pathCoordinates)
-    var polyline = L.polyline(pathCoordinates).addTo(map)
+    polyline = L.polyline(pathCoordinates).addTo(map)
     $('path').attr('style', 'stroke:#3D0D3E !important')
 
     //var startMarker = L.marker(startCoordinates).addTo(map);
@@ -458,7 +459,7 @@ var zoomInHike = function(layer, clickedHikeId){
     map.fitBounds(polyline.getBounds());
     //http%3A%2F%2Flocalhost%3A3000%2Fpublic%2FPinadd.png
     //https://api.mapbox.com/v4/mapbox.streets/url-https%3A%2F%2Fmapbox.com%2Fguides%2Fimg%2Fpages%2Frocket.png(-76.9,38.9)/-76.9,38.9,15/100x100.png?access_token=pk.eyJ1IjoiYW5kcmV3cGF0dGVyc29uMzAwMSIsImEiOiI5YjZkYWY4ZTgzNTQzNzcwZjg1M2YxYmFhMjU3NWY5OSJ9.6FMHigG3xoaQ5zd-rKWBpg
-    var trailPointsLayer = L.mapbox.featureLayer().addTo(map);
+    trailPointsLayer = L.mapbox.featureLayer().addTo(map);
 
       var startEndMarkers = [{
           "type": "Feature",
@@ -504,6 +505,11 @@ var zoomInHike = function(layer, clickedHikeId){
 
       // Add features to the map.
     trailPointsLayer.setGeoJSON(startEndMarkers);
+  }
+
+  var removePolylineTrail = function(map){
+    map.removeLayer(polyline)
+    map.removeLayer(trailPointsLayer)
   }
 
   var allHikersTrails = function(map) {
