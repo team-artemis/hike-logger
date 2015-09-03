@@ -202,8 +202,14 @@ $(document).on("ready", function() {
   // Return to main menu from my-trails page
   $('#my-hikes-back').on('click', function(event){
     event.preventDefault();
-    $('.navbar').children().addClass('hideMenu');
-    $('.main-menu').removeClass('hideMenu');
+    // $('.navbar').children().addClass('hideMenu');
+    $('#my-hikes-back').addClass('hideMenu');
+    $('.main-menu').addClass('animated bounceInLeft').one(animationEnd, function(){
+      $('.main-menu').removeClass('hideMenu')
+      $(this).removeAttr('style');
+      $(this).removeClass('animated bounceInLeft')
+    });
+    $('.main-menu').show();
     $('.my-hikes-menu').hide();
   });
 
@@ -211,32 +217,31 @@ $(document).on("ready", function() {
   $('.navbar').on('click', '#log-hike-back', function(event){
     // debugger
     event.preventDefault();
-    $('.log-hike-menu').addClass('animated bounceOutRight').one(animationEnd, function(){
-      $('.navbar').children().addClass('hideMenu');
-      $(this).removeClass('animated bounceOutRight')
-      setTimeout(testing, -500)
-    })
-
-    var testing = function() {
-      $('.main-menu').addClass('animated bounceInLeft').one(animationEnd, function(){
+    $('.log-hike-menu').addClass('hideMenu');
+    $('.main-menu').addClass('animated bounceInLeft').one(animationEnd, function(){
         $('.main-menu').removeClass('hideMenu')
         $(this).removeAttr('style');
         $(this).removeClass('animated bounceInLeft')
       });
       $('.main-menu').show();
-    }
-
-    map.removeControl(logHikeButton);
-    if(directionsLayer){map.removeLayer(directionsLayer)}
+        map.removeControl(logHikeButton);
+       if(directionsLayer){map.removeLayer(directionsLayer)}
   })
 
   // Return to main menu from all hikers page
   $('#all-hikers-back').on('click', function(event){
     event.preventDefault();
-    $('.navbar').children().addClass('hideMenu');
-    $('.main-menu').removeClass('hideMenu');
+    $('#all-hikers-back').addClass('hideMenu');
+    $('.main-menu').addClass('animated bounceInLeft').one(animationEnd, function(){
+        $('.main-menu').removeClass('hideMenu')
+        $(this).removeAttr('style');
+        $(this).removeClass('animated bounceInLeft')
+      });
     $('.main-menu').show();
     $('.all-hikers-menu').hide();
+    // $('.navbar').children().addClass('hideMenu');
+    // $('.main-menu').removeClass('hideMenu');
+    // $('.main-menu').show();
     map.removeLayer(allHikersLayer);
   })
 
@@ -259,9 +264,8 @@ $(document).on("ready", function() {
       dataType: 'json'
     }).done(function(response) {
       $('.main-menu').addClass('hideMenu');
-      $('.my-hikes-menu').removeClass('hideMenu');
       $('.my-hikes-menu').addClass('animated bounceInRight').one(animationEnd, function(){
-        $(this).removeClass('hideMenu');
+        $(this).removeClass('hideMenu animated bounceInRight');
         $(this).removeAttr('style');
       })
       $('.my-hikes-menu').show();
@@ -277,7 +281,10 @@ $(document).on("ready", function() {
   $('#all-hikers').on('click', function(event) {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
-    $('.all-hikers-menu').removeClass('hideMenu');
+    $('.all-hikers-menu').addClass('animated bounceInRight').one(animationEnd, function(){
+        $(this).removeClass('hideMenu animated bounceInRight');
+        $(this).removeAttr('style');
+      })
     $('.all-hikers-menu').show();
 
     allHikersLayer.addTo(map)
