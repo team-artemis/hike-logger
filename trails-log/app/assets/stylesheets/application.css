@@ -52,6 +52,10 @@ html {
     overflow-y: scroll;
 }
 
+.main-menu {
+  -vendor-animation-delay: 2s;
+}
+
 .navbar form, #nav-content, h2 {
   padding: 8px 12px;
   background: #333;
@@ -158,3 +162,4 @@ video#bgvid {
   }
 .popup .cycle a.prev { float:left; }
 .popup .cycle a.next { float:right; }
+
