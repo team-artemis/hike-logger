@@ -161,11 +161,11 @@ $('.map').on('click', '.popup .cycle a', function() {
     $('.main-menu').show();
     $('#nav-content').hide();
     $('.my-hikes-menu').hide();
+    map.addLayer(userTrailsLayer);
+    map.addLayer(photoLayer);
+    removePolylineTrail(map);
     map.fitBounds(userTrailsLayer.getBounds());
     // userTrailsLayer = getUserTrails(map)
-    removePolylineTrail(map);
-    map.addLayer(photoLayer);
-    map.addLayer(userTrailsLayer);
     // map.fitBounds(photoLayer.getBounds());
   })
 
@@ -408,6 +408,7 @@ var getLastTrail = function(currentTrailId) {
     for (var i = 0; i < pathCoordinates.length; i++){
       pathCoordinates[i] = pathCoordinates[i].reverse()
     }
+
     polyline = L.polyline(pathCoordinates).addTo(map)
 
     $('path').attr('style', 'stroke:#3D0D3E !important')
@@ -415,6 +416,7 @@ var getLastTrail = function(currentTrailId) {
     map.fitBounds(polyline.getBounds());
 
     trailPointsLayer = L.mapbox.featureLayer().addTo(map);
+
 
     var startEndMarkers = [{
       "type": "Feature",
