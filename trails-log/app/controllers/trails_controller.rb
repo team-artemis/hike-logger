@@ -6,12 +6,9 @@ class TrailsController < ApplicationController
     @trails = Trail.all
     @geojson = Array.new
     build_geojson(@trails, @geojson)
-
     respond_to do |format|
-      # format.html
       format.json { render json: @geojson }
     end
-    # render 'index'
   end
 
   def build_geojson(trails, geojson)
