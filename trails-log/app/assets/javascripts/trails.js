@@ -89,16 +89,16 @@ photoLayer.on('layeradd', function(e) {
   var slideshowContent = '';
   var feature = marker.feature;
   var images = feature.properties.images;
-    // Set slideshow content - Check view-trail.js 
+    // Set slideshow content - Check view-trail.js
     slideshowContent = setSlideshowContent(images, slideshowContent);
-    // Set popup content - Check view-trail.js 
+    // Set popup content - Check view-trail.js
     var popupContent = createPopUpForPhoto(feature, slideshowContent);
     // Bind popup for each marker to the content
     marker.bindPopup(popupContent,{
       closeButton: false,
       minWidth: 320,
     });
-  });  
+  });
 
 $('.map').on('click', '.popup .cycle a', function() {
   var $slideshow = $('.slideshow'),
@@ -158,6 +158,7 @@ $('.map').on('click', '.popup .cycle a', function() {
     $('.my-hikes-menu').hide();
     map.addLayer(userTrailsLayer);
     map.addLayer(photoLayer);
+    removePolylineTrail(map);
     map.fitBounds(userTrailsLayer.getBounds());
   })
 
@@ -354,7 +355,7 @@ $('.map').on('click', '.popup .cycle a', function() {
 
 }); // END DOCUMENT READY
 
-  
+
 
   //Make an AJAX call for the current_user
   var currentUser;
@@ -392,6 +393,8 @@ var getLastTrail = function(currentTrailId) {
     })
   }
 
+  var polyline;
+  var trailPointsLayer;
   var renderTrail = function(trail, map) {
     var startCoordinates = trail["origin"]["geometry"]["coordinates"].reverse();
     var endCoordinates = trail["destination"]["geometry"]["coordinates"].reverse();
@@ -402,10 +405,12 @@ var getLastTrail = function(currentTrailId) {
     }
 
     var polyline = L.polyline(pathCoordinates).addTo(map)
+
     $('path').attr('style', 'stroke:#3D0D3E !important')
 
     map.fitBounds(polyline.getBounds());
-    var trailPointsLayer = L.mapbox.featureLayer().addTo(map);
+    trailPointsLayer = L.mapbox.featureLayer().addTo(map);
+
 
     var startEndMarkers = [{
       "type": "Feature",
@@ -453,9 +458,13 @@ var getLastTrail = function(currentTrailId) {
       trailPointsLayer.setGeoJSON(startEndMarkers);
     }
 
-    var allHikersTrails = function(map) {
-      var allHikersLayer = L.mapbox.featureLayer()
-      .loadURL("http://localhost:3000/trails.json")
+  var removePolylineTrail = function(map){
+    map.removeLayer(polyline)
+    map.removeLayer(trailPointsLayer)
+  }
+
+  var allHikersTrails = function(map) {
+    var allHikersLayer = L.mapbox.featureLayer().loadURL("http://localhost:3000/trails.json")
       return allHikersLayer
     }
 
@@ -468,4 +477,4 @@ var getLastTrail = function(currentTrailId) {
       photoLayer = L.mapbox.featureLayer()
       .loadURL("http://localhost:3000/users/1/trails.json")
       return photoLayer
-    } 
+    }
