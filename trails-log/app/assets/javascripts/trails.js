@@ -488,7 +488,7 @@ $(document).on("ready", function() {
           "type": "Feature",
           "geometry": {
               "type": "Point",
-              "coordinates": startCoordinates
+              "coordinates": startCoordinates.reverse()
           },
           "properties": {
               "title": "Trailhead Marker",
@@ -504,15 +504,15 @@ $(document).on("ready", function() {
           "type": "Feature",
           "geometry": {
               "type": "Point",
-              "coordinates": endCoordinates
+              "coordinates": endCoordinates.reverse()
           },
           "properties": {
               "title": "End of Trail Marker",
               "icon": {
-                  "iconUrl": "http://localhost:3000/Pincancel.png",
-                  "iconSize": [100, 100],
-                  "iconAnchor": [50, 50],
-                  "popupAnchor": [0, -55],
+                  "iconUrl": "http://localhost:3000/PinOK.png",
+                  "iconSize": [50, 50],
+                  "iconAnchor": [25, 25],
+                  "popupAnchor": [0, -25],
                   "className": "dot"
               }
           }
