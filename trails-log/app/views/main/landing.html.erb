@@ -1,57 +1,137 @@
 <div class="video-wrapper">
-  <%= video_tag("trail.mp4", autobuffer: true, autoplay: true, loop: true, id: "bgvid") %>
+	<%= video_tag("logger2.mp4", autobuffer: true, autoplay: true, loop: true, id: "bgvid") %>
 </div>
 
-<div class="landing-wrapper">
-	<div class="login-wrapper">
-		<h1>Login</h1>
-		<%= form_for :session, url: login_path do |f| %>
-		  <%= f.label :email %>
-		  <%= f.email_field :email, class: 'tbd' %>
+<div class="ui vertical masthead center aligned middle aligned basic segment landing-wrapper" id="splash-content">
 
-		  <%= f.label :password %>
-		  <%= f.password_field :password, class: 'tbd' %>
+	<div class="ui stackable page very relaxed grid">
 
-		  <%= f.submit "Login", class: 'tbd' %>
-		<% end %>
+		<div class="ui centered row">
+			<h1 class="ui huge inverted header" id="header">
+				WE'RE TRAILERS!
+				<div class="sub header"><b> 
+					You'd think we're vehicles but we're just folks who love trails
+				</b></div>
+			</h1>
+		</div>
 
-		<p>New user? <%= link_to "Sign up now!", new_user_path, class: "sign-up" %></p>
+		<div class="ui two column row">
+			<div class="ui eight wide left aligned column" style="background-color: rgba(255, 255, 255, 0.5); " id="splash-col">
+				<div class="login-wrapper">
+				<br>
+				<br>
+					<%= form_for :session, url: login_path, html: {class: "ui huge form"} do |f| %>
+
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="mail outline icon"></i>
+							<%= f.email_field :email, :placeholder => "Email" %>
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="lock icon"></i>
+							<%= f.password_field :password, :placeholder => "Password" %>
+						</div>
+					</div> 
+
+					<%= f.submit "Login", class: "ui massive primary submit button"  %>  	
+					<label style="float: right; "> <br>
+						or...  <%= link_to "Log In", new_user_path, class: "sign-up" %>
+					</label> 			
+					<% end %>
+
+				</div>
+				<br>
+				<br>
+				<div class="signup-wrapper hideMenu">
+
+					<%= form_for :user, url: users_path, html: {class: "ui huge form"} do |f| %>
+
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="user icon"></i>
+							<%= f.text_field :firstname, :placeholder => "First and Last Name" %>
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="mail outline icon"></i>
+							<%= f.email_field :email, :placeholder => "Email" %>
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="home icon"></i>
+							<%= f.text_field :city, :placeholder => "City" %>
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="lock icon"></i>
+							<%= f.password_field :password, :placeholder => "Password" %>
+						</div>
+					</div> 
+
+					<%= f.submit "Join", class: "ui massive primary submit button"  %>  
+
+					<% end %>
+					<br>
+					<br>
+				</div>
+			</div>
+			<div class="ui eight wide column">
+				<div class="ui massive inverted list">
+					<div class="item">
+						<i class="idea inverted big inverted big icon"></i>
+						<div class="middle aligned content">
+							<div class="content"> <a><b> 
+								Get awesome great trail ideas 
+							</b></a></div>
+						</div>
+					</div>
+					<div class="item">
+						<i class="compass inverted big icon"></i>
+						<div class="middle aligned content">
+							<div class="content"><a><b>
+								Map your trails
+							</b></a></div>
+						</div>
+					</div>
+					<div class="item">
+						<i class="send outline inverted big icon"></i>
+						<div class="middle aligned content">
+							<div class="content"><a><b>
+								Share the 411 with your friends
+							</b></a></div>
+						</div>
+					</div>
+					<div class="item">
+						<i class="moon inverted big icon"></i>
+						<div class="middle aligned content">
+							<div class="content"><a><b>
+								Pictures of the moon galore (jk!)
+							</b></a></div>
+						</div>
+					</div>
+					<div class="item">
+						<i class="camera retro inverted big icon"></i>
+						<div class="middle aligned content">
+							<div class="content"><a><b>
+								Explore pictures of destinations 
+							</b></a> </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+</div>
+<br>
 
-	<div class="signup-wrapper hideMenu">
-		<%= form_for(:user, url: users_path) do |f| %>
-		  <div class="field">
-		    <%= f.label 'First name' %><br>
-		    <%= f.text_field :firstname %>
-		  </div>
-		  <div class="field">
-		    <%= f.label 'Last name' %><br>
-		    <%= f.text_field :lastname %>
-		  </div>
-		  <div class="field">
-		    <%= f.label :city %><br>
-		    <%= f.text_field :city %>
-		  </div>
-		  <div class="field">
-		    <%= f.label :state %><br>
-		    <%= f.text_field :state %>
-		  </div>
-		  <div class="field">
-		    <%= f.label :country %><br>
-		    <%= f.text_field :country %>
-		  </div>
-		  <div class="field">
-		    <%= f.label :password %><br>
-		    <%= f.password_field :password %>
-		  </div>
-		  <div class="field">
-		    <%= f.label :email %><br>
-		    <%= f.text_field :email %>
-		  </div>
-		  <div class="actions">
-		    <%= f.submit %>
-		  </div>
-	  <% end %>
-		<p>Already a user? <%= link_to "Login!", root_path, class: "login-link" %></p>
-	</div>
+<br>
 </div>

@@ -1,17 +1,17 @@
 User.create(
-	firstname: "Taylor",
-	lastname: "Swift",
-	email: "Swifty1989@test.com",
-	city: "Nashville",
-	state: "TN",
-	country: "USA",
-	password: "password"
+  firstname: "Taylor",
+  lastname: "Swift",
+  email: "Swifty1989@test.com",
+  city: "Nashville",
+  state: "TN",
+  country: "USA",
+  password: "password"
 )
 
 User.create(
   firstname: "Bee",
   lastname: "Derek",
-  email: "derek@test.com",
+  email: "daschi87@gmail.com",
   city: "San Francisco",
   state: "CA",
   country: "USA",
@@ -31,6 +31,7 @@ Trail.create(
   trailhead_lat: 37.897568,
   trailend_lon: -122.582923,
   trailend_lat: 37.927665,
+  waypoints: "-122.639476,37.897568;-122.582923,37.927665",
   user_id: 1,
   images: [
           ['http://2.bp.blogspot.com/-kw9YgQnbELY/Um6dt-GgdXI/AAAAAAAAB0o/VCErLESCKGE/s1600/mt-tamalpais-matt-davis-trail-staircase-big.jpg','A really big staircase on the Matt Davis Trail!'],
@@ -52,6 +53,7 @@ Trail.create(
   trailhead_lat: 37.934242,
   trailend_lon: -122.582923,
   trailend_lat: 37.927665,
+  waypoints: "-122.747442,37.934242;-122.582923,37.927665",
   user_id: 2,
   images: [
         ['http://2.bp.blogspot.com/-kw9YgQnbELY/Um6dt-GgdXI/AAAAAAAAB0o/VCErLESCKGE/s1600/mt-tamalpais-matt-davis-trail-staircase-big.jpg','A really big staircase on the Matt Davis Trail!'],
@@ -73,6 +75,7 @@ Trail.create(
   trailhead_lat: 30.934242,
   trailend_lon: -81.582923,
   trailend_lat: 30.927665,
+  waypoints: "-81.747442,30.934242;-81.582923,30.927665",
   user_id: 1,
   images: [
         ['http://2.bp.blogspot.com/-kw9YgQnbELY/Um6dt-GgdXI/AAAAAAAAB0o/VCErLESCKGE/s1600/mt-tamalpais-matt-davis-trail-staircase-big.jpg','A really big staircase on the Matt Davis Trail!'],
@@ -90,10 +93,11 @@ Trail.create(
   review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
   rating: 4,
   trailhead_title:"Florida",
-  trailhead_lon: 21.304770,
-  trailhead_lat: -157.857614,
+  trailhead_lon: -157.857614,
+  trailhead_lat: 21.304770,
   trailend_lon: -81.582923,
   trailend_lat: 30.927665,
+  waypoints: "-157.857614,21.304770;-81.582923,30.927665",
   user_id: 1,
   images: [
         ['http://2.bp.blogspot.com/-kw9YgQnbELY/Um6dt-GgdXI/AAAAAAAAB0o/VCErLESCKGE/s1600/mt-tamalpais-matt-davis-trail-staircase-big.jpg','A really big staircase on the Matt Davis Trail!'],
@@ -111,10 +115,11 @@ Trail.create(
   review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
   rating: 4,
   trailhead_title:"Florida",
-  trailhead_lon: 36.167783,
-  trailhead_lat: -86.778365,
+  trailhead_lon: -86.778365,
+  trailhead_lat: 36.167783,
   trailend_lon: -81.582923,
   trailend_lat: 30.927665,
+  waypoints: "-86.778365,36.167783;-81.582923,30.927665",
   user_id: 2,
   images: [
         ['http://2.bp.blogspot.com/-kw9YgQnbELY/Um6dt-GgdXI/AAAAAAAAB0o/VCErLESCKGE/s1600/mt-tamalpais-matt-davis-trail-staircase-big.jpg','A really big staircase on the Matt Davis Trail!'],

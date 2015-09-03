@@ -45,7 +45,6 @@ class MainController < ApplicationController
   def the_current_trail_path
     @current_trail = Trail.find_by(id: params[:id])
     @response = HTTParty.get("https://api.mapbox.com/v4/directions/mapbox.walking/#{@current_trail.waypoints}.json?access_token=pk.eyJ1IjoiYW5kcmV3cGF0dGVyc29uMzAwMSIsImEiOiI5YjZkYWY4ZTgzNTQzNzcwZjg1M2YxYmFhMjU3NWY5OSJ9.6FMHigG3xoaQ5zd-rKWBpg")
-     # body["origin"]["geometry"]["coordinates"]
     @body = JSON.parse(@response.body)
     if request.xhr?
       respond_to do |format|
@@ -54,12 +53,4 @@ class MainController < ApplicationController
     end
   end
 
-  private
-
-  # def reverse_geocode(trailhead_lat, trailhead_lon)
-  #   location = Geokit::LatLng.new(trailhead_lat, trailhead_lon)
-  #   city = location.reverse_geocode.city
-  #   state = location.reverse_geocode.state
-  #   return [city, state].join(', ')
-  # end
 end
