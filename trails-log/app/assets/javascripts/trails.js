@@ -89,16 +89,16 @@ photoLayer.on('layeradd', function(e) {
   var slideshowContent = '';
   var feature = marker.feature;
   var images = feature.properties.images;
-    // Set slideshow content - Check view-trail.js 
+    // Set slideshow content - Check view-trail.js
     slideshowContent = setSlideshowContent(images, slideshowContent);
-    // Set popup content - Check view-trail.js 
+    // Set popup content - Check view-trail.js
     var popupContent = createPopUpForPhoto(feature, slideshowContent);
     // Bind popup for each marker to the content
     marker.bindPopup(popupContent,{
       closeButton: false,
       minWidth: 320,
     });
-  });  
+  });
 
 $('.map').on('click', '.popup .cycle a', function() {
   var $slideshow = $('.slideshow'),
@@ -161,10 +161,12 @@ $('.map').on('click', '.popup .cycle a', function() {
     $('.main-menu').show();
     $('#nav-content').hide();
     $('.my-hikes-menu').hide();
-    map.addLayer(userTrailsLayer);
-    map.addLayer(photoLayer);
-    removePolylineTrail(map);
     map.fitBounds(userTrailsLayer.getBounds());
+    // userTrailsLayer = getUserTrails(map)
+    removePolylineTrail(map);
+    map.addLayer(photoLayer);
+    map.addLayer(userTrailsLayer);
+    // map.fitBounds(photoLayer.getBounds());
   })
 
   // Return to main menu from my-trails page
@@ -360,8 +362,6 @@ $('.map').on('click', '.popup .cycle a', function() {
 
 }); // END DOCUMENT READY
 
-  
-
   //Make an AJAX call for the current_user
   var currentUser;
   $.ajax({
@@ -404,6 +404,7 @@ var getLastTrail = function(currentTrailId) {
     var startCoordinates = trail["origin"]["geometry"]["coordinates"].reverse();
     var endCoordinates = trail["destination"]["geometry"]["coordinates"].reverse();
     var pathCoordinates = trail["routes"][0]["geometry"]["coordinates"]
+
     for (var i = 0; i < pathCoordinates.length; i++){
       pathCoordinates[i] = pathCoordinates[i].reverse()
     }
@@ -414,7 +415,6 @@ var getLastTrail = function(currentTrailId) {
     map.fitBounds(polyline.getBounds());
 
     trailPointsLayer = L.mapbox.featureLayer().addTo(map);
-
 
     var startEndMarkers = [{
       "type": "Feature",
@@ -471,15 +471,16 @@ var getLastTrail = function(currentTrailId) {
     var allHikersLayer = L.mapbox.featureLayer()
     .loadURL("http://localhost:3000/trails.json")
     return allHikersLayer
-    }
+  }
 
-    var hikerTrails = function(userId) {
+  var hikerTrails = function(userId) {
       var hikerTrails = L.mapbox.featureLayer()
       .loadURL("http://localhost:3000/users/"+userId+"/trails.json")
       return hikerTrails
-    }
-    var hikerPhotos = function(map){
+  }
+
+  var hikerPhotos = function(map){
       photoLayer = L.mapbox.featureLayer()
       .loadURL("http://localhost:3000/users/1/trails.json")
       return photoLayer
-    } 
+  } 
