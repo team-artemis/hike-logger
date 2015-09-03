@@ -1,12 +1,6 @@
 module TrailsHelper
 
   Geokit::Geocoders::GoogleGeocoder.api_key = 'AIzaSyCDDyToOS_3CYekY0fDAUZXD6A0CJXCbPM'
-  def reverse_geocode(trailhead_lat, trailhead_lon)
-    location = Geokit::LatLng.new(trailhead_lat, trailhead_lon)
-    city = location.reverse_geocode.city
-    state = location.reverse_geocode.state
-    return [city, state].join(', ')
-  end
 
   def get_trail_owner(trail_object)
     User.find_by(trail_object.user_id)

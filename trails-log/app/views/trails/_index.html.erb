@@ -2,6 +2,6 @@
 
 <li class="cssmenu"><a id="trail<%= trail.id %>" href="/users/<%= current_user.id %>/trails/<%= trail.id %>">
   <b><%= trail.title %></b> <br>
-  <%= reverse_geocode(trail.trailhead_lat, trail.trailhead_lon) %>
+  <%= trail.city %>, <%= trail.state %>
 </a></li>
 <% end %>
