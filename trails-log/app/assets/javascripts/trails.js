@@ -66,59 +66,58 @@ $(document).on("ready", function() {
 
   var logHikeButton = new addHikeButton
 
-    $(".other-hiker").on('click', function(event) {
-      event.preventDefault();
-      var urlVal = $(this).attr('href')
-      $.ajax({
-        url: urlVal,
-      }).done(function(response){
-        $('.navbar').children().hide()
-        // $('.navbar').prepend(response)
-
-        // $('.all-hikers-menu').addClass('hideMenu');
-        // $('.other-hiker-menu').removeClass('hideMenu');
-      }).fail(function(response){
-        console.log("fail")
-        console.log(response)
-      })
-    })
-  
-
-
   userTrailsLayer.on("ready", function(event) {
     map.fitBounds(userTrailsLayer.getBounds());
 
     // Hovering on the trail in the navbar opens pop up
     var hoveredTrailId;
-    $("[id^='trail']").on('mouseenter', function(event){
+    hoverNavToPopUp(userTrailsLayer);
+    // $("[id^='trail']").on('mouseenter', function(event){
+    //   hoveredTrailId = $(this).attr('id').slice(-1)
+    //   userTrailsLayer.eachLayer(function(marker) {
+    //     if (marker.feature.properties.id == hoveredTrailId){
+    //       marker.openPopup();
+    //     }
+    //   })
+    // });
+
+    // $("[id^='trail']").on('mouseleave', function(event){
+    //   userTrailsLayer.eachLayer(function(marker) {
+    //     if (marker.feature.properties.id == hoveredTrailId){
+    //       marker.closePopup();
+    //     }
+    //   });
+
+    // });
+  });
+
+  var hoverNavToPopUp = function(layer){
+
+  $("[id^='trail']").on('mouseenter', function(event){
       hoveredTrailId = $(this).attr('id').slice(-1)
-      userTrailsLayer.eachLayer(function(marker) {
+      layer.eachLayer(function(marker) {
         if (marker.feature.properties.id == hoveredTrailId){
           marker.openPopup();
         }
       })
     });
 
-
-
-
     $("[id^='trail']").on('mouseleave', function(event){
-      userTrailsLayer.eachLayer(function(marker) {
+      layer.eachLayer(function(marker) {
         if (marker.feature.properties.id == hoveredTrailId){
           marker.closePopup();
         }
       });
-
     });
-  });
+  };
 
-//*~**~**~**~**~**~**~**~**~**~**~**~**~*
-  var myLayer = L.mapbox.featureLayer().addTo(map);
+// //*~**~**~**~**~**~**~**~**~**~**~**~**~*
+  var photoLayer = L.mapbox.featureLayer().addTo(map);
   // Set the geojson data
-  var geoJson = myLayer.loadURL("http://localhost:3000/users/1/trails.json")
+  var geoJson = photoLayer.loadURL("http://localhost:3000/users/1/trails.json")
 
     //On add of the layer
-    myLayer.on('layeradd', function(e) {
+    photoLayer.on('layeradd', function(e) {
     var marker = e.layer;
     var slideshowContent = '';
     var feature = marker.feature;
@@ -153,7 +152,7 @@ $(document).on("ready", function() {
       });
     });
     //Add layer w/geojson data (currently in global)
-    myLayer.getGeoJSON(geoJson);
+    photoLayer.getGeoJSON(geoJson);
 
     $('.map').on('click', '.popup .cycle a', function() {
       console.log("yes")
@@ -257,20 +256,6 @@ $(document).on("ready", function() {
     $('.main-menu').show();
   })
 
-  // $('.back-button').on('click', function(event){
-  //   event.preventDefault();
-  //   console.log("back button working")
-  //   // window.location = currentUser["id"]
-  //   $('.navbar').children().addClass('hideMenu');
-  //   $('.main-menu').removeClass('hideMenu');
-  //   //REFACTORED ALERT: Andrew removed add and save trailhead buttons here
-  //   $('.leaflet-draw').hide()
-  //   $('#inputs').empty();
-  //   map.addLayer(userTrailsLayer);
-  //   map.removeControl(logHikeButton);
-  //   map.removeLayer(directionsLayer);
-  // });
-
   // Show the my trails menu
   $('#my-trails').on('click', function(event){
     event.preventDefault();
@@ -330,14 +315,21 @@ $(document).on("ready", function() {
     });
   };
 
+
   var otherHikerListener = (function() {
     $(".other-hiker").on('click', function(event) {
       event.preventDefault();
       var urlVal = $(this).attr('href')
+      var hikerId = $(this).parent().attr('id').slice(-1)
       $.ajax(urlVal)
       .done(function(response){
-        $('.navbar').children().hide()
-        $('.navbar').prepend(response)
+        map.removeLayer(userTrailsLayer);
+        map.removeLayer(allHikersLayer);
+        map.removeLayer(photoLayer);
+        $('.navbar').children().hide();
+        $('.navbar').prepend(response);
+        var hikerTrailsLayer = hikerTrails(hikerId).addTo(map)
+        hoverNavToPopUp(hikerTrailsLayer);
       })
       .fail(function(response){
         console.log("The request failed.")
@@ -483,6 +475,11 @@ $(document).on("ready", function() {
   var allHikersTrails = function(map) {
     var allHikersLayer = L.mapbox.featureLayer().loadURL("http://localhost:3000/trails.json")
       return allHikersLayer
+  }
+
+  var hikerTrails = function(userId) {
+      var hikerTrails = L.mapbox.featureLayer().loadURL("http://localhost:3000/users/"+userId+"/trails.json")
+        return hikerTrails
   }
 
   var removeAllLayers = function(map) {
