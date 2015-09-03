@@ -31,7 +31,7 @@ $(document).on("ready", function() {
       .addListener(addHike, 'click', L.DomEvent.preventDefault)
 
       addHike.style.backgroundColor = 'white';
-      addHike.style.backgroundImage = "url(http://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)";
+      addHike.style.backgroundImage = "url(http://localhost:3000/Crosspin.png)";
       addHike.style.backgroundSize = "30px 30px";
       addHike.style.width = '30px';
       addHike.style.height = '30px';
@@ -68,27 +68,8 @@ $(document).on("ready", function() {
 
   userTrailsLayer.on("ready", function(event) {
     map.fitBounds(userTrailsLayer.getBounds());
-
-    // Hovering on the trail in the navbar opens pop up
     var hoveredTrailId;
     hoverNavToPopUp(userTrailsLayer);
-    // $("[id^='trail']").on('mouseenter', function(event){
-    //   hoveredTrailId = $(this).attr('id').slice(-1)
-    //   userTrailsLayer.eachLayer(function(marker) {
-    //     if (marker.feature.properties.id == hoveredTrailId){
-    //       marker.openPopup();
-    //     }
-    //   })
-    // });
-
-    // $("[id^='trail']").on('mouseleave', function(event){
-    //   userTrailsLayer.eachLayer(function(marker) {
-    //     if (marker.feature.properties.id == hoveredTrailId){
-    //       marker.closePopup();
-    //     }
-    //   });
-
-    // });
   });
 
   var hoverNavToPopUp = function(layer){
@@ -111,7 +92,7 @@ $(document).on("ready", function() {
     });
   };
 
-// //*~**~**~**~**~**~**~**~**~**~**~**~**~*
+// *~**~**~**~**~**~**~**~**~**~**~**~**~*
   var photoLayer = L.mapbox.featureLayer().addTo(map);
   // Set the geojson data
   var geoJson = photoLayer.loadURL("http://localhost:3000/users/1/trails.json")
@@ -202,11 +183,6 @@ $(document).on("ready", function() {
         $('.navbar').prepend(hikeInfo)
         zoomInHike(userTrailsLayer, clickedHikeId);
         zoomInHike(hikerTrailsLayer, clickedHikeId);
-        // userTrailsLayer.eachLayer(function(marker){
-        //   if (marker.feature.properties.id == clickedHikeId){
-        //      map.setView(marker._latlng, 15);
-        //   }
-        // })
       })
     });
 
@@ -224,7 +200,7 @@ $(document).on("ready", function() {
 
   // Return to main menu from my-trails page
   $('#my-hikes-back').on('click', function(event){
-    event.preventDefault(); 
+    event.preventDefault();
     $('.navbar').children().addClass('hideMenu');
     $('.main-menu').removeClass('hideMenu');
     $('.my-hikes-menu').hide();
@@ -238,7 +214,7 @@ $(document).on("ready", function() {
     $('.main-menu').removeClass('hideMenu');
     $('.main-menu').show();
     map.removeControl(logHikeButton);
-    if(directionsLayer){map.removeLayer(directionsLayer)} 
+    if(directionsLayer){map.removeLayer(directionsLayer)}
   })
 
   // Return to main menu from all hikers page
@@ -274,7 +250,6 @@ $(document).on("ready", function() {
       $('.main-menu').addClass('hideMenu');
       $('.my-hikes-menu').removeClass('hideMenu');
       $('.my-hikes-menu').show();
-      //$('.navbar').children().hide()
       $('.navbar').prepend(response)
     }).fail(function(response){
       console.log(response)
@@ -348,7 +323,6 @@ var zoomInHike = function(layer, clickedHikeId){
   })()
 
     var directionsLayer;
-
 
 // LOG HIKE
   $('#log-hike').on('click', function(event) {
@@ -449,7 +423,7 @@ var zoomInHike = function(layer, clickedHikeId){
     return userTrailsLayer
   };
 
-//Not currently in use
+//Not currently in use, but this logic is used three times. How can I get it to work?
   var getLastTrail = function(currentTrailId) {
     //var currentUserId = currentUser.id
     var currentTrail;
@@ -477,9 +451,59 @@ var zoomInHike = function(layer, clickedHikeId){
     console.log(pathCoordinates)
     var polyline = L.polyline(pathCoordinates).addTo(map)
     $('path').attr('style', 'stroke:#3D0D3E !important')
-    var startMarker = L.marker(startCoordinates).addTo(map); //style with 'S'
-    var endMarker = L.marker(endCoordinates).addTo(map); //style with 'End' or something
+
+    //var startMarker = L.marker(startCoordinates).addTo(map);
+    //var endMarker = L.marker(endCoordinates).addTo(map);
+
     map.fitBounds(polyline.getBounds());
+    //http%3A%2F%2Flocalhost%3A3000%2Fpublic%2FPinadd.png
+    //https://api.mapbox.com/v4/mapbox.streets/url-https%3A%2F%2Fmapbox.com%2Fguides%2Fimg%2Fpages%2Frocket.png(-76.9,38.9)/-76.9,38.9,15/100x100.png?access_token=pk.eyJ1IjoiYW5kcmV3cGF0dGVyc29uMzAwMSIsImEiOiI5YjZkYWY4ZTgzNTQzNzcwZjg1M2YxYmFhMjU3NWY5OSJ9.6FMHigG3xoaQ5zd-rKWBpg
+    var trailPointsLayer = L.mapbox.featureLayer().addTo(map);
+
+      var startEndMarkers = [{
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": startCoordinates.reverse()
+          },
+          "properties": {
+              "title": "Trailhead Marker",
+              "icon": {
+                  "iconUrl": "http://localhost:3000/Pinadd.png",
+                  "iconSize": [50, 50], // size of the icon
+                  "iconAnchor": [25, 25], // point of the icon which will correspond to marker's location
+                  "popupAnchor": [0, -25], // point from which the popup should open relative to the iconAnchor
+                  "className": "dot"
+              }
+          }
+      }, {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": endCoordinates.reverse()
+          },
+          "properties": {
+              "title": "End of Trail Marker",
+              "icon": {
+                  "iconUrl": "http://localhost:3000/PinOK.png",
+                  "iconSize": [50, 50],
+                  "iconAnchor": [25, 25],
+                  "popupAnchor": [0, -25],
+                  "className": "dot"
+              }
+          }
+      }];
+
+      // Set a custom icon on each marker based on feature properties.
+    trailPointsLayer.on('layeradd', function(e) {
+        var marker = e.layer,
+            feature = marker.feature;
+
+        marker.setIcon(L.icon(feature.properties.icon));
+    });
+
+      // Add features to the map.
+    trailPointsLayer.setGeoJSON(startEndMarkers);
   }
 
   var allHikersTrails = function(map) {
