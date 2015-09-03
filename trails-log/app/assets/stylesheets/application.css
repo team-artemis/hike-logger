@@ -18,6 +18,7 @@
  /***** POST SEMANTIC START *****/
  #splash-col{
   max-width: 400px;
+  margin-left:8em;
 }
 #header {
   font-size: 4em;
@@ -29,9 +30,12 @@
       1px -1px 0 #000,
       -1px 1px 0 #000,
        1px 1px 0 #000;
+  margin-top:2em;
+  margin-bottom: 1em
 }
 #header div {
   font-size: .5em;
+
 }
 
 

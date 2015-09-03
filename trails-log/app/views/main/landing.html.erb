@@ -1,12 +1,11 @@
 <div class="video-wrapper">
-	<%= video_tag("trail.mp4", autobuffer: true, autoplay: true, loop: true, id: "bgvid") %>
+	<%= video_tag("logger2.mp4", autobuffer: true, autoplay: true, loop: true, id: "bgvid") %>
 </div>
-<div class="ui vertical masthead center aligned middle aligned basic segment" id=" landing-wrapper splash-content">
-	<br>
-	<br>
-	<br>
-	<br>
-	<div class="ui stackable page very relaxed padded equal width grid">
+
+<div class="ui vertical masthead center aligned middle aligned basic segment landing-wrapper" id="splash-content">
+
+	<div class="ui stackable page very relaxed grid">
+
 		<div class="ui centered row">
 			<h1 class="ui huge inverted header" id="header">
 				WE'RE TRAILERS!
@@ -17,44 +16,39 @@
 		</div>
 
 		<div class="ui two column row">
-			<div style="background-color: rgba(255, 255, 255, 0.5); " id="splash-col" class="ui left aligned column">
+			<div class="ui eight wide left aligned column" style="background-color: rgba(255, 255, 255, 0.5); " id="splash-col">
 				<div class="login-wrapper">
-					<br>
-					<br>
+				<br>
+				<br>
 					<%= form_for :session, url: login_path, html: {class: "ui huge form"} do |f| %>
-						<div class="field">
-							<div class="ui left icon input">
-								<i class="user icon"></i>
-								<%= f.text_field :firstname, :placeholder => "First and Last Name" %>
-							</div>
+
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="mail outline icon"></i>
+							<%= f.email_field :email, :placeholder => "Email" %>
 						</div>
+					</div>
 
-						<div class="field">
-							<div class="ui left icon input">
-								<i class="mail outline icon"></i>
-								<%= f.email_field :email, :placeholder => "Email" %>
-							</div>
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="lock icon"></i>
+							<%= f.password_field :password, :placeholder => "Password" %>
 						</div>
+					</div> 
 
-						<div class="field">
-							<div class="ui left icon input">
-								<i class="lock icon"></i>
-								<%= f.password_field :password, :placeholder => "Password" %>
-							</div>
-						</div> 
-						
-						<%= f.submit "Login", class: "ui massive primary submit button"  %>  	
-						
-						<label style="float: right; color:white; a:link: #FFFFF;"> <br>
-							or...  <%= link_to "Log In", new_user_path, class: "sign-up" %>
-						</label> 	
-
+					<%= f.submit "Login", class: "ui massive primary submit button"  %>  	
+					<label style="float: right; "> <br>
+						or...  <%= link_to "Log In", new_user_path, class: "sign-up" %>
+					</label> 			
 					<% end %>
+
 				</div>
 				<br>
 				<br>
 				<div class="signup-wrapper hideMenu">
-					<%= form_for :session, url: login_path, html: {class: "ui huge form"} do |f| %>
+
+					<%= form_for :user, url: users_path, html: {class: "ui huge form"} do |f| %>
+
 					<div class="field">
 						<div class="ui left icon input">
 							<i class="user icon"></i>
@@ -71,19 +65,26 @@
 
 					<div class="field">
 						<div class="ui left icon input">
+							<i class="home icon"></i>
+							<%= f.text_field :city, :placeholder => "City" %>
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="ui left icon input">
 							<i class="lock icon"></i>
 							<%= f.password_field :password, :placeholder => "Password" %>
 						</div>
 					</div> 
 
-					<%= f.submit "Login", class: "ui massive primary submit button"  %>  				
+					<%= f.submit "Join", class: "ui massive primary submit button"  %>  
+
 					<% end %>
-					<div class="ui float right text segment">
-						<p>New user? <%= link_to "Sign up now!", new_user_path, class: "sign-up" %></p>
-					</div>
+					<br>
+					<br>
 				</div>
 			</div>
-			<div class="ui column">
+			<div class="ui eight wide column">
 				<div class="ui massive inverted list">
 					<div class="item">
 						<i class="idea inverted big inverted big icon"></i>
