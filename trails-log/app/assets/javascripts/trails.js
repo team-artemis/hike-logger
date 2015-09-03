@@ -263,7 +263,9 @@ $('.map').on('click', '.popup .cycle a', function() {
       var hikerId = $(this).parent().attr('id').slice(-1)
       $.ajax(urlVal)
       .done(function(response){
-        removeAllLayers();
+        map.removeLayer(userTrailsLayer);
+        map.removeLayer(allHikersLayer);
+        debugger
         $('.navbar').children().hide();
         $('.navbar').prepend(response);
         hikerTrailsLayer = hikerTrails(hikerId).addTo(map)
@@ -490,10 +492,4 @@ var getLastTrail = function(currentTrailId) {
       photoLayer = L.mapbox.featureLayer()
       .loadURL("http://localhost:3000/users/1/trails.json")
       return photoLayer
-    }
-
-    var removeAllLayers = function(){
-      map.removeLayer(userTrailsLayer);
-      map.removeLayer(allHikersLayer);
-      map.removeLayer(photoLayer);
-    }
+    } 
