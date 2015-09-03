@@ -265,7 +265,6 @@ $('.map').on('click', '.popup .cycle a', function() {
       .done(function(response){
         map.removeLayer(userTrailsLayer);
         map.removeLayer(allHikersLayer);
-        debugger
         $('.navbar').children().hide();
         $('.navbar').prepend(response);
         hikerTrailsLayer = hikerTrails(hikerId).addTo(map)
@@ -352,29 +351,6 @@ $('.map').on('click', '.popup .cycle a', function() {
         console.log('request did not go through');
       });
     });
-
-
-var bejewelGroup = new L.featureGroup()
-bejewelGroup.addTo(map)
-
-
-var drawControl = new L.Control.Draw({
-  draw: {
-    position: 'topleft'
-  },
-  edit: {
-    featureGroup: bejewelGroup
-  }
-});
-map.addControl(drawControl);
-
-
-
-
-
-
-
-
 
 }); // END DOCUMENT READY
 
