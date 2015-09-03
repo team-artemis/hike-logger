@@ -32,12 +32,6 @@ class TrailsController < ApplicationController
 
   end
 
-  def build_geojson(trails, geojson)
-    trails.each do |trail|
-      geojson << GeojsonBuilder.build_trail_point(trail)
-    end
-  end
-
   def show
     @trail = set_trail
     if request.xhr?

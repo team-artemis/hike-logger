@@ -133,6 +133,7 @@ $('.map').on('click', '.popup .cycle a', function() {
       dataType: "JSON"
     }).done(function(response){
       currentTrail = response;
+      console.log(currentTrail);
       renderTrail(currentTrail, map);
     }).fail(function(){
       console.log('There was a server problem.')
@@ -143,8 +144,12 @@ $('.map').on('click', '.popup .cycle a', function() {
     $.ajax(urlVal).done(function(response){
       $('.navbar').children().hide()
       $('.navbar').prepend(response)
-      zoomInHike(userTrailsLayer, clickedHikeId);
-      zoomInHike(hikerTrailsLayer, clickedHikeId);
+      map.removeLayer(userTrailsLayer);
+      map.removeLayer(hikerTrailsLayer);
+      map.removeLayer(photoLayer);
+      map.fitBounds(currentTrail.getBounds())
+      // zoomInHike(userTrailsLayer, clickedHikeId);
+      // zoomInHike(hikerTrailsLayer, clickedHikeId);
     })
   });
 

@@ -11,7 +11,7 @@ User.create(
 User.create(
   firstname: "Bee",
   lastname: "Derek",
-  email: "derek@test.com",
+  email: "daschi87@gmail.com",
   city: "San Francisco",
   state: "CA",
   country: "USA",
