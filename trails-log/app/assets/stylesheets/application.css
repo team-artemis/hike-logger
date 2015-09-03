@@ -26,7 +26,7 @@
   color: white;
   text-shadow:
   1px 1px 0 #000,
-  -1px -1px 0 #000,  
+  -1px -1px 0 #000,
   1px -1px 0 #000,
   -1px 1px 0 #000,
   1px 1px 0 #000;
@@ -66,7 +66,7 @@ html {
 .hideMenu { display: none; }
 
 .navbar {
-  background: #333;
+  background: #616161;
   height: 100%;
   padding-top: 10%;
   padding-bottom: 20%;
@@ -79,11 +79,15 @@ html {
   overflow-y: scroll;
 }
 
+.main-menu {
+  -vendor-animation-delay: 2s;
+}
+
 .navbar form, #nav-content, h2 {
   padding: 8px 12px;
-  background: #333;
+  background: #616161;
   border-bottom: 1px solid #393939;
-  color: #ccc;
+  color: #CCCCC5;
   display: block;
   margin: 0;
   padding: 8px 12px;
@@ -91,7 +95,7 @@ html {
   font-weight: normal;
 }
 .cssmenu {
-  background: #333;
+  background: #616161;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -102,9 +106,9 @@ html {
 }
 
 .cssmenu a {
-  background: #333;
+  background: #616161;
   border-bottom: 1px solid #393939;
-  color: #ccc;
+  color: #FFF;
   display: block;
   margin: 0;
   padding: 8px 12px;
@@ -124,9 +128,15 @@ html {
 .all-hikers a:hover {background: #0b91d8;}
 .logout a:hover {background: #EC407A;}
 
-.my-hikes-menu h2 {background: #85CA4D;}
-.log-hike-menu h2 {background: #E47225;}
-.all-hikers-menu h2 {background: #0b91d8;}
+.my-hikes-menu h2 {color: #85CA4D;}
+.my-hikes-menu a:hover {background: #85CA4D;}
+.log-hike-menu h2 {color: #E47225;}
+.log-hike-menu a:hover {background: #E47225;}
+.all-hikers-menu h2 {color: #0b91d8;}
+.all-hikers-menu a:hover {background: #0b91d8;}
+.show-other-user-menu h2 {color: #0b91d8;}
+.show-other-user-menu a:hover {background: #0b91d8;}
+
 
 
 /*.cssmenu a:hover {
@@ -200,3 +210,4 @@ video#bgvid {
 }
 .popup .cycle a.prev { float:left; }
 .popup .cycle a.next { float:right; }
+
