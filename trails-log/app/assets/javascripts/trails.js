@@ -31,7 +31,7 @@ $(document).on("ready", function() {
       .addListener(addHike, 'click', L.DomEvent.preventDefault)
 
       addHike.style.backgroundColor = 'white';
-      addHike.style.backgroundImage = "url(http://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)";
+      addHike.style.backgroundImage = "url(http://localhost:3000/Crosspin.png)";
       addHike.style.backgroundSize = "30px 30px";
       addHike.style.width = '30px';
       addHike.style.height = '30px';
