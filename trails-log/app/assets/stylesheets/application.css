@@ -37,11 +37,11 @@
   font-size: .5em;
 
 }
-.menu {
-  padding-left:1em;
-}
-.menu a:link {
+.navbar a:link {
   font-color:w #FFF;
+}
+.navbar {
+  padding-left:1em;  
 }
 
  /***** POST SEMANTIC END *****/

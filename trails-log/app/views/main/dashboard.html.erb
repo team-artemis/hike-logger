@@ -6,29 +6,42 @@
     Hi <%= current_user.firstname %>, we love you!
   </div>
   <br>
-  <div class="menu">
+  <div class="main-menu">
       <div class="ui middle aligned animated very relaxed massive list">
-        <div class="item">
+        <div class="item" id="my-trails">
           <%= image_tag( "canoe.png", width:'50', height:'50', class: "ui image") %>
           <div class="middle aligned content">
-            <a class="medium inverted header">Your Hikes</a>
+            <a class="medium inverted header" href='/users/<%= current_user.id %>/trails'>
+              My Hikes
+            </a>
           </div>
         </div>
 
-        <div class="item">
+        <div class="item" id="log-hike">
           <%= image_tag( "main_log_hike.png", width:'50', height:'50', class: "ui image") %>
           <div class="middle aligned content">
-            <a class="medium inverted header">Log Hike</a>
+            <a class="medium inverted header" a href='/users/<%= current_user.id %>/trails/new'>
+              Add a Hike
+            </a>
           </div>
         </div>
 
-        <div class="item">
+        <div class="item" id="all-hikers">
           <%= image_tag( "main_all_hikers.png", width:'50', height:'50', class: "ui image") %>
           <div class="middle aligned content">
-            <a class="medium inverted header">All Hikers</a>
+            <a class="medium inverted header" href='/users'>
+              All Hikers
+            </a>
           </div>
         </div>
 
+        <div class="item" id="logout-btn">
+          <%= image_tag( "logout.png", width:'50', height:'50', class: "ui image") %>
+          <div class="middle aligned content">
+            <%= link_to "Logout", logout_path, method: :delete, class: "medium grey header"  %>
+
+          </div>
+        </div>
 
       </div>
   </div>
