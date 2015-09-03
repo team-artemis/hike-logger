@@ -1,10 +1,13 @@
+var map;
+
 $(document).on("ready", function() {
-// These must be the first lines in the js file
-// They toggle the login/signup forms on the landing page
+  // These must be the first lines in the js file
+  // They toggle the login/signup forms on the landing page
+
   $('.landing-wrapper').on('click', '.sign-up', function(event){
     event.preventDefault();
-      $('.login-wrapper').addClass('hideMenu');
-      $('.signup-wrapper').removeClass('hideMenu');
+    $('.login-wrapper').addClass('hideMenu');
+    $('.signup-wrapper').removeClass('hideMenu');
   })
 
   $('.landing-wrapper').on('click', '.login-link', function(event){
@@ -13,15 +16,15 @@ $(document).on("ready", function() {
     $('.signup-wrapper').addClass('hideMenu');
   })
 
+  // START DASHBOARD/MAP
   L.mapbox.accessToken = 'pk.eyJ1IjoidGlzZGVyZWsiLCJhIjoiNDQ5Y2JiODdiZDZmODM0OWI0NmRiNDI5OGQzZWE4ZWIifQ.rVJW4H9TC1cknmRYoZE78w';
-
-  var map = L.mapbox.map('user-map', 'mapbox.run-bike-hike')
-    .addControl(L.mapbox.geocoderControl('mapbox.places'))
-    .setView([37.7833, -122.4167]);
+  map = L.mapbox.map('user-map', 'mapbox.run-bike-hike')
+  map.addControl(L.mapbox.geocoderControl('mapbox.places'))
+  map.setView([37.7833, -122.4167]);
 
   var userTrailsLayer = getUserTrails(map).addTo(map);
   var allHikersLayer = allHikersTrails(map);
-
+  var photoLayer = hikerPhotos(map);
 
   var addHikeButton =  L.Control.extend({options: {position: 'topleft'},
     onAdd: function(map){
@@ -36,155 +39,114 @@ $(document).on("ready", function() {
       addHike.style.width = '30px';
       addHike.style.height = '30px';
 
-
-
       addHike.onclick = function(){
-        console.log('before')
-        var addPathCreator = function(){
-          directions = L.mapbox.directions({profile: 'mapbox.walking'});
-          directionsLayer = L.mapbox.directions.layer(directions)
-              .addTo(map);
-          directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
-              .addTo(map);
-          directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
-              .addTo(map);
-        }
-        addPathCreator();
+        directions = L.mapbox.directions({profile: 'mapbox.walking'});
+        directionsLayer = L.mapbox.directions.layer(directions)
+        .addTo(map);
+        directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
+        .addTo(map);
+        directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
+        .addTo(map);
 
-        $('#mapbox-directions-origin-input').hide();
-        $('#mapbox-directions-destination-input').hide();
-        $('#routes').hide();
-        $('.mapbox-form-label').hide();
-        }
-
-        return addHike;
+        hideExtraPathControls();
       }
-
-  //   }
+      return addHike;
+    }
   });
 
+var logHikeButton = new addHikeButton
 
-  var logHikeButton = new addHikeButton
+userTrailsLayer.on("ready", function(event) {
+  map.fitBounds(userTrailsLayer.getBounds());
+  var hoveredTrailId;
+  hoverNavToPopUp(userTrailsLayer);
+  map.addLayer(photoLayer)
+});
 
-  userTrailsLayer.on("ready", function(event) {
-    map.fitBounds(userTrailsLayer.getBounds());
-    var hoveredTrailId;
-    hoverNavToPopUp(userTrailsLayer);
-  });
-
-  var hoverNavToPopUp = function(layer){
+var hoverNavToPopUp = function(layer){
 
   $("[id^='trail']").on('mouseenter', function(event){
-      hoveredTrailId = $(this).attr('id').slice(-1)
-      layer.eachLayer(function(marker) {
-        if (marker.feature.properties.id == hoveredTrailId){
-          marker.openPopup();
-        }
-      })
-    });
+    hoveredTrailId = $(this).attr('id').slice(-1)
+    layer.eachLayer(function(marker) {
+      if (marker.feature.properties.id == hoveredTrailId){
+        marker.openPopup();
+      }
+    })
+  });
 
-    $("[id^='trail']").on('mouseleave', function(event){
-      layer.eachLayer(function(marker) {
-        if (marker.feature.properties.id == hoveredTrailId){
-          marker.closePopup();
-        }
-      });
+  $("[id^='trail']").on('mouseleave', function(event){
+    layer.eachLayer(function(marker) {
+      if (marker.feature.properties.id == hoveredTrailId){
+        marker.closePopup();
+      }
     });
-  };
+  });
+};
 
 // *~**~**~**~**~**~**~**~**~**~**~**~**~*
-  var photoLayer = L.mapbox.featureLayer().addTo(map);
-  // Set the geojson data
-  var geoJson = photoLayer.loadURL("http://localhost:3000/users/1/trails.json")
+photoLayer.on('layeradd', function(e) {
+  var marker = e.layer;
+  var slideshowContent = '';
+  var feature = marker.feature;
+  var images = feature.properties.images;
+    // Set slideshow content - Check view-trail.js
+    slideshowContent = setSlideshowContent(images, slideshowContent);
+    // Set popup content - Check view-trail.js
+    var popupContent = createPopUpForPhoto(feature, slideshowContent);
+    // Bind popup for each marker to the content
+    marker.bindPopup(popupContent,{
+      closeButton: false,
+      minWidth: 320,
+    });
+  });
 
-    //On add of the layer
-    photoLayer.on('layeradd', function(e) {
-    var marker = e.layer;
-    var slideshowContent = '';
-    var feature = marker.feature;
-    var images = feature.properties.images;
+$('.map').on('click', '.popup .cycle a', function() {
+  var $slideshow = $('.slideshow'),
+  $newSlide;
 
-    // craft the slideshow content
-    for(var i = 0; i < images.length; i++) {
-        var img = images[i];
-
-        slideshowContent += '<div class="image' + (i === 0 ? ' active' : '') + '">' +
-                              '<img src="' + img[0] + '" />' +
-                              '<div class="caption">' + img[1] + '</div>' +
-                            '</div>';
+  if ($(this).hasClass('prev')) {
+    $newSlide = $slideshow.find('.active').prev();
+    if ($newSlide.index() < 0) {
+      $newSlide = $('.image').last();
     }
+  } else {
+    $newSlide = $slideshow.find('.active').next();
+    if ($newSlide.index() < 0) {
+      $newSlide = $('.image').first();
+    }
+  }
 
-    //Craft the popup content
-      var popupContent =  '<div id="' + feature.properties.id + '" class="popup">' +
-                            '<h2>' + feature.properties.title + '</h2>' +
-                            '<div class="slideshow">' +
-                                slideshowContent +
-                            '</div>' +
-                            '<div class="cycle">' +
-                                '<a href="#" class="prev">&laquo; Previous</a>' +
-                                '<a href="#" class="next">Next &raquo;</a>' +
-                            '</div>'
-                        '</div>';
-
-      //bindpopup of the popupcontent
-      marker.bindPopup(popupContent,{
-        closeButton: false,
-        minWidth: 320,
-      });
-    });
-    //Add layer w/geojson data (currently in global)
-    photoLayer.getGeoJSON(geoJson);
-
-    $('.map').on('click', '.popup .cycle a', function() {
-      console.log("yes")
-        var $slideshow = $('.slideshow'),
-            $newSlide;
-
-        if ($(this).hasClass('prev')) {
-            $newSlide = $slideshow.find('.active').prev();
-            if ($newSlide.index() < 0) {
-                $newSlide = $('.image').last();
-            }
-        } else {
-            $newSlide = $slideshow.find('.active').next();
-            if ($newSlide.index() < 0) {
-                $newSlide = $('.image').first();
-            }
-        }
-
-        $slideshow.find('.active').removeClass('active').hide();
-        $newSlide.addClass('active').show();
-        return false;
-    });
+  $slideshow.find('.active').removeClass('active').hide();
+  $newSlide.addClass('active').show();
+  return false;
+});
 //*~**~**~**~**~**~**~**~**~**~**~**~**~*
 
-
   // Show hike page from both my trails list and hikers' trails list
- $('.navbar').on('click', "[id^='trail']", function(event){
-      event.preventDefault();
-      var clickedHikeId = $(this).attr('id').slice(-1)
-      //var currentTrailBody = getLastTrail(clickedHikeId)
-      var currentTrail;
-      $.ajax({
-        url: '/the_current_trail_path/' + clickedHikeId,
-        method: "GET",
-        dataType: "JSON"
-      }).done(function(serverResponse){
-        console.log(serverResponse)
-        currentTrail = serverResponse;
-        renderTrail(currentTrail, map);
-        }).fail(function(){
-          console.log('fail')
-        });
-
-      var urlVal = $(this).attr('href')
-      $.ajax(urlVal).done(function(hikeInfo){
-        $('.navbar').children().hide()
-        $('.navbar').prepend(hikeInfo)
-        zoomInHike(userTrailsLayer, clickedHikeId);
-        zoomInHike(hikerTrailsLayer, clickedHikeId);
-      })
+  $('.navbar').on('click', "[id^='trail']", function(event){
+    event.preventDefault();
+    var clickedHikeId = $(this).attr('id').slice(-1)
+    var currentTrail;
+    $.ajax({
+      url: '/the_current_trail_path/' + clickedHikeId,
+      method: "GET",
+      dataType: "JSON"
+    }).done(function(response){
+      currentTrail = response;
+      renderTrail(currentTrail, map);
+    }).fail(function(){
+      console.log('There was a server problem.')
+      console.log(response)
     });
+
+    var urlVal = $(this).attr('href')
+    $.ajax(urlVal).done(function(response){
+      $('.navbar').children().hide()
+      $('.navbar').prepend(response)
+      zoomInHike(userTrailsLayer, clickedHikeId);
+      zoomInHike(hikerTrailsLayer, clickedHikeId);
+    })
+  });
 
   // Return to main menu from trail-page
   $('.navbar').on('click', '#show-page-back', function(event){
@@ -196,6 +158,7 @@ $(document).on("ready", function() {
     $('.my-hikes-menu').hide();
     map.addLayer(userTrailsLayer);
     removePolylineTrail(map);
+    map.addLayer(photoLayer);
     map.fitBounds(userTrailsLayer.getBounds());
   })
 
@@ -209,7 +172,6 @@ $(document).on("ready", function() {
 
   // Return to main menu from the log hike page
   $('.navbar').on('click', '#log-hike-back', function(event){
-    // debugger
     event.preventDefault();
     $('.navbar').children().addClass('hideMenu');
     $('.main-menu').removeClass('hideMenu');
@@ -228,9 +190,9 @@ $(document).on("ready", function() {
     map.removeLayer(allHikersLayer);
   })
 
+  // Return to main menu from the show other hikers list
   $('.navbar').on('click', '#show-user-back', function(event){
     event.preventDefault();
-    console.log("you got meeee");
     $('.show-other-user-menu').hide();
     $('.main-menu').removeClass('hideMenu');
     $('.main-menu').show();
@@ -246,17 +208,16 @@ $(document).on("ready", function() {
       type: typeVal,
       dataType: 'json'
     }).done(function(response) {
-      console.log(response)
-      console.log('Yay! request went through')
       $('.main-menu').addClass('hideMenu');
       $('.my-hikes-menu').removeClass('hideMenu');
       $('.my-hikes-menu').show();
       $('.navbar').prepend(response)
     }).fail(function(response){
       console.log(response)
-      console.log('request did not go through');
+      console.log('The request did not go through.');
     })
     map.addLayer(userTrailsLayer);
+    map.addLayer(photoLayer);
   });
 
   // ALL HIKERS
@@ -272,6 +233,7 @@ $(document).on("ready", function() {
     allHikersLayerBehavior();
   });
 
+  // Add hover on all hikers layer
   var allHikersLayerBehavior = function() {
     map.fitBounds(allHikersLayer.getBounds());
     // Hover user's nav item to highlight their markers
@@ -294,14 +256,7 @@ $(document).on("ready", function() {
     });
   };
 
-var zoomInHike = function(layer, clickedHikeId){
-  layer.eachLayer(function(marker){
-    if (marker.feature.properties.id == clickedHikeId){
-     map.setView(marker._latlng, 15);
-    }
-  })
-};
-
+  // Show specific hiker's trails and allow for hover
   var otherHikerListener = (function() {
     $(".other-hiker").on('click', function(event) {
       event.preventDefault();
@@ -309,9 +264,7 @@ var zoomInHike = function(layer, clickedHikeId){
       var hikerId = $(this).parent().attr('id').slice(-1)
       $.ajax(urlVal)
       .done(function(response){
-        map.removeLayer(userTrailsLayer);
-        map.removeLayer(allHikersLayer);
-        map.removeLayer(photoLayer);
+        removeAllLayers();
         $('.navbar').children().hide();
         $('.navbar').prepend(response);
         hikerTrailsLayer = hikerTrails(hikerId).addTo(map)
@@ -323,9 +276,9 @@ var zoomInHike = function(layer, clickedHikeId){
     })
   })()
 
-    var directionsLayer;
+  var directionsLayer;
 
-// LOG HIKE
+  // LOG HIKE
   $('#log-hike').on('click', function(event) {
     event.preventDefault();
     $('.main-menu').addClass('hideMenu');
@@ -340,12 +293,10 @@ var zoomInHike = function(layer, clickedHikeId){
   //START SUBMIT NEW HIKE
   $('.navbar').on("submit", '#new-trail-form', function(event){
     event.preventDefault();
-      //var urlVal = $(this).attr('action')
       var userId = $('#user_trails_user_id').attr('value')
       var urlVal = '/users/' + userId + '/trails'
       var typeVal = $(this).attr('method')
       var fullPath = directions.query()
-      debugger
       var waypointString = "";
 
       for (var i = 0;i < fullPath["_waypoints"].length;i++){
@@ -359,7 +310,6 @@ var zoomInHike = function(layer, clickedHikeId){
           waypointString = ""
         }
       }
-      //waypointString = waypointString.substring(0, waypointString.length - 1);
       var trailEndLat = fullPath["destination"]["geometry"]["coordinates"][1]
       $('#user_trails_trailend_lat').val(trailEndLat)
       var trailEndLon = fullPath["destination"]["geometry"]["coordinates"][0]
@@ -370,9 +320,8 @@ var zoomInHike = function(layer, clickedHikeId){
       $('#user_trails_trailhead_lon').val(trailHeadLon)
       var waypointPlusLonLat = trailHeadLon+","+trailHeadLat +";" + waypointString +trailEndLon+","+trailEndLat
       $('#user_trails_waypoints').val(waypointPlusLonLat)
-      console.log(waypointPlusLonLat)
 
-    $.ajax({
+      $.ajax({
         url: urlVal,
         type: typeVal,
         data: $('#new-trail-form').serialize()
@@ -388,33 +337,33 @@ var zoomInHike = function(layer, clickedHikeId){
         var trailId = $('.trail-id').text()
         var currentTrail;
         $.ajax({
-            url: '/the_current_trail_path/' + trailId,
-            method: "GET",
-            dataType: "JSON"
+          url: '/the_current_trail_path/' + trailId,
+          method: "GET",
+          dataType: "JSON"
         }).done(function(serverResponse){
           currentTrail = serverResponse;
           renderTrail(currentTrail, map);
-          }).fail(function(){
-            console.log('fail')
-          })
-        }).fail(function(response){
-          console.log(response)
-          console.log('request did not go through');
-        });
-  });
-  //END SUBMIT NEW HIKE
+        }).fail(function(){
+          console.log('fail')
+        })
+      }).fail(function(response){
+        console.log(response)
+        console.log('request did not go through');
+      });
+    });
 }); // END DOCUMENT READY
 
 
   //Make an AJAX call for the current_user
   var currentUser;
-   $.ajax({
-     url: '/the_current_user',
-     method: "GET",
-     dataType: "JSON"
-   }).done(function(user){
-      currentUser = user;
-   });
+  $.ajax({
+    url: '/the_current_user',
+    method: "GET",
+    dataType: "JSON"
+  })
+  .done(function(user){
+    currentUser = user;
+  });
 
 
   var getUserTrails = function(map) {
@@ -425,7 +374,7 @@ var zoomInHike = function(layer, clickedHikeId){
   };
 
 //Not currently in use, but this logic is used three times. How can I get it to work?
-  var getLastTrail = function(currentTrailId) {
+var getLastTrail = function(currentTrailId) {
     //var currentUserId = currentUser.id
     var currentTrail;
     $.ajax({
@@ -436,9 +385,9 @@ var zoomInHike = function(layer, clickedHikeId){
       console.log(serverResponse)
       currentTrail = serverResponse;
       return currentTrail
-      }).fail(function(){
-        console.log('fail')
-      })
+    }).fail(function(){
+      console.log('fail')
+    })
   }
 
   var polyline;
@@ -447,85 +396,90 @@ var zoomInHike = function(layer, clickedHikeId){
     var startCoordinates = trail["origin"]["geometry"]["coordinates"].reverse();
     var endCoordinates = trail["destination"]["geometry"]["coordinates"].reverse();
     var pathCoordinates = trail["routes"][0]["geometry"]["coordinates"]
+
     for (var i = 0; i < pathCoordinates.length; i++){
       pathCoordinates[i] = pathCoordinates[i].reverse()
     }
     polyline = L.polyline(pathCoordinates).addTo(map)
+
     $('path').attr('style', 'stroke:#3D0D3E !important')
 
-    //var startMarker = L.marker(startCoordinates).addTo(map);
-    //var endMarker = L.marker(endCoordinates).addTo(map);
-
     map.fitBounds(polyline.getBounds());
-    //http%3A%2F%2Flocalhost%3A3000%2Fpublic%2FPinadd.png
-    //https://api.mapbox.com/v4/mapbox.streets/url-https%3A%2F%2Fmapbox.com%2Fguides%2Fimg%2Fpages%2Frocket.png(-76.9,38.9)/-76.9,38.9,15/100x100.png?access_token=pk.eyJ1IjoiYW5kcmV3cGF0dGVyc29uMzAwMSIsImEiOiI5YjZkYWY4ZTgzNTQzNzcwZjg1M2YxYmFhMjU3NWY5OSJ9.6FMHigG3xoaQ5zd-rKWBpg
+
     trailPointsLayer = L.mapbox.featureLayer().addTo(map);
 
-      var startEndMarkers = [{
-          "type": "Feature",
-          "geometry": {
-              "type": "Point",
-              "coordinates": startCoordinates.reverse()
-          },
-          "properties": {
-              "title": "Trailhead Marker",
-              "icon": {
-                  "iconUrl": "http://localhost:3000/Pinadd.png",
+    var startEndMarkers = [{
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": startCoordinates.reverse()
+      },
+      "properties": {
+        "title": "Trailhead Marker",
+        "icon": {
+          "iconUrl": "http://localhost:3000/Pinadd.png",
                   "iconSize": [50, 50], // size of the icon
                   "iconAnchor": [25, 25], // point of the icon which will correspond to marker's location
                   "popupAnchor": [0, -25], // point from which the popup should open relative to the iconAnchor
                   "className": "dot"
+                }
               }
-          }
-      }, {
-          "type": "Feature",
-          "geometry": {
-              "type": "Point",
-              "coordinates": endCoordinates.reverse()
-          },
-          "properties": {
-              "title": "End of Trail Marker",
-              "icon": {
+            }, {
+              "type": "Feature",
+              "geometry": {
+                "type": "Point",
+                "coordinates": endCoordinates.reverse()
+              },
+              "properties": {
+                "title": "End of Trail Marker",
+                "icon": {
                   "iconUrl": "http://localhost:3000/PinOK.png",
                   "iconSize": [50, 50],
                   "iconAnchor": [25, 25],
                   "popupAnchor": [0, -25],
                   "className": "dot"
+                }
               }
-          }
-      }];
+            }];
 
       // Set a custom icon on each marker based on feature properties.
-    trailPointsLayer.on('layeradd', function(e) {
+      trailPointsLayer.on('layeradd', function(e) {
         var marker = e.layer,
-            feature = marker.feature;
+        feature = marker.feature;
 
         marker.setIcon(L.icon(feature.properties.icon));
-    });
+      });
 
       // Add features to the map.
-    trailPointsLayer.setGeoJSON(startEndMarkers);
-  }
+      trailPointsLayer.setGeoJSON(startEndMarkers);
+    }
+
 
   var removePolylineTrail = function(map){
     map.removeLayer(polyline)
     map.removeLayer(trailPointsLayer)
   }
 
-  var allHikersTrails = function(map) {
-    var allHikersLayer = L.mapbox.featureLayer().loadURL("http://localhost:3000/trails.json")
+    var allHikersTrails = function(map) {
+      var allHikersLayer = L.mapbox.featureLayer()
+      .loadURL("http://localhost:3000/trails.json")
+
       return allHikersLayer
-  }
+    }
 
-  var hikerTrails = function(userId) {
-      var hikerTrails = L.mapbox.featureLayer().loadURL("http://localhost:3000/users/"+userId+"/trails.json")
-        return hikerTrails
-  }
+    var hikerTrails = function(userId) {
+      var hikerTrails = L.mapbox.featureLayer()
+      .loadURL("http://localhost:3000/users/"+userId+"/trails.json")
+      return hikerTrails
+    }
+    var hikerPhotos = function(map){
+      photoLayer = L.mapbox.featureLayer()
+      .loadURL("http://localhost:3000/users/1/trails.json")
+      return photoLayer
+    }
 
-  var removeAllLayers = function(map) {
-    map.removeLayer(userTrailsLayer);
-    map.removeLayer(allHikersLayer);
-    map.removeLayer(drawControl);
-    map.removeControl(addHikeButton)
-  };
-
+    var removeAllLayers = function(){
+      map.removeLayer(userTrailsLayer);
+      map.removeLayer(allHikersLayer);
+      map.removeLayer(photoLayer);
+    }
