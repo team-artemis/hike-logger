@@ -17,18 +17,20 @@
 
 .ui.list .item {
   padding-left: 1em;
+  -moz-transition: all .5s ease-in;
+  -o-transition: all .5s ease-in;
+  -webkit-transition: all .5s ease-in;
+  transition: all .5s ease-in;
 }
 
-.ui.list .item:hover#my-hikes {
-  background-color: #85CA4D;
-}
-.ui.list .item:hover#log-hike {
-  background-color: #E47225;
-}
+.ui.list .item:hover#my-hikes {background-color: #85CA4D}
+.ui.list .item:hover#log-hike {background-color: #E47225}
+.ui.list .item:hover#all-hikers {background-color: #0b91d8}
+.ui.list .item:hover#logout-btn {background-color: #EC407A}
 
-.ui.list .item:hover#all-hikers {
-  background-color: #0b91d8;
-}
+.ui.list .item:hover.user-hike {background-color: #85CA4D}
+.ui.list .item:hover.other-hiker {background-color: #0b91d8}
+
 
 
 

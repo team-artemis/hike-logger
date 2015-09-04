@@ -1,6 +1,6 @@
 <!-- .user-hike : each of the items in the list in "my hikes"
-.my-hikes-header 
-.log-hikes-header 
+.my-hikes-header
+.log-hikes-header
  -->
 
 <div class="pure-u-5-24 navbar debug">
@@ -11,7 +11,7 @@
     <div class="ui medium centered inverted header">
       Welcome, <%= current_user.firstname %>!
     </div>
-    <div class="ui middle aligned very relaxed massive list"  >     
+    <div class="ui middle aligned very relaxed massive list"  >
       <div class="item" id="my-hikes">
         <%= image_tag( "canoe.png", width:'50', height:'50', class: "ui image") %>
         <div class="middle aligned content">
@@ -57,7 +57,7 @@
           <%= image_tag "back.png", width: '30', height: '30', class: "back-button" %>
         </a>
       </div>
-      <div class="ui centered row"> 
+      <div class="ui centered row">
         <h1 class="ui inverted massive header my-hikes-header">
           My Hikes
         </h1>
@@ -81,8 +81,8 @@
             <%= image_tag "back.png", width: '30', height: '30', class: "back-button" %>
           </a>
         </div>
-        <div class="ui centered row"> 
-          <h1 class="ui inverted massive header my-hikes-header">
+        <div class="ui centered row">
+          <h1 class="ui inverted massive header log-hikes-header">
             Log Hike
           </h1>
         </div>
@@ -103,8 +103,8 @@
             <%= image_tag "back.png", width: '30', height: '30', class: "back-button" %>
           </a>
         </div>
-        <div class="ui centered row"> 
-          <h1 class="ui inverted massive header my-hikes-header">
+        <div class="ui centered row">
+          <h1 class="ui inverted massive header all-hikes-header">
             Hikers
           </h1>
         </div>
