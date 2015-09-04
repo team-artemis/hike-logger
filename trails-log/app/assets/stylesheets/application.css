@@ -43,8 +43,13 @@
   background-color: white;
 }
 .back-button{
-  margin-left:1em;
+  margin-left: 1em;
 }
+
+#nav-content {
+  border-bottom: none;
+}
+
 
 /***** POST SEMANTIC END *****/
 

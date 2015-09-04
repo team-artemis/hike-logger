@@ -32,5 +32,9 @@
 .ui.list .item:hover.other-hiker {background-color: #0b91d8}
 
 
+.ui.list .item:hover#logout-btn {
+  background-color: #424242;
+}
+
 
 
