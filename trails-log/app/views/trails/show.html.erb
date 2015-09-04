@@ -13,54 +13,58 @@
           </div>
         </h1>
       </div>
+      <div class="ui section divider"></div>
       <div class="ui fluid row">
-        <div class="ui fluid container">
+  
+          <div class="ui tiny statistics">
+            <div class="statistic">
+              <div class="value">
+                <%= @trail.length %>
+              </div>
+              <div class="label">
+                Length
+              </div>
+            </div>
+            <div class="statistic">
+              <div class="value">
+                <%= @trail.duration %>
+              </div>
+              <div class="label">
+                Duration
+              </div>
+            </div>
+            
+          </div>
+          <br>
 
-        <div class="ui small statistics">
-          <div class="statistic">
-            <div class="value">
-              <%= @trail.length %>
+          <div class="ui tiny statistics">
+            <div class="statistic">
+              <div class="value">
+                <%= @trail.rating %>
+              </div>
+              <div class="label">
+                Rating
+              </div>
             </div>
-            <div class="label">
-              Length
+            <div class="statistic">
+              <div class="value">
+                <%= @trail.difficulty %>
+              </div>
+              <div class="label">
+                Difficulty
+              </div>
             </div>
-          </div>
-          <div class="statistic">
-            <div class="value">
-              <%= @trail.duration %>
-            </div>
-            <div class="label">
-              Duration
-            </div>
-          </div>
-          
         </div>
-        <br>
-        <div class="ui small statistics">
-          <div class="statistic">
-            <div class="value">
-              <%= @trail.rating %>
-            </div>
-            <div class="label">
-              Rating
-            </div>
-          </div>
-          <div class="statistic">
-            <div class="value">
-              <%= @trail.difficulty %>
-            </div>
-            <div class="label">
-              Difficulty
-            </div>
-          </div>
-        </div>
+      </div>
+      <div class="ui section divider"></div>
+      <div class="ui fluid row">
         <div class="ui container">
           <h4 class="ui medium header">Review</h4>
   
           <%= @trail.review %>
 
         </div>
-        <span style="font-color:#61616;" class="trail-id hidden">
+        <span style="display: none;" class="trail-id hidden">
           <%= @trail.id %>
         </span>
       </div>
