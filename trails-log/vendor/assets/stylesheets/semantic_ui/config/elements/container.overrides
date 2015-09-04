@@ -1,3 +1,11 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.container#hike-review p {
+  font-size: 20px
+}
+ 
+.ui.container#nav-content {
+  border-bottom: none;
+}
