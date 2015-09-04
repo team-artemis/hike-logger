@@ -66,7 +66,7 @@ userTrailsLayer.on("ready", function(event) {
 var hoverNavToPopUp = function(layer){
 
   $("[id^='trail']").on('mouseenter', function(event){
-    hoveredTrailId = $(this).attr('id').slice(-1)
+    hoveredTrailId = $(this).attr('id').match(/[0-9 -()+]+$/)
     layer.eachLayer(function(marker) {
       if (marker.feature.properties.id == hoveredTrailId){
         marker.openPopup();
@@ -125,7 +125,7 @@ $('.map').on('click', '.popup .cycle a', function() {
   // Show hike page from both my trails list and hikers' trails list
   $('.navbar').on('click', "[id^='trail']", function(event){
     event.preventDefault();
-    var clickedHikeId = $(this).attr('id').slice(-1)
+    var clickedHikeId = $(this).attr('id').match(/[0-9 -()+]+$/)
     var currentTrail;
     $.ajax({
       url: '/the_current_trail_path/' + clickedHikeId,
@@ -170,11 +170,13 @@ $('.map').on('click', '.popup .cycle a', function() {
   })
 
   // Return to main menu from my-trails page
-  $('#my-hikes-back').on('click', function(event){
+  $('.navbar').on('click', '#my-hikes-back', function(event){
     event.preventDefault();
     $('.navbar').children().addClass('hideMenu');
     $('.main-menu').removeClass('hideMenu');
+    $('.main-menu').show();
     $('.my-hikes-menu').hide();
+    
   });
 
   // Return to main menu from the log hike page
@@ -246,7 +248,7 @@ $('.map').on('click', '.popup .cycle a', function() {
     // Hover user's nav item to highlight their markers
     var hoveredUserId;
     $("[id^='hiker']").on('mouseenter', function(e){
-      var hoveredUserId = $(this).attr('id').slice(-1)
+      var hoveredUserId = $(this).attr('id').match(/[0-9 -()+]+$/)
       allHikersLayer.eachLayer(function(marker) {
         if (marker.feature.properties.user == hoveredUserId){
           marker.openPopup();
@@ -268,7 +270,7 @@ $('.map').on('click', '.popup .cycle a', function() {
     $(".other-hiker").on('click', function(event) {
       event.preventDefault();
       var urlVal = $(this).attr('href')
-      var hikerId = $(this).attr('href').slice(-1)
+      var hikerId = $(this).attr('href').match(/[0-9 -()+]+$/)
       $.ajax(urlVal)
       .done(function(response){
         map.removeLayer(userTrailsLayer);
