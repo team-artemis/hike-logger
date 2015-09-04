@@ -1,3 +1,18 @@
 /*******************************
          Site Overrides
 *******************************/
+
+
+.ui.primary.button {
+  background-color: #FFFFFF;
+  color: #E47225;
+  -moz-transition: all .5s ease-in;
+  -o-transition: all .5s ease-in;
+  -webkit-transition: all .5s ease-in;
+  transition: all .5s ease-in;
+}
+
+.ui.primary.button:hover {
+  background-color: #E47225;
+  color: #FFFFFF;
+}
