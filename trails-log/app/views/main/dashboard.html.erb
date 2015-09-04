@@ -1,3 +1,8 @@
+<!-- .user-hike : each of the items in the list in "my hikes"
+.my-hikes-header 
+.log-hikes-header 
+ -->
+
 <div class="pure-u-5-24 navbar debug">
   <div class="main-menu">
     <div class="avatar-frame">
@@ -45,26 +50,23 @@
 
   <!-- MY HIKES  -->
 
-  <div class="my-hikes-menu hideMenu main-menu-list">
-    <div class="ui fluid padded grid container">
+  <div class="my-hikes-menu hideMenu">
+    <div class="ui fluid relaxed grid container">
       <div class="ui left aliged row" id="my-hikes-back" >
         <a href="/users/<%= current_user.id %>">
           <%= image_tag "back.png", width: '30', height: '30', class: "back-button" %>
         </a>
       </div>
-      <div class="ui row"> 
-        <h2 class="ui icon header">
-          <i class="settings icon"></i>
-          <div class="content">
-            My Hikes
-          </div>
-        </h2>
-        <div class="ui inverted medium centered header">
-        </div>
+      <div class="ui centered row"> 
+        <h1 class="ui inverted massive header my-hikes-header">
+          My Hikes
+        </h1>
       </div>
-      <div class="ui row"> 
-        <div class="ui list">
-          <%= render 'trails/index' %>
+      <div class="ui fluid row">
+        <div class="ui fluid container">
+          <div class="ui divided very relaxed inverted link list">
+            <%= render 'trails/index' %>
+          </div>
         </div>
       </div>
     </div>
@@ -73,19 +75,24 @@
     <!-- LOG HIKE  -->
 
     <div class="log-hike-menu hideMenu" id="log-hike">
-      <li id= "log-hike-back" class="cssmenu back-button">
-        <span>
+      <div class="ui fluid relaxed grid container">
+        <div class="ui left aliged row" id="log-hike-back" >
           <a href="/users/<%= current_user.id %>">
-            back to menu
+            <%= image_tag "back.png", width: '30', height: '30', class: "back-button" %>
           </a>
-        </span>
-      </li>
-      <li class="cssmenu">
-        <h2> Log Hike </h2>
-      </li>
-
-      <%= render 'trails/form' %>
-
+        </div>
+        <div class="ui centered row"> 
+          <h1 class="ui inverted massive header my-hikes-header">
+            Log Hike
+          </h1>
+        </div>
+        <div class="ui fluid row">
+          <div class="ui fluid container">
+              <%= render 'trails/form' %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- ALL HIKERS -->

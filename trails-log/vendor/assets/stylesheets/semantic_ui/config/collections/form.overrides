@@ -1,3 +1,7 @@
 /*******************************
          Site Overrides
 *******************************/
+.ui.form#new-trail-form .field > label {
+  font-color: white
+}
+

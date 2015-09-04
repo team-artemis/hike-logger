@@ -1,4 +1,4 @@
-<%= form_for :user_trails, html: {class: "pure-form pure-form-stacked", id:"new-trail-form"} do |f| %>
+<%= form_for :user_trails, html: {class: "ui form", id:"new-trail-form"} do |f| %>
 <% if @trail.errors.any? %>
 <div id="error_explanation">
   <h2><%= pluralize(@trail.errors.count, "error") %> prohibited this trail from being saved:</h2>
@@ -12,29 +12,44 @@
 <% end %>
 
 <div class="field">
-  <%= f.label :title %>
-  <%= f.text_field :title, class: "pure-input-rounded" %>
+  <label><%= f.label :title %></label>
+  <%= f.text_field :title %>
 </div>
 <div class="field">
-  <%= f.label :length %>
-  <%= f.text_field :length, class: "pure-input-rounded" %>
+  <label><%= f.label :length %></label>
+  <%= f.text_field :length %>
+</div>
+<div class="two fields">
+  <div class="field">
+    <label><%= f.label :duration %></label>
+    <%= f.text_field :duration %>
+  </div>
+  <div class="field">
+    <label><%= f.label :rating %></label>
+    <%= f.number_field :rating, class: "pure-input-rounded" %>
+  </div>
 </div>
 <div class="field">
-  <%= f.label :duration %>
-  <%= f.text_field :duration, class: "pure-input-rounded" %>
-</div>
+  <label><%= f.label :difficulty %></label>
+  
+  <select>
+  <option value="">Select Difficulty</option>
+  <option value="EZ">Easy</option>
+  <option value="MD">Medium</option>
+  <option value="HR">Hard</option>
+  <option value="RL">Really Hard</option>
+  <option value="DB">Dont Bother</option>
+  </select>
+</div> 
+
 <div class="field">
-  <%= f.label :difficulty %>
-  <%= f.text_field :difficulty, class: "pure-input-rounded" %>
+    <label><%= f.label :review %></label>
+    <textarea ></textarea>
+    <%= f.text_field :review, size:'10x10', class: "pure-input-rounded" %>
 </div>
-<div class="field">
-  <%= f.label :review %>
-  <%= f.text_field :review, class: "pure-input-rounded" %>
-</div>
-<div class="field">
-  <%= f.label :rating %>
-  <%= f.number_field :rating, class: "pure-input-rounded" %>
-</div>
+
+
+
 <%= f.hidden_field :trailhead_lat, value: @trail.trailhead_lat %>
 <%= f.hidden_field :trailhead_lon, value: @trail.trailhead_lon %>
 <%= f.hidden_field :trailend_lat, value: @trail.trailend_lat %>
@@ -42,6 +57,7 @@
 <%= f.hidden_field :waypoints, value: @trail.waypoints %>
 <%= f.hidden_field :user_id, value: current_user.id %>
 <div class="actions">
-  <%= f.submit 'Add Trail', class: "pure-button pure-button-primary add-trail-submit" %>
+  <%= f.submit 'Add Trail', class: "ui primary button" %>
 </div>
+
 <% end %>
