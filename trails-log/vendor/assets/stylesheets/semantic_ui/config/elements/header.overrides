@@ -10,4 +10,7 @@
   color: #E47225;
 }
 
+.ui.inverted.header.all-hikes-header {
+  color: #0b91d8;
+}
 
