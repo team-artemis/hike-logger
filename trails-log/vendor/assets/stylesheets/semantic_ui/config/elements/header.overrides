@@ -1,3 +1,13 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.inverted.header.my-hikes-header {
+  color: #85CA4D;
+}
+
+.ui.inverted.header.log-hikes-header {
+  color: #E47225;
+}
+
+
