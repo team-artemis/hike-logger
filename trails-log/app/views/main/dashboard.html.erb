@@ -87,7 +87,7 @@
           </h1>
         </div>
         <div class="ui fluid row">
-          <div class="ui fluid basic container">
+          <div class="ui fluid container">
               <%= render 'trails/form' %>
           </div>
         </div>
@@ -97,19 +97,25 @@
     <!-- ALL HIKERS -->
 
     <div class="all-hikers-menu hideMenu">
-      <li id= "all-hikers-back" class="cssmenu back-button">
-        <span>
+      <div class="ui fluid relaxed grid container">
+        <div class="ui left aliged row"  id= "all-hikers-back" >
           <a href="/users/<%= current_user.id %>">
-            back to menu
+            <%= image_tag "back.png", width: '30', height: '30', class: "back-button" %>
           </a>
-        </span>
-      </li>
-      <li class="cssmenu">
-        <h2> Hikers </h2>
-      </li>
-
-      <%= render 'users/index' %>
-
+        </div>
+        <div class="ui centered row"> 
+          <h1 class="ui inverted massive header my-hikes-header">
+            Hikers
+          </h1>
+        </div>
+        <div class="ui fluid row">
+          <div class="ui fluid container">
+            <div class="ui divided very relaxed inverted link list">
+              <%= render 'users/index' %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>

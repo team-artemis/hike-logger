@@ -268,7 +268,7 @@ $('.map').on('click', '.popup .cycle a', function() {
     $(".other-hiker").on('click', function(event) {
       event.preventDefault();
       var urlVal = $(this).attr('href')
-      var hikerId = $(this).parent().attr('id').slice(-1)
+      var hikerId = $(this).attr('href').slice(-1)
       $.ajax(urlVal)
       .done(function(response){
         map.removeLayer(userTrailsLayer);

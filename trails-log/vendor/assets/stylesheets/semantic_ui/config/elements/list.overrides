@@ -20,14 +20,14 @@
 }
 
 .ui.list .item:hover#my-hikes {
-  background-color: purple;
+  background-color: #85CA4D;
 }
 .ui.list .item:hover#log-hike {
-  background-color: blue;
+  background-color: #E47225;
 }
 
 .ui.list .item:hover#all-hikers {
-  background-color: pink;
+  background-color: #0b91d8;
 }
 
 
