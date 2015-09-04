@@ -15,4 +15,20 @@
   color: #FFFFFF !important;
 }
 
+.ui.list .item {
+  padding-left: 1em;
+}
+
+.ui.list .item:hover#my-hikes {
+  background-color: purple;
+}
+.ui.list .item:hover#log-hike {
+  background-color: blue;
+}
+
+.ui.list .item:hover#all-hikers {
+  background-color: pink;
+}
+
+
 

@@ -35,14 +35,15 @@
 }
 #header div {
   font-size: .5em;
-
 }
 .navbar a:link {
   font-color:w #FFF;
 }
-.navbar {
-  padding-left:1em;  
+#my-hikes-menu-item a:hover {
+  background-color: white;
 }
+
+
 
  /***** POST SEMANTIC END *****/
 
