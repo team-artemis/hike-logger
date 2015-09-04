@@ -9,7 +9,7 @@
 
 <div id="nav-content">
 
-  <li class="cssmenu">
+<!--   <li class="cssmenu">
     <strong>Length:</strong>
     <%= @trail.length %>
   </li>
@@ -17,7 +17,7 @@
   <li class="cssmenu">
     <strong>Duration:</strong>
     <%= @trail.duration %>
-  </li>
+  </li> -->
 
   <li class="cssmenu">
     <strong>Difficulty:</strong>
@@ -29,12 +29,39 @@
     <%= @trail.review %>
   </li>
 
-  <li class="cssmenu">
+<!--   <li class="cssmenu">
     <strong>Rating:</strong>
     <%= @trail.rating %>
-  </li>
+  </li> -->
 
-  <li class="trail-id hidden">
+  <li class="trail-id hidden" style="display: none">
     <%= @trail.id %>
   </li>
+
+
+  <div class="ui inverted segment">
+  <div class="ui inverted statistic">
+    <div class="value">
+    <i class="send icon"></i>  <%= @trail.length %>
+    </div>
+    <div class="label">
+      Miles
+    </div>
+  </div>
+  <div class="ui red inverted statistic">
+    <div class="value">
+      <%= @trail.duration %>
+    </div>
+    <div class="label">
+      Hours
+    </div>
+  </div>
+  <div class="ui orange inverted statistic">
+    <div class="value">
+      <%= @trail.rating %>
+    </div>
+    <div class="label">
+      Stars
+    </div>
+  </div>
 </div>

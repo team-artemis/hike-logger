@@ -145,9 +145,9 @@ $('.map').on('click', '.popup .cycle a', function() {
       $('.navbar').children().hide()
       $('.navbar').prepend(response)
       map.removeLayer(userTrailsLayer);
-      map.removeLayer(hikerTrailsLayer);
       map.removeLayer(photoLayer);
-      map.fitBounds(currentTrail.getBounds())
+      // map.fitBounds(currentTrail.getBounds())
+      map.removeLayer(hikerTrailsLayer);
       // zoomInHike(userTrailsLayer, clickedHikeId);
       // zoomInHike(hikerTrailsLayer, clickedHikeId);
     })
@@ -272,11 +272,12 @@ $('.map').on('click', '.popup .cycle a', function() {
       $.ajax(urlVal)
       .done(function(response){
         map.removeLayer(userTrailsLayer);
-        map.removeLayer(allHikersLayer);
+        map.removeLayer(photoLayer);
         $('.navbar').children().hide();
         $('.navbar').prepend(response);
         hikerTrailsLayer = hikerTrails(hikerId).addTo(map)
         hoverNavToPopUp(hikerTrailsLayer);
+        map.removeLayer(allHikersLayer);
       })
       .fail(function(response){
         console.log("The request failed.")
