@@ -11,7 +11,7 @@ User.create(
 User.create(
   firstname: "Bee",
   lastname: "Derek",
-  email: "derek@test.com",
+  email: "daschi87@gmail.com",
   city: "San Francisco",
   state: "CA",
   country: "USA",
@@ -21,7 +21,6 @@ User.create(
 Trail.create(
   title: "Stinson Beach to Mt. Tamalpais",
   length: 17.3,
-  is_loop: false,
   duration: "Full day",
   difficulty: "Difficult",
   review: "It's a great time, I loved this trail. OMG! Bring a lot of water, and Karlie Kloss if you can.",
@@ -42,7 +41,6 @@ Trail.create(
 
 Trail.create(
   title: "Point Reyes Coast Trail to Alamere Falls",
-  is_loop: true,
   length: 7.5,
   duration: "4 hours",
   difficulty: "Intermediate",
@@ -64,7 +62,6 @@ Trail.create(
 
 Trail.create(
   title: "Floridian Hike",
-  is_loop: true,
   length: 7.5,
   duration: "4 hours",
   difficulty: "Intermediate",
@@ -86,7 +83,6 @@ Trail.create(
 
 Trail.create(
   title: "Honolulu",
-  is_loop: true,
   length: 7.5,
   duration: "4 hours",
   difficulty: "Intermediate",
@@ -108,7 +104,6 @@ Trail.create(
 
 Trail.create(
   title: "Nashville",
-  is_loop: true,
   length: 7.5,
   duration: "4 hours",
   difficulty: "Intermediate",

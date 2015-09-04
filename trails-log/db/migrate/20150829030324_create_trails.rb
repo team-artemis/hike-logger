@@ -7,7 +7,8 @@ class CreateTrails < ActiveRecord::Migration
       t.string :difficulty
       t.string :review
       t.integer :rating
-      t.boolean :is_loop
+      t.string  :city
+      t.string  :state
       t.string :trailhead_title
       t.decimal  :trailhead_lon
       t.decimal  :trailhead_lat
