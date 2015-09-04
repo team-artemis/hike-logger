@@ -1,7 +1,7 @@
 <% @users.each do |user| %>
 
   <a class="item other-hiker" id="hikers<%= user.id %>" href="/users/<%= user.id %>">
-
+	 <img class="ui avatar image" src="<%= avatar_url(user)%>">
     <div class="content">
       <div class="ui header">
         <%= user.firstname %> <%= user.lastname %>
