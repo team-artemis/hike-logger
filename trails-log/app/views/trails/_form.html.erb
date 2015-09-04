@@ -44,8 +44,7 @@
 
 <div class="field">
     <label><%= f.label :review %></label>
-    <textarea ></textarea>
-    <%= f.text_field :review, size:'10x10', class: "pure-input-rounded" %>
+    <%= f.text_area :review, size:'10x10' %>
 </div>
 
 
@@ -56,7 +55,8 @@
 <%= f.hidden_field :trailend_lon, value: @trail.trailend_lon %>
 <%= f.hidden_field :waypoints, value: @trail.waypoints %>
 <%= f.hidden_field :user_id, value: current_user.id %>
-<div class="actions">
+
+<div class="field">
   <%= f.submit 'Add Trail', class: "ui primary button" %>
 </div>
 
