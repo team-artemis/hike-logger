@@ -129,19 +129,19 @@ html {
 }
 
 /*NEED TO TARGET ID's OF LINKS*/
-.my-trails a:hover {background: #85CA4D;}
+/*.my-trails a:hover {background: #85CA4D;}
 .log-hike a:hover {background: #E47225;}
 .all-hikers a:hover {background: #0b91d8;}
-.logout a:hover {background: #EC407A;}
+.logout a:hover {background: #EC407A;}*/
 
-.my-hikes-menu h2 {color: #85CA4D;}
+/*.my-hikes-menu h2 {color: #85CA4D;}
 .my-hikes-menu a:hover {background: #85CA4D;}
 .log-hike-menu h2 {color: #E47225;}
 .log-hike-menu a:hover {background: #E47225;}
 .all-hikers-menu h2 {color: #0b91d8;}
 .all-hikers-menu a:hover {background: #0b91d8;}
 .show-other-user-menu h2 {color: #0b91d8;}
-.show-other-user-menu a:hover {background: #0b91d8;}
+.show-other-user-menu a:hover {background: #0b91d8;}*/
 
 
 
