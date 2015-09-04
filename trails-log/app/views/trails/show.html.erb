@@ -1,40 +1,71 @@
 <div class="my-hike-page">
-  <li id="show-page-back" class="cssmenu back-button"><span> <a href="/users/<%= current_user.id %>">
-    back to menu
-  </a></span></li>
-  <li class="cssmenu">
-    <h2> <%= @trail.title %> </h2>
-  </li>
+    <div class="ui fluid relaxed grid container" id="nav-content" >
+      <div class="ui left aliged row" id="show-page-back" >
+        <a href="/users/<%= current_user.id %>">
+          <%= image_tag "back.png", width: '30', height: '30', class: "back-button" %>
+        </a>
+      </div>
+      <div class="ui centered row"> 
+        <h1 class="ui inverted massive header trail-header">
+          <%= @trail.title %>
+          <div class="sub header">
+          <%= @trail.city %>, <%= @trail.state %>
+          </div>
+        </h1>
+      </div>
+      <div class="ui fluid row">
+        <div class="ui fluid container">
+
+        <div class="ui small statistics">
+          <div class="statistic">
+            <div class="value">
+              <%= @trail.length %>
+            </div>
+            <div class="label">
+              Length
+            </div>
+          </div>
+          <div class="statistic">
+            <div class="value">
+              <%= @trail.duration %>
+            </div>
+            <div class="label">
+              Duration
+            </div>
+          </div>
+          
+        </div>
+        <br>
+        <div class="ui small statistics">
+          <div class="statistic">
+            <div class="value">
+              <%= @trail.rating %>
+            </div>
+            <div class="label">
+              Rating
+            </div>
+          </div>
+          <div class="statistic">
+            <div class="value">
+              <%= @trail.difficulty %>
+            </div>
+            <div class="label">
+              Difficulty
+            </div>
+          </div>
+        </div>
+        <div class="ui container">
+          <h4 class="ui medium header">Review</h4>
+  
+          <%= @trail.review %>
+
+        </div>
+        <span style="font-color:#61616;" class="trail-id hidden">
+          <%= @trail.id %>
+        </span>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div id="nav-content">
 
-  <li class="cssmenu">
-    <strong>Length:</strong>
-    <%= @trail.length %>
-  </li>
-
-  <li class="cssmenu">
-    <strong>Duration:</strong>
-    <%= @trail.duration %>
-  </li>
-
-  <li class="cssmenu">
-    <strong>Difficulty:</strong>
-    <%= @trail.difficulty %>
-  </li>
-
-  <li class="cssmenu">
-    <strong>Review:</strong>
-    <%= @trail.review %>
-  </li>
-
-  <li class="cssmenu">
-    <strong>Rating:</strong>
-    <%= @trail.rating %>
-  </li>
-
-  <li class="trail-id hidden">
-    <%= @trail.id %>
-  </li>
-</div>

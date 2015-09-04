@@ -1,16 +1,26 @@
 <div class="show-other-user-menu">
-	<li id="show-user-back" class="cssmenu back-button">
-	  <span>
+	<div class="ui fluid relaxed grid container">
+	  <div class="ui left aliged row" id="my-hikes-back" >
 	    <a href="/users/<%= current_user.id %>">
-	      back to menu
+	      <%= image_tag "back.png", width: '30', height: '30', class: "back-button" %>
 	    </a>
-	  </span>
-	</li>
-
-	<li class="cssmenu">
-	  <h2> <%= @user.firstname %>'s hikes </h2>
-	</li>
-
-	<%= render 'trails/index' %>
-
+	  </div>
+	  <div class="ui centered row"> 
+	  	<div class="avatar-frame">
+	      <%= image_tag avatar_url(current_user)  %>
+	    </div>
+    </div>
+	  <div class="ui centered row"> 
+	    <h1 class="ui inverted massive header my-hikes-header">
+	      <%= @user.firstname %>'s hikes
+	    </h1>
+	  </div>
+	  <div class="ui fluid row">
+	    <div class="ui fluid container">
+	      <div class="ui divided very relaxed inverted link list">
+	        <%= render 'trails/index' %>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </div>

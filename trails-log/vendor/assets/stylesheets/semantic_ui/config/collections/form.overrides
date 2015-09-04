@@ -1,3 +1,11 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.form#new-trail-form .field > label {
+  color: #FFFFFF;
+}
+
+.ui.form#new-trail-form {
+  border-bottom: none; 
+}

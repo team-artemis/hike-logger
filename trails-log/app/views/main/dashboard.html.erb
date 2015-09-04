@@ -1,77 +1,130 @@
+<!-- .user-hike : each of the items in the list in "my hikes"
+.my-hikes-header 
+.log-hikes-header 
+ -->
+
 <div class="pure-u-5-24 navbar debug">
   <div class="main-menu">
     <div class="avatar-frame">
       <%= image_tag avatar_url(current_user)  %>
     </div>
-    <br>
-    <li class="cssmenu welcome"><a><span>Welcome, <%= current_user.firstname %>!</span></a></li>
-    <li class="cssmenu my-trails"><a id="my-trails" href='/users/<%= current_user.id %>/trails'><span>My Trails</span></a></li>
-    <li class="cssmenu log-hike" id="log-hike"><a href='/users/<%= current_user.id %>/trails/new'><span>Log Hike</span></a></li>
-    <li class="cssmenu all-hikers" id="all-hikers"><a href='/users'><span>All Hikers</span></a></li>
-    <li class="cssmenu logout"><span><%= link_to "Logout", logout_path, method: :delete %></span></li>
+    <div class="ui medium centered inverted header">
+      Welcome, <%= current_user.firstname %>!
+    </div>
+    <div class="ui middle aligned very relaxed massive list"  >     
+      <div class="item" id="my-hikes">
+        <%= image_tag( "canoe.png", width:'50', height:'50', class: "ui image") %>
+        <div class="middle aligned content">
+          <a class="medium inverted header" id="my-trails" href='/users/<%= current_user.id %>/trails'>
+            My Hikes
+          </a>
+        </div>
+      </div>
+      <div class="item" id="log-hike">
+        <%= image_tag( "main_log_hike.png", width:'50', height:'50', class: "ui image") %>
+        <div class="middle aligned content">
+          <a class="medium inverted header" a href='/users/<%= current_user.id %>/trails/new'>
+            Add a Hike
+          </a>
+        </div>
+      </div>
+
+      <div class="item" id="all-hikers">
+        <%= image_tag( "main_all_hikers.png", width:'50', height:'50', class: "ui image") %>
+        <div class="middle aligned content">
+          <a class="medium inverted header" href='/users'>
+            All Hikers
+          </a>
+        </div>
+      </div>
+
+      <div class="item" id="logout-btn">
+        <%= image_tag( "logout.png", width:'50', height:'50', class: "ui image") %>
+        <div class="middle aligned content">
+          <%= link_to "Logout", logout_path, method: :delete, class: "medium grey header"  %>
+
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- MY HIKES  -->
 
   <div class="my-hikes-menu hideMenu">
-    <li id= "my-hikes-back" class="cssmenu back-button">
-      <span>
+    <div class="ui fluid relaxed grid container">
+      <div class="ui left aliged row" id="my-hikes-back" >
         <a href="/users/<%= current_user.id %>">
-          back to menu
+          <%= image_tag "back.png", width: '30', height: '30', class: "back-button" %>
         </a>
-      </span>
-    </li>
-    <li class="cssmenu">
-      <h2> My Trails </h2>
-    </li>
-    <div id="hike-list">
-    <%= render 'trails/index' %>
+      </div>
+      <div class="ui centered row"> 
+        <h1 class="ui inverted massive header my-hikes-header">
+          My Hikes
+        </h1>
+      </div>
+      <div class="ui fluid row">
+        <div class="ui fluid container">
+          <div class="ui divided very relaxed inverted link list">
+            <%= render 'trails/index' %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- LOG HIKE  -->
+    <!-- LOG HIKE  -->
 
-  <div class="log-hike-menu hideMenu" id="log-hike">
-    <li id= "log-hike-back" class="cssmenu back-button">
-      <span>
-        <a href="/users/<%= current_user.id %>">
-          back to menu
-        </a>
-      </span>
-    </li>
-    <li class="cssmenu">
-      <h2> Log Hike </h2>
-    </li>
+    <div class="log-hike-menu hideMenu" id="log-hike">
+      <div class="ui fluid relaxed grid container">
+        <div class="ui left aliged row" id="log-hike-back" >
+          <a href="/users/<%= current_user.id %>">
+            <%= image_tag "back.png", width: '30', height: '30', class: "back-button" %>
+          </a>
+        </div>
+        <div class="ui centered row"> 
+          <h1 class="ui inverted massive header my-hikes-header">
+            Log Hike
+          </h1>
+        </div>
+        <div class="ui fluid row">
+          <div class="ui fluid container">
+              <%= render 'trails/form' %>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <%= render 'trails/form' %>
+    <!-- ALL HIKERS -->
+
+    <div class="all-hikers-menu hideMenu">
+      <div class="ui fluid relaxed grid container">
+        <div class="ui left aliged row"  id= "all-hikers-back" >
+          <a href="/users/<%= current_user.id %>">
+            <%= image_tag "back.png", width: '30', height: '30', class: "back-button" %>
+          </a>
+        </div>
+        <div class="ui centered row"> 
+          <h1 class="ui inverted massive header my-hikes-header">
+            Hikers
+          </h1>
+        </div>
+        <div class="ui fluid row">
+          <div class="ui fluid container">
+            <div class="ui divided very relaxed inverted link list">
+              <%= render 'users/index' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 
-  <!-- ALL HIKERS -->
-
-  <div class="all-hikers-menu hideMenu">
-    <li id= "all-hikers-back" class="cssmenu back-button">
-      <span>
-        <a href="/users/<%= current_user.id %>">
-          back to menu
-        </a>
-      </span>
-    </li>
-    <li class="cssmenu">
-      <h2> Hikers </h2>
-    </li>
-
-    <%= render 'users/index' %>
-
+  <!-- MAP -->
+  <div class="pure-u-19-24 debug">
+    <div class="map" id="user-map"></div>
   </div>
-
-</div>
-
-<!-- MAP -->
-<div class="pure-u-19-24 debug">
-  <div class="map" id="user-map"></div>
-</div>
-<!-- DRAW PATH -->
+  <!-- DRAW PATH -->
   <div id='inputs'></div>
   <div id='directions'>
     <div id='routes'></div>

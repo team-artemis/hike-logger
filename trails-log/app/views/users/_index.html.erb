@@ -1,11 +1,16 @@
 <% @users.each do |user| %>
-<li class="cssmenu" id="hikers<%= user.id %>">
-  <a class="other-hiker" href="/users/<%= user.id %>">
-    <span>
-      <b> <%= user.firstname %> <%= user.lastname %> </b>
-      <br>
-      <%= user.city %>, <%= user.state %>
-    </span>
+
+  <a class="item other-hiker" id="hikers<%= user.id %>" href="/users/<%= user.id %>">
+
+    <div class="content">
+      <div class="ui header">
+        <%= user.firstname %> <%= user.lastname %>
+      </div>
+      <div class="description">
+        <%= user.city %>, <%= user.state %>
+      </div>
+    </div>
+
   </a>
-</li>
+
 <% end %>
