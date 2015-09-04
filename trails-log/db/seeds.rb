@@ -21,7 +21,7 @@ User.create(
 Trail.create(
   title: "Stinson Beach to Mt. Tamalpais",
   length: 17.3,
-  duration: "Full day",
+  duration: "8",
   difficulty: "Difficult",
   review: "It's a great time, I loved this trail. OMG! Bring a lot of water, and Karlie Kloss if you can.",
   rating: 5,
@@ -42,7 +42,7 @@ Trail.create(
 Trail.create(
   title: "Point Reyes Coast Trail to Alamere Falls",
   length: 7.5,
-  duration: "4 hours",
+  duration: "4",
   difficulty: "Intermediate",
   review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
   rating: 4,
@@ -63,7 +63,7 @@ Trail.create(
 Trail.create(
   title: "Floridian Hike",
   length: 7.5,
-  duration: "4 hours",
+  duration: "4",
   difficulty: "Intermediate",
   review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
   rating: 4,
@@ -84,7 +84,7 @@ Trail.create(
 Trail.create(
   title: "Honolulu",
   length: 7.5,
-  duration: "4 hours",
+  duration: "4",
   difficulty: "Intermediate",
   review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
   rating: 4,
@@ -105,7 +105,7 @@ Trail.create(
 Trail.create(
   title: "Nashville",
   length: 7.5,
-  duration: "4 hours",
+  duration: "4",
   difficulty: "Intermediate",
   review: "There is no shade, lots of exposure to the elements, and plenty of Elk. There's a waterfall too.",
   rating: 4,
