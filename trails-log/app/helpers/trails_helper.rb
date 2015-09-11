@@ -1,6 +1,6 @@
 module TrailsHelper
 
-  Geokit::Geocoders::GoogleGeocoder.api_key = 'AIzaSyCDDyToOS_3CYekY0fDAUZXD6A0CJXCbPM'
+  Geokit::Geocoders::GoogleGeocoder.api_key = API_KEY
 
   def get_trail_owner(trail_object)
     User.find_by(trail_object.user_id)
