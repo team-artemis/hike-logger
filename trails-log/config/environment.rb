@@ -1,5 +1,3 @@
-require 'dotenv'
-Dotenv.load
 # Load the Rails application.
 require File.expand_path('../application', __FILE__)
 
